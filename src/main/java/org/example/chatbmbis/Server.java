@@ -12,8 +12,6 @@ public class Server {
 
     private static User userNow;
     private Map<Socket, String> usersMap;
-   // private List<Channel> channels;
-    //private List<PrivateChat> privateChats;
 
 
     public Server() {
