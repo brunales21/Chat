@@ -14,7 +14,7 @@ public class Main extends Application {
         Mediator mediator = new Mediator();
 
         //Crear vista chat
-        FXMLLoader fxmlLoader = new FXMLLoader( Main.class.getResource("chatView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("chatView.fxml"));
         Scene chatView = new Scene(fxmlLoader.load());
         Stage stageChat = new Stage();
         stageChat.setScene(chatView);
@@ -22,11 +22,10 @@ public class Main extends Application {
         ChatController chatController = fxmlLoader.getController();
         chatController.setMediator(mediator);
         mediator.setChatController(chatController);
-        mediator.getView().put(stageChat,chatController);
-
+        mediator.getView().put(stageChat, chatController);
 
         //Crear vista añadir usuario
-        FXMLLoader fxmlLoader3 = new FXMLLoader( Main.class.getResource("addUserView.fxml"));
+        FXMLLoader fxmlLoader3 = new FXMLLoader(Main.class.getResource("addUserView.fxml"));
         Scene adduserView = new Scene(fxmlLoader3.load());
         Stage stageUser = new Stage();
         stageUser.setScene(adduserView);
@@ -34,7 +33,7 @@ public class Main extends Application {
         AddViewController addViewController = fxmlLoader3.getController();
         addViewController.setMediator(mediator);
         mediator.setAddViewController(addViewController);
-        mediator.getView().put(stageUser,addViewController);
+        mediator.getView().put(stageUser, addViewController);
 
 
         //cread la vista login
@@ -47,7 +46,6 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
 
 
     public static void main(String[] args) {

@@ -22,7 +22,7 @@ public class User extends Client {
         this.nickname = name;
         this.chatRooms = new ArrayList<>();
         try {
-            this.socket= new Socket(hostname,port);
+            this.socket = new Socket(hostname, port);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -34,16 +34,16 @@ public class User extends Client {
 
     @Override
     public void run() {
-        while (true){
+        while (true) {
             Scanner in = null;
             String textoCliente = "";
             try {
                 in = new Scanner(socket.getInputStream());
                 textoCliente = in.nextLine();
                 Mediator.getInstance().reciveMessage(textoCliente);
-            }catch (NoSuchElementException ignored){
+            } catch (NoSuchElementException ignored) {
 
-            }catch (IOException e) {
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -60,13 +60,14 @@ public class User extends Client {
         out.println(message);
 
     }
+
     public void createChannel(String channelName) {
         sendMessage("CREATE;#" + channelName);
     }
 
     //Asociar a controlador de la vista
-    public void createPrivateChat(String idUser){
-        sendMessage("CREATE;"+idUser);
+    public void createPrivateChat(String idUser) {
+        sendMessage("CREATE;" + idUser);
     }
 
 
@@ -82,7 +83,7 @@ public class User extends Client {
         while (true) {
             try {
                 //Recibe el id de quien lo envia y el mensaje
-                String [] comand = message.split(";");
+                String[] comand = message.split(";");
                 System.out.println(comand[1]);
 
             } catch (NoSuchElementException ignore) {
@@ -100,6 +101,7 @@ public class User extends Client {
     public void addChatRoom(ChatRoom chatRoom) {
         chatRooms.add(chatRoom);
     }
+
     public String getNickname() {
         return nickname;
     }
