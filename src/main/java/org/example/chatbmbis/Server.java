@@ -7,7 +7,7 @@ import java.util.*;
 
 public class Server {
 
-    private  ServerSocket serverSocket;
+    private ServerSocket serverSocket;
     private int port;
 
     private static User userNow;
@@ -15,14 +15,14 @@ public class Server {
 
 
     public Server() {
-       // this.privateChats = new ArrayList<>();
+        // this.privateChats = new ArrayList<>();
         //this.channels = new ArrayList<>();
         this.usersMap = new HashMap<>();
 
     }
 
-    public static  void  setUserNow(User user){
-        userNow=user;
+    public static void setUserNow(User user) {
+        userNow = user;
     }
 
 
@@ -36,7 +36,7 @@ public class Server {
         }
     }
 
-    private void clientHandler(Socket socket){
+    private void clientHandler(Socket socket) {
         Scanner in = null;
         try {
             in = new Scanner(socket.getInputStream());
@@ -52,6 +52,7 @@ public class Server {
             throw new RuntimeException(ex);
         }
     }
+
     private void processCommand(String commandLine) {
         String[] parts = splitParts(commandLine);
         switch (parts[0]) {
@@ -62,7 +63,7 @@ public class Server {
                 //create(socketUserMap.get(socket).getNickname(), parts[1]);
                 break;
             case "PRIVMSG":
-                sendMessage(getSocketByUserNickname(parts[1]),parts[2]);
+                sendMessage(getSocketByUserNickname(parts[1]), parts[2]);
                 break;
             case "JOIN":
                 //join();
@@ -73,6 +74,7 @@ public class Server {
                 //listChannels(socket);
         }
     }
+
     public static String[] splitParts(String header) {
         String[] split = header.split(" ");
         if (split.length == 1) {
@@ -87,20 +89,22 @@ public class Server {
 
         return partsList.toArray(new String[0]);
     }
-    public Socket getSocketByUserNickname(String nickname){
-       Map.Entry<Socket,String> userEntry = null;
+
+    public Socket getSocketByUserNickname(String nickname) {
+        Map.Entry<Socket, String> userEntry = null;
         for (Map.Entry<Socket, String> socketUserEntry : usersMap.entrySet()) {
 
-            String user =socketUserEntry.getValue();
+            String user = socketUserEntry.getValue();
 
-            if (user.equals(nickname)){
-                userEntry=socketUserEntry;
+            if (user.equals(nickname)) {
+                userEntry = socketUserEntry;
                 break;
             }
         }
         return userEntry.getKey();
     }
-    public void sendMessage(Socket socket,String text){
+
+    public void sendMessage(Socket socket, String text) {
         PrintStream out = null;
         try {
             out = new PrintStream(socket.getOutputStream());
