@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="59.0" prefWidth="228.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.chatbmbis.ItemContactController">
+   <children>
+      <HBox fx:id="item" alignment="CENTER_LEFT" layoutY="-1.0" onMouseClicked="#onClickItem" prefHeight="59.0" prefWidth="228.0">
+         <children>
+            <ImageView fitHeight="42.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../img/img_2.png" />
+               </image>
+            </ImageView>
+            <VBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="189.0">
+               <children>
+                  <Label fx:id="nickNameLabel" alignment="BOTTOM_LEFT" prefHeight="31.0" prefWidth="185.0" text="Juan Manuel">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                     <font>
+                        <Font size="16.0" />
+                     </font></Label>
+                  <HBox alignment="CENTER_LEFT" prefHeight="28.0" prefWidth="186.0">
+                     <children>
+                        <Label alignment="TOP_LEFT" prefHeight="36.0" prefWidth="69.0" text="En línea">
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                        <Circle fill="#1fff7a" radius="5.0" stroke="BLACK" strokeType="INSIDE">
+                           <HBox.margin>
+                              <Insets bottom="5.0" />
+                           </HBox.margin>
+                        </Circle>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

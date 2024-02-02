@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="496.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.chatbmbis.LoginController">
+   <children>
+      <VBox alignment="TOP_CENTER" layoutX="2.0" prefHeight="497.0" prefWidth="325.0">
+         <children>
+            <ImageView fitHeight="133.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+               <image>
+                  <Image url="@../../../img/img_2.png" />
+               </image>
+            </ImageView>
+            <TextField fx:id="userName" prefHeight="29.0" prefWidth="321.0" promptText="User Name">
+               <VBox.margin>
+                  <Insets left="30.0" right="30.0" top="50.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="password" promptText="Password">
+               <VBox.margin>
+                  <Insets left="30.0" right="30.0" top="50.0" />
+               </VBox.margin>
+            </TextField>
+            <HBox alignment="CENTER" prefHeight="165.0" prefWidth="321.0" spacing="50.0">
+               <children>
+                  <Button fx:id="acceder" mnemonicParsing="false" onMouseClicked="#ingresar" prefHeight="49.0" prefWidth="100.0" text="Acceder" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
