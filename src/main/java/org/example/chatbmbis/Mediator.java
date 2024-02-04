@@ -1,7 +1,5 @@
 package org.example.chatbmbis;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -12,13 +10,13 @@ import java.util.List;
 import java.util.Map;
 
 public class Mediator {
-    AddContactViewController addViewController;
-    public static ChatController chatController;
-    ItemContactController itemContactController;
-    LoginController loginController;
+    private ChatController chatController;
+    private AddContactViewController addViewController;
+    private ItemContactController itemContactController;
+    private LoginController loginController;
 
     private Map<Stage, Controller> view = new HashMap<>();
-    public static Map<ItemContactController, String> itemContactControllers = new HashMap<>();
+    private Map<ItemContactController, String> itemContactControllers = new HashMap<>();
 
     private List<String> contacts;
 
@@ -29,6 +27,7 @@ public class Mediator {
 
     public Mediator() {
         this.contacts = new ArrayList<>();
+        user = new User();
     }
 
     public static synchronized Mediator getInstance() {
@@ -38,29 +37,28 @@ public class Mediator {
         return instance;
     }
 
+    public static synchronized Mediator getInstance(User user) {
+        if (instance == null) {
+            instance = new Mediator();
+            instance.setUser(user);
+        }
+        return instance;
+    }
 
-    public void createChatView(String nickname) {
+
+    public void ingresar(String nickname) {
+        user.ingresar(nickname);
+    }
+    public void createChatView() {
         Stage stage = null;
         for (Map.Entry<Stage, Controller> entry : view.entrySet()) {
             if (entry.getKey().getTitle().equals("Chat")) {
                 stage = entry.getKey();
-                //break?
+                break;
             }
         }
-
-        User user = new User(nickname, "localhost", 80);
-        PrintStream out = null;
-        try {
-            out = new PrintStream(user.getSocket().getOutputStream());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        out.println(nickname);
-
         stage.setResizable(false);
         stage.show();
-        user.start();
 
     }
 
@@ -68,9 +66,11 @@ public class Mediator {
         user.sendMessage(messageText);
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-    public void createAddView(String promtext, String buttonText) {
-
+    public void createAddView(String promptText, String buttonText) {
         Stage stage = null;
         AddContactViewController addController = null;
         for (Map.Entry<Stage, Controller> entry : view.entrySet()) {
@@ -79,41 +79,18 @@ public class Mediator {
                 addController = (AddContactViewController) entry.getValue();
             }
         }
-        addController.setPrompText(promtext);
+        addController.setPromptText(promptText);
         addController.getAddButton().setText(buttonText);
         stage.setResizable(false);
         stage.show();
 
     }
 
-    public void createChat(String idButton, String idChat) {
-        switch (idButton) {
-            case "Crear grupo":
-               /* ChatRoom channel = new ChatRoom("#"+idChat);
-                User user = (User) server.getUsersMap()
-                    .values()
-                    .stream()
-                    .filter(u -> Objects.equals(u.getNickname(),chatController.getNickName()));
-
-
-               server.createChannel(channel,user);
-
-                break;
-            case "Añadir usuario":
-                ChatRoom privateChat = new ChatRoom(idChat);
-                /*User user2 = (User) server.getUsersMap()
-                        .values()
-                        .stream()
-                        .filter(u -> Objects.equals(u.getNickname(),chatController.getNickName()));
-               // server.createChannel(privateChat,user2);
-                createItemChat(idChat);
-                break;
-                //case "Añadir al grupo":
-            */
-        }
-
+    public void createContactItem(String nickname) {
+        chatController.createContactItem(nickname);
     }
 
+/*
     public void createItemChat(String nickName) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("contactItemView.fxml"));
         Parent paren = null;
@@ -136,12 +113,14 @@ public class Mediator {
 
     }
 
+ */
+
     public void receiveMessage(String header) {
         String[] headerParts = Server.splitParts(header);
         System.out.println(header);
         String senderNickname = headerParts[0];
         String messageText = headerParts[1];
-        chatController.addMessagesForeingUser(senderNickname+ ": " +messageText);
+        chatController.addMessagesForeingUser(senderNickname + ": " + messageText);
     }
 
 
@@ -195,5 +174,13 @@ public class Mediator {
 
     public void setItemContactControllers(Map<ItemContactController, String> itemContactControllers) {
         this.itemContactControllers = itemContactControllers;
+    }
+
+    public List<String> getContacts() {
+        return contacts;
+    }
+
+    public User getUser() {
+        return user;
     }
 }

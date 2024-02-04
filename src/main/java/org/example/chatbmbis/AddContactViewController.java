@@ -20,13 +20,12 @@ public class AddContactViewController extends Controller {
 
     @FXML
     private void onClickAdd() {
-        mediator.getChatController().createContactItem(nicknameTextField.getText());
+        mediator.createContactItem(nicknameTextField.getText());
         Stage stageToClose = (Stage) this.addButton.getScene().getWindow();
         stageToClose.close();
-
     }
 
-    public void setPrompText(String prompText) {
+    public void setPromptText(String prompText) {
         nicknameTextField.setPromptText(prompText);
     }
 

@@ -9,8 +9,6 @@ public class Server {
 
     private ServerSocket serverSocket;
     private int port;
-
-    private static User userNow;
     private static Map<Socket, User> socketUserMap;
     private static Map<User, Socket> userSocketMap;
 
@@ -25,19 +23,14 @@ public class Server {
 
     }
 
-    public static void setUserNow(User user) {
-        userNow = user;
-    }
-
 
     public void start() throws IOException {
         this.serverSocket = new ServerSocket(80);
         while (true) {
             Socket socket = serverSocket.accept();
-            Scanner in = new Scanner(socket.getInputStream());
 
-            String nickname = in.nextLine();
-            User user = new User(nickname);
+            User user = new User();
+
             socketUserMap.put(socket, user);
             userSocketMap.put(user, socket);
 
@@ -61,13 +54,17 @@ public class Server {
         }
     }
 
-    private void processCommand(Socket socket, String commandLine) {
-        String[] parts = splitParts(commandLine);
-        try {
+    private void register(Socket socket, String nickname) {
+        socketUserMap.get(socket).setNickname(nickname);
+    }
 
+    private void processCommand(Socket socket, String header) {
+        System.out.println(header);
+        String[] parts = splitParts(header);
+        try {
             switch (parts[0]) {
-                case "CONNECT":
-                    //login(parts[2], socket);
+                case "REGISTER":
+                    register(socket, parts[1]);
                     break;
                 case "CREATE":
                     //create(socketUserMap.get(socket).getNickname(), parts[1]);
@@ -91,10 +88,11 @@ public class Server {
 
     public static String[] splitParts(String header) {
         String[] split = header.split(" ");
-        if (split.length == 1) {
+        int colonIndex = header.indexOf(":");
+        if (split.length == 1 || colonIndex == -1) {
             return split;
         }
-        int colonIndex = header.indexOf(":");
+
         String textMessage = header.substring(colonIndex + 1); // +1 para excluir el ':'
         String prefix = header.substring(0, colonIndex);
 
@@ -153,9 +151,6 @@ public class Server {
         this.port = port;
     }
 
-    public static User getUserNow() {
-        return userNow;
-    }
 
     public Map<Socket, User> getSocketUserMap() {
         return socketUserMap;

@@ -6,18 +6,22 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class LoginController extends Controller {
-
+    private Mediator mediator;
     @FXML
     Button accessButton;
     @FXML
     TextField usernameField, passwordField;
-    private Mediator mediator;
 
     public LoginController() {}
 
     @FXML
     private void ingresar() {
-        mediator.createChatView(usernameField.getText());
+        mediator.createChatView();
+        mediator.ingresar(usernameField.getText());
+        closeLoginView();
+    }
+
+    public void closeLoginView() {
         Stage stage = (Stage) this.accessButton.getScene().getWindow();
         stage.close();
     }

@@ -15,16 +15,27 @@ public class User extends Client {
     Mediator mediator;
 
 
-    public User(String name, String hostname, int port) {
+    public User(String nickname, String hostname, int port) {
         super(hostname, port);
-        this.nickname = name;
+        this.nickname = nickname;
         this.chatRooms = new ArrayList<>();
-        mediator = Mediator.getInstance();
         try {
             this.socket = new Socket(hostname, port);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        mediator = Mediator.getInstance(this);
+    }
+
+    public User(String hostname, int port) {
+        super(hostname, port);
+        this.chatRooms = new ArrayList<>();
+        try {
+            this.socket = new Socket(hostname, port);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        mediator = Mediator.getInstance(this);
     }
 
     public User() {
@@ -33,6 +44,11 @@ public class User extends Client {
 
     public User(String nickname) {
         this.nickname = nickname;
+    }
+
+    public void ingresar(String nickname) {
+        register(nickname);
+        this.start();
     }
 
     @Override
@@ -61,6 +77,11 @@ public class User extends Client {
 
     }
 
+    public void register(String nickname) {
+        setNickname(nickname);
+        sendMessage("REGISTER "+nickname);
+    }
+
     public void createChannel(String channelName) {
         sendMessage("CREATE #" + channelName);
     }
@@ -68,30 +89,6 @@ public class User extends Client {
     //Asociar a controlador de la vista
     public void createPrivateChat(String idUser) {
         sendMessage("CREATE " + idUser);
-    }
-
-
-    //Mandar a la vista el mensaje
-    public void receive(String message) {
-
-        Scanner in = null;
-        try {
-            in = new Scanner(socket.getInputStream());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        while (true) {
-            try {
-                //Recibe el nickname de quien lo envia y el mensaje
-                String[] comand = message.split(";");
-                System.out.println(comand[1]);
-
-            } catch (NoSuchElementException ignore) {
-
-            }
-        }
-
-
     }
 
     public List<ChatRoom> getChatRooms() {
@@ -117,4 +114,6 @@ public class User extends Client {
     public void setCommand(String command) {
         this.command = command;
     }
+
+
 }

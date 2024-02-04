@@ -16,29 +16,22 @@ import java.io.IOException;
 
 
 public class ChatController extends Controller {
-
-
+    private Mediator mediator;
     @FXML
     private VBox vBoxGroup, vBoxPrivate, messages;
     @FXML
     private Label friendNicknameChatLabel;
     @FXML
     private TextField textMessageField;
-    private Mediator mediator = Mediator.getInstance();
-    private static ChatController instance;
 
+    /*
     public static synchronized ChatController getInstance() {
         if (instance == null) {
             instance = new ChatController();
         }
         return instance;
     }
-
-    public ChatController() {
-
-    }
-
-
+     */
     @FXML
     protected void onClickCreateGroup() {
         createAddView("Nombre grupo", "Crear grupo");
@@ -54,8 +47,8 @@ public class ChatController extends Controller {
         createAddView("Nombre del grupo", "Añadir al grupo");
     }
 
-    public void createAddView(String promtext, String buttonText) {
-        mediator.createAddView(promtext, buttonText);
+    public void createAddView(String promptText, String buttonText) {
+        mediator.createAddView(promptText, buttonText);
     }
 
     @FXML
@@ -64,6 +57,7 @@ public class ChatController extends Controller {
         mediator.sendMessage(header);
         messages.setAlignment(Pos.TOP_RIGHT);
         messages.getChildren().add(propietaryMessageStyle(textMessageField.getText()));
+        textMessageField.setText("");
 
     }
 

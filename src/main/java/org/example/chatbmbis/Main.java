@@ -10,7 +10,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        Mediator mediator = new Mediator();
+        Mediator mediator = Mediator.getInstance(new User("localhost", 80));
 
         //Crear vista chat
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("chatView.fxml"));
@@ -41,7 +41,7 @@ public class Main extends Application {
         LoginController loginController = fxmlLoader2.getController();
         loginController.setMediator(mediator);
         mediator.setLoginController(loginController);
-        stage.setTitle("Hello!");
+        stage.setTitle("Inicio de sesión");
         stage.setScene(scene);
         stage.show();
     }
