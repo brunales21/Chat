@@ -25,11 +25,16 @@ public class Client extends Thread {
 
     }
 
-    @Override
-    public void run() {
-        do {
+    public String getHostname() {
+        return hostname;
+    }
 
-        } while (true);
+    public int getPort() {
+        return port;
+    }
+
+    public Socket getSocket() {
+        return socket;
     }
 
     public static void main(String[] args) {

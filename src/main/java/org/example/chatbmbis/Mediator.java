@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.Map;
 
 public class Mediator {
-    AddViewController addViewController;
+    AddContactViewController addViewController;
     public static ChatController chatController;
     ItemContactController itemContactController;
     LoginController loginController;
 
     private Map<Stage, Controller> view = new HashMap<>();
-    public static Map<ItemContactController,String> itemContactControllers = new HashMap<>();
+    public static Map<ItemContactController, String> itemContactControllers = new HashMap<>();
 
     private List<String> contacts;
 
@@ -27,8 +27,8 @@ public class Mediator {
     private static Mediator instance;
 
 
-    public Mediator(){
-        this.contacts=new ArrayList<>();
+    public Mediator() {
+        this.contacts = new ArrayList<>();
     }
 
     public static synchronized Mediator getInstance() {
@@ -39,24 +39,24 @@ public class Mediator {
     }
 
 
-
-    public void createChatView(String nickName){
+    public void createChatView(String nickname) {
         Stage stage = null;
         for (Map.Entry<Stage, Controller> entry : view.entrySet()) {
-           if (entry.getKey().getTitle().equals("Chat")){
-               stage=entry.getKey();
-           }
+            if (entry.getKey().getTitle().equals("Chat")) {
+                stage = entry.getKey();
+                //break?
+            }
         }
-        chatController.setNickName(nickName);
 
-        user = new User(nickName,"localhost",80);
-        PrintStream printStream = null;
+        User user = new User(nickname, "localhost", 80);
+        PrintStream out = null;
         try {
-            printStream = new PrintStream(user.socket.getOutputStream());
+            out = new PrintStream(user.getSocket().getOutputStream());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        printStream.println(nickName);
+
+        out.println(nickname);
 
         stage.setResizable(false);
         stage.show();
@@ -64,31 +64,30 @@ public class Mediator {
 
     }
 
-    public void sendMessageToClient(String mesage){
-        user.sendMessage(mesage);
+    public void sendMessage(String messageText) {
+        user.sendMessage(messageText);
     }
 
 
-
-    public void createAddView (String promtext,String buttonText){
+    public void createAddView(String promtext, String buttonText) {
 
         Stage stage = null;
-        AddViewController addController= null;
+        AddContactViewController addController = null;
         for (Map.Entry<Stage, Controller> entry : view.entrySet()) {
-            if (entry.getKey().getTitle().equals("Add")){
-                stage=entry.getKey();
-                addController = (AddViewController) entry.getValue();
+            if (entry.getKey().getTitle().equals("Add")) {
+                stage = entry.getKey();
+                addController = (AddContactViewController) entry.getValue();
             }
         }
         addController.setPrompText(promtext);
-        addController.getAddOrcreate().setText(buttonText);
+        addController.getAddButton().setText(buttonText);
         stage.setResizable(false);
         stage.show();
 
     }
 
-    public void createChat(String idButton,String idChat){
-        switch (idButton){
+    public void createChat(String idButton, String idChat) {
+        switch (idButton) {
             case "Crear grupo":
                /* ChatRoom channel = new ChatRoom("#"+idChat);
                 User user = (User) server.getUsersMap()
@@ -115,7 +114,7 @@ public class Mediator {
 
     }
 
-    public void createItemChat(String nickName){
+    public void createItemChat(String nickName) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("contactItemView.fxml"));
         Parent paren = null;
         try {
@@ -124,34 +123,37 @@ public class Mediator {
             throw new RuntimeException(e);
         }
         ItemContactController itemContactController1 = loader.getController();
-        String name = itemContactController1.getNickNameLabel();
+        String name = itemContactController1.getNicknameLabel();
 
-        itemContactController1.setCallback(()->{
-           chatController.setNickNameFriend(name);
+        itemContactController1.setCallback(() -> {
+            chatController.setFriendNicknameChatLabelText(name);
         });
 
-        itemContactController1.setNickNameLabel(name);
-        itemContactControllers.put(itemContactController1,nickName);
+        itemContactController1.setNicknameLabelText(name);
+        itemContactControllers.put(itemContactController1, nickName);
         contacts.add(nickName);
         chatController.getvBoxPrivate().getChildren().add(paren);
 
     }
 
-    public void reciveMessage(String text){
-        String[] comandParts = Server.splitParts(text);
-        chatController.addMessagesForeingUser(comandParts[0]);
+    public void receiveMessage(String header) {
+        String[] headerParts = Server.splitParts(header);
+        System.out.println(header);
+        String senderNickname = headerParts[0];
+        String messageText = headerParts[1];
+        chatController.addMessagesForeingUser(senderNickname+ ": " +messageText);
     }
 
 
-    public AddViewController getAddViewController() {
+    public AddContactViewController getAddViewController() {
         return addViewController;
     }
 
-    public void setAddViewController(AddViewController addViewController) {
+    public void setAddViewController(AddContactViewController addViewController) {
         this.addViewController = addViewController;
     }
 
-    public  ChatController getChatController() {
+    public ChatController getChatController() {
         return chatController;
     }
 

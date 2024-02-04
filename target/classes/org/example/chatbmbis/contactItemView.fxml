@@ -18,7 +18,7 @@
             </ImageView>
             <VBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="189.0">
                <children>
-                  <Label fx:id="nickNameLabel" alignment="BOTTOM_LEFT" prefHeight="31.0" prefWidth="185.0" text="Juan Manuel">
+                  <Label fx:id="nicknameLabel" alignment="BOTTOM_LEFT" prefHeight="31.0" prefWidth="185.0" text="Juan Manuel">
                      <padding>
                         <Insets left="10.0" />
                      </padding>

@@ -8,26 +8,28 @@ import javafx.scene.layout.HBox;
 public class ItemContactController {
 
     @FXML
-    Label nickNameLabel;
+    Label nicknameLabel;
     @FXML
     private HBox item;
 
-    private Callback callback = ()->{};
+    private Callback callback = () -> {
+    };
 
     @FXML
-    public void onClickItem(MouseEvent event){
+    public void onClickItem(MouseEvent event) {
         callback.run();
     }
 
-    public void setCallback(Callback callback){
+    public void setCallback(Callback callback) {
         this.callback = callback;
     }
-    public String getNickNameLabel() {
-        return nickNameLabel.getText();
+
+    public String getNicknameLabel() {
+        return nicknameLabel.getText();
     }
 
-    public void setNickNameLabel(String nickNameLabel) {
-        this.nickNameLabel.setText(nickNameLabel);
+    public void setNicknameLabelText(String nickNameLabel) {
+        this.nicknameLabel.setText(nickNameLabel);
     }
 
 }

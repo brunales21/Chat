@@ -1,8 +1,6 @@
 package org.example.chatbmbis;
 
-import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -21,6 +19,7 @@ public class User extends Client {
         super(hostname, port);
         this.nickname = name;
         this.chatRooms = new ArrayList<>();
+        mediator = Mediator.getInstance();
         try {
             this.socket = new Socket(hostname, port);
         } catch (IOException e) {
@@ -32,15 +31,17 @@ public class User extends Client {
         super();
     }
 
+    public User(String nickname) {
+        this.nickname = nickname;
+    }
+
     @Override
     public void run() {
-        while (true) {
+        while (!socket.isClosed()) {
             Scanner in = null;
-            String textoCliente = "";
             try {
                 in = new Scanner(socket.getInputStream());
-                textoCliente = in.nextLine();
-                Mediator.getInstance().reciveMessage(textoCliente);
+                mediator.receiveMessage(in.nextLine());
             } catch (NoSuchElementException ignored) {
 
             } catch (IOException e) {
@@ -50,7 +51,6 @@ public class User extends Client {
     }
 
     public void sendMessage(String message) {
-
         PrintStream out = null;
         try {
             out = new PrintStream(socket.getOutputStream());
@@ -62,12 +62,12 @@ public class User extends Client {
     }
 
     public void createChannel(String channelName) {
-        sendMessage("CREATE;#" + channelName);
+        sendMessage("CREATE #" + channelName);
     }
 
     //Asociar a controlador de la vista
     public void createPrivateChat(String idUser) {
-        sendMessage("CREATE;" + idUser);
+        sendMessage("CREATE " + idUser);
     }
 
 
@@ -82,7 +82,7 @@ public class User extends Client {
         }
         while (true) {
             try {
-                //Recibe el id de quien lo envia y el mensaje
+                //Recibe el nickname de quien lo envia y el mensaje
                 String[] comand = message.split(";");
                 System.out.println(comand[1]);
 

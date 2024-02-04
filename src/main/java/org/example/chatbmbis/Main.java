@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
@@ -30,7 +29,7 @@ public class Main extends Application {
         Stage stageUser = new Stage();
         stageUser.setScene(adduserView);
         stageUser.setTitle("Add");
-        AddViewController addViewController = fxmlLoader3.getController();
+        AddContactViewController addViewController = fxmlLoader3.getController();
         addViewController.setMediator(mediator);
         mediator.setAddViewController(addViewController);
         mediator.getView().put(stageUser, addViewController);
@@ -46,11 +45,8 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
-
     public static void main(String[] args) {
         launch();
     }
-
 
 }

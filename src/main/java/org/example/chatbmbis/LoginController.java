@@ -1,30 +1,25 @@
 package org.example.chatbmbis;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class LoginController extends Controller {
 
     @FXML
-    Button acceder;
+    Button accessButton;
     @FXML
-    TextField userName,password;
+    TextField usernameField, passwordField;
     private Mediator mediator;
 
-    public LoginController (){
+    public LoginController() {}
 
-    }
     @FXML
-    private void ingresar(){
-        mediator.createChatView(userName.getText());
-        Stage stage2 = (Stage) this.acceder.getScene().getWindow();
-        stage2.close();
+    private void ingresar() {
+        mediator.createChatView(usernameField.getText());
+        Stage stage = (Stage) this.accessButton.getScene().getWindow();
+        stage.close();
     }
 
     public Mediator getMediator() {

@@ -19,14 +19,12 @@ public class ChatController extends Controller {
 
 
     @FXML
-    private VBox vBoxGroup,vBoxPrivate,messages;
+    private VBox vBoxGroup, vBoxPrivate, messages;
     @FXML
-    private Label nickNameFriend;
+    private Label friendNicknameChatLabel;
     @FXML
-    private TextField textmessage;
-
+    private TextField textMessageField;
     private Mediator mediator = Mediator.getInstance();
-    private String nickName;
     private static ChatController instance;
 
     public static synchronized ChatController getInstance() {
@@ -35,48 +33,49 @@ public class ChatController extends Controller {
         }
         return instance;
     }
-    public ChatController(){
+
+    public ChatController() {
 
     }
-
 
 
     @FXML
     protected void onClickCreateGroup() {
-        createAddView("Nombre grupo","Crear grupo");
-    }
-    @FXML
-    private void onClickCreateChat(){
-        createAddView("Nombre usuario","Añadir usuario");
+        createAddView("Nombre grupo", "Crear grupo");
     }
 
     @FXML
-    private void onClickAddUserToChannel(){
-        createAddView("Nombre del grupo","Añadir al grupo");
-    }
-
-    public void createAddView (String promtext,String buttonText){
-        mediator.createAddView(promtext,buttonText);
+    private void onClickCreateChat() {
+        createAddView("Nombre usuario", "Añadir usuario");
     }
 
     @FXML
-    private void onClickSendMessage(){
-        String comand = "PRIVMSG "+nickNameFriend.getText()+" :"+textmessage.getText();
-        mediator.sendMessageToClient(comand);
+    private void onClickAddUserToChannel() {
+        createAddView("Nombre del grupo", "Añadir al grupo");
+    }
+
+    public void createAddView(String promtext, String buttonText) {
+        mediator.createAddView(promtext, buttonText);
+    }
+
+    @FXML
+    private void onClickSendMessage() {
+        String header = "PRIVMSG " + friendNicknameChatLabel.getText() + " :" + textMessageField.getText();
+        mediator.sendMessage(header);
         messages.setAlignment(Pos.TOP_RIGHT);
-        messages.getChildren().add(mensaggeStylePropiertary(textmessage.getText()));
+        messages.getChildren().add(propietaryMessageStyle(textMessageField.getText()));
 
     }
 
-    public void addMessagesForeingUser(String text){
-        Label label = messageStyleForeign(text);
-        messages.setAlignment(Pos.TOP_LEFT);
+    public void addMessagesForeingUser(String textMessage) {
+        Label messageLabel = foreignMessageStyle(textMessage);
+        messages.setAlignment(Pos.TOP_RIGHT);
         Platform.runLater(() -> {
-            messages.getChildren().add(label);
+            messages.getChildren().add(messageLabel);
         });
     }
 
-    public void createItemChat(String nickName){
+    public void createContactItem(String nickname) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("contactItemView.fxml"));
         Parent paren = null;
         try {
@@ -84,20 +83,18 @@ public class ChatController extends Controller {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        ItemContactController itemContactController1 = loader.getController();
-
-
-        itemContactController1.setCallback(()->{
-           setNickNameFriend(nickName);
+        ItemContactController itemContactController = loader.getController();
+        itemContactController.setCallback(() -> {
+            setFriendNicknameChatLabelText(nickname);
         });
 
-        itemContactController1.setNickNameLabel(nickName);
+        itemContactController.setNicknameLabelText(nickname);
         vBoxPrivate.getChildren().add(paren);
     }
 
-    public Label mensaggeStylePropiertary(String textmessage){
-        Label label = new Label(textmessage);
-        label.setStyle("-fx-background-color:"+String.format("#%02X%02X%02X", 180, 160, 200));
+    public Label propietaryMessageStyle(String textmessage) {
+        Label label = new Label("Tú: "+textmessage);
+        label.setStyle("-fx-background-color:" + String.format("#%02X%02X%02X", 180, 160, 200));
         // Cambiar el color del texto
         label.setTextFill(Color.BLACK);
         // Cambiar el tamaño del texto
@@ -108,7 +105,7 @@ public class ChatController extends Controller {
         return label;
     }
 
-    public Label messageStyleForeign(String text){
+    public Label foreignMessageStyle(String text) {
         Label label = new Label(text);
         label.setStyle("-fx-background-color: lightblue");
         // Cambiar el color del texto
@@ -122,14 +119,12 @@ public class ChatController extends Controller {
     }
 
     @FXML
-    private void exitAccount(){
+    private void exitAccount() {
 
     }
 
 
-
-
-    public  void  createItem(FXMLLoader itemContactController,String nickName){
+    public void createItem(FXMLLoader itemContactController, String nickName) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("contactItemView.fxml"));
         Parent paren = null;
         try {
@@ -138,7 +133,7 @@ public class ChatController extends Controller {
             throw new RuntimeException(e);
         }
         ItemContactController itemContactController1 = itemContactController.getController();
-        itemContactController1.setNickNameLabel(nickName);
+        itemContactController1.setNicknameLabelText(nickName);
         vBoxPrivate.getChildren().add(paren);
 
     }
@@ -150,14 +145,6 @@ public class ChatController extends Controller {
 
     public void setMediator(Mediator mediator) {
         this.mediator = mediator;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
     }
 
 
@@ -177,12 +164,12 @@ public class ChatController extends Controller {
         this.vBoxPrivate = vBoxPrivate;
     }
 
-    public Label getNickNameFriend() {
-        return nickNameFriend;
+    public Label getFriendNicknameChatLabel() {
+        return friendNicknameChatLabel;
     }
 
-    public void setNickNameFriend(String nickNameFriend) {
-        this.nickNameFriend.setText(nickNameFriend);
+    public void setFriendNicknameChatLabelText(String friendNickname) {
+        friendNicknameChatLabel.setText(friendNickname);
     }
 
     public VBox getMessages() {
