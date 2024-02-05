@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -55,11 +56,15 @@ public class ChatController extends Controller {
     }
 
     public void addMessagesForeingUser(String textMessage) {
-        Label messageLabel = foreignMessageStyle(textMessage);
-        vBoxMessages.setAlignment(Pos.TOP_RIGHT);
-        Platform.runLater(() -> {
-            vBoxMessages.getChildren().add(messageLabel);
-        });
+        String[] parts = textMessage.split(":");
+        if (parts[0].trim().equals(receptorChatLabel.getText())){
+            Label messageLabel = foreignMessageStyle(textMessage);
+            vBoxMessages.setAlignment(Pos.TOP_RIGHT);
+            Platform.runLater(() -> {
+                vBoxMessages.getChildren().add(messageLabel);
+            });
+        }
+
     }
 
     public void createContactItem(String nickname) {
@@ -72,7 +77,12 @@ public class ChatController extends Controller {
         }
         ItemContactController itemContactController = loader.getController();
         itemContactController.setCallback(() -> {
-            //setVBoxMessages();
+            try {
+                PrivateChat privateChat = mediator.getUser().getPrivateChats().stream().filter(name -> name.getUser2().getNickname().equals(nickname)).toList().get(0);
+                setVBoxMessages(privateChat.getMessages());
+            }catch (IndexOutOfBoundsException ignore){
+                setVBoxMessages(new ArrayList<>());
+            }
             setReceptorChatLabelText(nickname);
         });
 
@@ -83,12 +93,13 @@ public class ChatController extends Controller {
         } else {
             vBoxPrivate.getChildren().add(paren);
         }
+
     }
 
-    public void setVBoxMessages(List<String> messages) {
+    public void setVBoxMessages(List<Message> messages) {
         vBoxMessages.getChildren().clear();
-        for (String message: messages) {
-            vBoxMessages.getChildren().add(propietaryMessageStyle(message));
+        for (Message message: messages) {
+            vBoxMessages.getChildren().add(propietaryMessageStyle(message.getTextMessage()));
         }
     }
 

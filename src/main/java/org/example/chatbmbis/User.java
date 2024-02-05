@@ -43,10 +43,16 @@ public class User extends Client {
 
     public User() {
         super();
+        this.channels = new ArrayList<>();
+        this.privateChats = new ArrayList<>();
     }
 
     public User(String nickname) {
         this.nickname = nickname;
+    }
+    public void register(String nickname) {
+        setNickname(nickname);
+        sendMessage("REGISTER "+nickname);
     }
 
     public void ingresar(String nickname) {
@@ -60,8 +66,23 @@ public class User extends Client {
             Scanner in = null;
             try {
                 in = new Scanner(socket.getInputStream());
+                String header = in.nextLine();
+                String[] headerParts = Server.splitParts(header);
+                String senderNickname = headerParts[0];
+                String messageText = headerParts[1];
 
-                mediator.receiveMessage(in.nextLine());
+                if (senderNickname.startsWith("#")){
+                    Channel channel = channels.stream().filter(channel1 -> channel1.getChannelName().equals(senderNickname)).toList().get(0);
+                }else {
+                    try {
+                        PrivateChat privateChatResult = privateChats.stream().filter(privateChat -> privateChat.getUser2().equals(senderNickname)).toList().get(0);
+                        Message message = new Message(privateChatResult.getUser1(), messageText);
+                        privateChatResult.getMessages().add(message);
+                    }catch (IndexOutOfBoundsException errorWindow){
+
+                    }
+                }
+                mediator.receiveMessage(header);
             } catch (NoSuchElementException ignored) {
 
             } catch (IOException e) {
@@ -71,6 +92,7 @@ public class User extends Client {
     }
 
     public void sendMessage(String message) {
+
         PrintStream out = null;
         try {
             out = new PrintStream(socket.getOutputStream());
@@ -81,10 +103,19 @@ public class User extends Client {
 
     }
 
-    public void register(String nickname) {
-        setNickname(nickname);
-        sendMessage("REGISTER "+nickname);
+    public void sendSaveMessage(String message){
+        String[] splitParts = Server.splitParts(message);
+        if (splitParts[1].startsWith("#")){
+
+        }else {
+            PrivateChat privateChat = privateChats.stream().filter(name -> name.getUser2().equals(splitParts[1])).toList().get(0);
+            Message message1 = new Message(this,splitParts[2]);
+            privateChat.getMessages().add(message1);
+        }
+        sendMessage(message);
     }
+
+
 
     public void createChannel(String channelName) {
         sendMessage("CREATE #" + channelName);

@@ -2,8 +2,6 @@ package org.example.chatbmbis;
 
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,13 +23,6 @@ public class Mediator {
     public Mediator() {
         this.contacts = new ArrayList<>();
         user = new User();
-    }
-
-    public static synchronized Mediator getInstance() {
-        if (instance == null) {
-            instance = new Mediator();
-        }
-        return instance;
     }
 
     public static synchronized Mediator getInstance(User user) {
@@ -61,7 +52,12 @@ public class Mediator {
     }
 
     public void sendMessage(String messageText) {
-        user.sendMessage(messageText);
+        String [] split = Server.splitParts(messageText);
+        if (split[0].equals("PRIVMSG")){
+            user.sendSaveMessage(messageText);
+        }else  {
+            user.sendMessage(messageText);
+        }
     }
 
     public void setUser(User user) {
@@ -86,9 +82,7 @@ public class Mediator {
 
     public void createContactItem(String nickname) {
         chatController.createContactItem(nickname);
-        sendMessage("");
-
-
+        //sendMessage("");
     }
 
 /*
@@ -117,10 +111,14 @@ public class Mediator {
  */
 
     public void receiveMessage(String header) {
-        System.out.println("header que recibe cliente: "+header);
         String[] headerParts = Server.splitParts(header);
         String senderNickname = headerParts[0];
         String messageText = headerParts[1];
+        if (senderNickname.startsWith("#")){
+
+        }else {
+
+        }
         chatController.addMessagesForeingUser(senderNickname + ": " + messageText);
     }
 

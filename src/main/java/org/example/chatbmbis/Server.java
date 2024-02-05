@@ -26,14 +26,15 @@ public class Server {
 
     }
 
+    private void register(Socket socket, String nickname) {
+        socketUserMap.get(socket).setNickname(nickname);
+    }
 
     public void start() throws IOException {
         this.serverSocket = new ServerSocket(80);
         while (true) {
             Socket socket = serverSocket.accept();
-
             User user = new User();
-
             socketUserMap.put(socket, user);
             userSocketMap.put(user, socket);
 
@@ -57,9 +58,7 @@ public class Server {
         }
     }
 
-    private void register(Socket socket, String nickname) {
-        socketUserMap.get(socket).setNickname(nickname);
-    }
+
 
     private void join(String channelName) {
         channels.add(new Channel(channelName, this));
@@ -108,7 +107,7 @@ public class Server {
                     register(socket, parts[1]);
                     break;
                 case "CREATE":
-                    create(socketUserMap.get(socket).getNickname(), parts[2]);
+                    create(socketUserMap.get(socket).getNickname(), parts[1]);
                     break;
                 case "PRIVMSG":
                     if (parts[1].startsWith("#")) {
@@ -127,7 +126,7 @@ public class Server {
             }
 
         } catch (UserNotFoundException e) {
-            ErrorWindow.mostrarMensaje("Este usuario no existe.");
+            //ErrorWindow.mostrarMensaje("Este usuario no existe.");
         }
     }
 
