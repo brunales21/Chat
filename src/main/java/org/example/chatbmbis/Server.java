@@ -13,12 +13,15 @@ public class Server {
     private static Map<Socket, User> socketUserMap;
     private static Map<User, Socket> userSocketMap;
 
+    private Map<String, List<Message>> chatMap;
+
 
     public Server() {
         //this.privateChats = new ArrayList<>();
         //this.channels = new ArrayList<>();
         userSocketMap = new HashMap<>();
         socketUserMap = new HashMap<>();
+        chatMap = new HashMap<>();
         channels = new ArrayList<>();
 
     }
@@ -74,6 +77,28 @@ public class Server {
         channel.broadcast(textMessage);
     }
 
+    private void create(String userNickname, String chatroomNickname) {
+        if (userNickname.startsWith("#")) {
+            Channel channel = new Channel(chatroomNickname);
+            try {
+                User user = getUserByNickname(userNickname);
+                channel.addUser(user);
+                user.getChannels().add(channel);
+            } catch (UserNotFoundException ignored) {
+
+            }
+        } else {
+            try {
+                User user1 = getUserByNickname(userNickname);
+                User user2 = getUserByNickname(chatroomNickname);
+                PrivateChat privateChat = new PrivateChat(user1, user2);
+                user1.getPrivateChats().add(privateChat);
+            } catch (UserNotFoundException e) {
+                // cuando el user2 no se encuentre en el servidor
+            }
+        }
+    }
+
     private void processCommand(Socket socket, String header) {
         System.out.println("Header que recibe servidor: "+header);
         String[] parts = splitParts(header);
@@ -83,7 +108,7 @@ public class Server {
                     register(socket, parts[1]);
                     break;
                 case "CREATE":
-                    //create(socketUserMap.get(socket).getNickname(), parts[1]);
+                    create(socketUserMap.get(socket).getNickname(), parts[2]);
                     break;
                 case "PRIVMSG":
                     if (parts[1].startsWith("#")) {
@@ -186,85 +211,4 @@ public class Server {
     public void setUserSocketMap(Map<User, Socket> userSocketMap) {
         this.userSocketMap = userSocketMap;
     }
-
-    /*
-
-    public void createChannel(ChatRoom channel, User user) {
-
-        String id =channel.getId().substring(0);
-        if (id.equals("#")){
-            if (!channels.contains(channel)){
-                channels.add((Channel) channel);
-                if (!user.getChatRooms().contains(channel)) {
-                    user.addChatRoom(channel);
-                    channel.addUser(user);
-                }
-            }
-
-        }else {
-            //Si la lista contiene el chat
-            if (!privateChats.contains(channel)){
-                privateChats.add((PrivateChat) channel);
-
-                //Si el usuario contiene el chat
-                if (!user.getChatRooms().contains(channel)){
-                    user.getChatRooms().add(channel);
-                    channel.addUser(user);
-                }
-            }
-        }
-
-    }
-
-    public void createPrivateChat(Channel channel, User user) {
-        if (!user.getChatRooms().contains(channel)) {
-            user.addChatRoom(channel);
-            channel.addUser(user);
-        }
-        if (!channels.contains(channel)){
-            channels.add((Channel) channel);
-        }
-    }
-
-    public ServerSocket getServerSocket() {
-        return serverSocket;
-    }
-
-    public void setServerSocket(ServerSocket serverSocket) {
-        this.serverSocket = serverSocket;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
-    }
-
-    public Map<Socket, User> getUsersMap() {
-        return usersMap;
-    }
-
-    public void setUsersMap(Map<Socket, User> usersMap) {
-        this.usersMap = usersMap;
-    }
-
-    public List<Channel> getChannels() {
-        return channels;
-    }
-
-    public void setChannels(List<Channel> channels) {
-        this.channels = channels;
-    }
-
-    public List<PrivateChat> getPrivateChats() {
-        return privateChats;
-    }
-
-    public void setPrivateChats(List<PrivateChat> privateChats) {
-        this.privateChats = privateChats;
-    }
-
- */
 }

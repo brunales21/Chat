@@ -17,6 +17,10 @@ public class Channel {
         this.users = new ArrayList<>();
     }
 
+    public Channel(String channelName) {
+        this.channelName = channelName;
+    }
+
     public void broadcast(String textMessage) {
         for (User user : users) {
             Socket socket = server.getUserSocketMap().get(user);

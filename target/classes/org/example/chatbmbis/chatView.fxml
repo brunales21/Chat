@@ -163,7 +163,7 @@
                   </Separator>
                   <ScrollPane prefHeight="354.0" prefWidth="354.0">
                      <content>
-                        <VBox fx:id="messages" prefHeight="368.0" prefWidth="333.0" spacing="10.0">
+                        <VBox fx:id="vBoxMessages" prefHeight="368.0" prefWidth="333.0" spacing="10.0">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>

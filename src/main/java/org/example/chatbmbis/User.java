@@ -12,6 +12,7 @@ public class User extends Client {
     private String nickname;
     private String command;
     private List<Channel> channels;
+    private List<PrivateChat> privateChats;
     Mediator mediator;
 
 
@@ -19,6 +20,7 @@ public class User extends Client {
         super(hostname, port);
         this.nickname = nickname;
         this.channels = new ArrayList<>();
+        this.privateChats = new ArrayList<>();
         try {
             this.socket = new Socket(hostname, port);
         } catch (IOException e) {
@@ -30,6 +32,7 @@ public class User extends Client {
     public User(String hostname, int port) {
         super(hostname, port);
         this.channels = new ArrayList<>();
+        this.privateChats = new ArrayList<>();
         try {
             this.socket = new Socket(hostname, port);
         } catch (IOException e) {
@@ -57,6 +60,7 @@ public class User extends Client {
             Scanner in = null;
             try {
                 in = new Scanner(socket.getInputStream());
+
                 mediator.receiveMessage(in.nextLine());
             } catch (NoSuchElementException ignored) {
 
@@ -115,5 +119,23 @@ public class User extends Client {
         this.command = command;
     }
 
+    public void setChannels(List<Channel> channels) {
+        this.channels = channels;
+    }
 
+    public List<PrivateChat> getPrivateChats() {
+        return privateChats;
+    }
+
+    public void setPrivateChats(List<PrivateChat> privateChats) {
+        this.privateChats = privateChats;
+    }
+
+    public Mediator getMediator() {
+        return mediator;
+    }
+
+    public void setMediator(Mediator mediator) {
+        this.mediator = mediator;
+    }
 }

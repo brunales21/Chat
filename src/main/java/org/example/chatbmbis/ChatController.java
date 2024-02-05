@@ -13,12 +13,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 
 import java.io.IOException;
+import java.util.List;
 
 
 public class ChatController extends Controller {
     private Mediator mediator;
     @FXML
-    private VBox vBoxGroup, vBoxPrivate, messages;
+    private VBox vBoxGroup, vBoxPrivate, vBoxMessages;
     @FXML
     private Label receptorChatLabel;
     @FXML
@@ -47,21 +48,21 @@ public class ChatController extends Controller {
     private void onClickSendMessage() {
         String header = "PRIVMSG " + receptorChatLabel.getText() + " :" + textMessageField.getText();
         mediator.sendMessage(header);
-        messages.setAlignment(Pos.TOP_RIGHT);
-        messages.getChildren().add(propietaryMessageStyle(textMessageField.getText()));
+        vBoxMessages.setAlignment(Pos.TOP_RIGHT);
+        vBoxMessages.getChildren().add(propietaryMessageStyle(textMessageField.getText()));
         textMessageField.setText("");
 
     }
 
     public void addMessagesForeingUser(String textMessage) {
         Label messageLabel = foreignMessageStyle(textMessage);
-        messages.setAlignment(Pos.TOP_RIGHT);
+        vBoxMessages.setAlignment(Pos.TOP_RIGHT);
         Platform.runLater(() -> {
-            messages.getChildren().add(messageLabel);
+            vBoxMessages.getChildren().add(messageLabel);
         });
     }
 
-    public void createContactItem(String nickname, boolean isChannel) {
+    public void createContactItem(String nickname) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("contactItemView.fxml"));
         Parent paren = null;
         try {
@@ -71,16 +72,23 @@ public class ChatController extends Controller {
         }
         ItemContactController itemContactController = loader.getController();
         itemContactController.setCallback(() -> {
+            //setVBoxMessages();
             setReceptorChatLabelText(nickname);
         });
 
         itemContactController.setNicknameLabelText(nickname);
-        itemContactController.setChannel(isChannel);
 
-        if (isChannel) {
+        if (nickname.startsWith("#")) {
             vBoxGroup.getChildren().add(paren);
         } else {
             vBoxPrivate.getChildren().add(paren);
+        }
+    }
+
+    public void setVBoxMessages(List<String> messages) {
+        vBoxMessages.getChildren().clear();
+        for (String message: messages) {
+            vBoxMessages.getChildren().add(propietaryMessageStyle(message));
         }
     }
 
@@ -164,11 +172,11 @@ public class ChatController extends Controller {
         receptorChatLabel.setText(friendNickname);
     }
 
-    public VBox getMessages() {
-        return messages;
+    public VBox getvBoxMessages() {
+        return vBoxMessages;
     }
 
-    public void setMessages(VBox messages) {
-        this.messages = messages;
+    public void setvBoxMessages(VBox vBoxMessages) {
+        this.vBoxMessages = vBoxMessages;
     }
 }

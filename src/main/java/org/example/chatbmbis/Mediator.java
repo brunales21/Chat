@@ -18,6 +18,7 @@ public class Mediator {
     private Map<ItemContactController, String> itemContactControllers = new HashMap<>();
     private List<String> contacts;
     private User user;
+
     private static Mediator instance;
 
 
@@ -83,8 +84,11 @@ public class Mediator {
 
     }
 
-    public void createContactItem(String nickname, boolean isChannel) {
-        chatController.createContactItem(nickname, isChannel);
+    public void createContactItem(String nickname) {
+        chatController.createContactItem(nickname);
+        sendMessage("");
+
+
     }
 
 /*
