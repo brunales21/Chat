@@ -23,6 +23,9 @@ public class AddContactViewController extends Controller {
         if (nicknameTextField.getPromptText().equals("Nombre grupo")) {
             mediator.createContactItem("#"+nicknameTextField.getText());
             mediator.sendMessage("CREATE #" + nicknameTextField.getText());
+        } else if (nicknameTextField.getPromptText().equals("Nombre del grupo")) {
+            mediator.sendMessage("JOIN #"+nicknameTextField.getText());
+            mediator.createContactItem("#"+nicknameTextField.getText());
         } else {
             mediator.createContactItem(nicknameTextField.getText());
             mediator.sendMessage("CREATE " + nicknameTextField.getText());

@@ -10,8 +10,8 @@ public class Server {
     private ServerSocket serverSocket;
     private int port;
     private List<Channel> channels;
-    private static Map<Socket, User> socketUserMap;
-    private static Map<User, Socket> userSocketMap;
+    private static Map<Socket, User> socketUserMap = new HashMap<>();
+    private static Map<User, Socket> userSocketMap = new HashMap<>();
 
     private Map<String, List<Message>> chatMap;
 
@@ -19,8 +19,6 @@ public class Server {
     public Server() {
         //this.privateChats = new ArrayList<>();
         //this.channels = new ArrayList<>();
-        userSocketMap = new HashMap<>();
-        socketUserMap = new HashMap<>();
         chatMap = new HashMap<>();
         channels = new ArrayList<>();
 
@@ -58,46 +56,6 @@ public class Server {
         }
     }
 
-
-
-    private void join(String channelName) {
-        channels.add(new Channel(channelName, this));
-    }
-
-    private Channel getChannelByName(String channelName) {
-        return channels.stream()
-                .filter(c -> c.getChannelName().equals(channelName))
-                .toList()
-                .get(0);
-    }
-
-    private void sendMessageToChannel(String channelName, String textMessage) {
-        Channel channel = getChannelByName(channelName);
-        channel.broadcast(textMessage);
-    }
-
-    private void create(String userNickname, String chatroomNickname) {
-        if (userNickname.startsWith("#")) {
-            Channel channel = new Channel(chatroomNickname);
-            try {
-                User user = getUserByNickname(userNickname);
-                channel.addUser(user);
-                user.getChannels().add(channel);
-            } catch (UserNotFoundException ignored) {
-
-            }
-        } else {
-            try {
-                User user1 = getUserByNickname(userNickname);
-                User user2 = getUserByNickname(chatroomNickname);
-                PrivateChat privateChat = new PrivateChat(user1, user2);
-                user1.getPrivateChats().add(privateChat);
-            } catch (UserNotFoundException e) {
-                // cuando el user2 no se encuentre en el servidor
-            }
-        }
-    }
-
     private void processCommand(Socket socket, String header) {
         System.out.println("Header que recibe servidor: "+header);
         String[] parts = splitParts(header);
@@ -117,7 +75,7 @@ public class Server {
                     }
                     break;
                 case "JOIN":
-                    join(parts[1]);
+                    join(parts[2],getUserByNickname(parts[1]));
                     break;
                 case "LU":
                     //listUsers(socket);
@@ -129,6 +87,60 @@ public class Server {
             //ErrorWindow.mostrarMensaje("Este usuario no existe.");
         }
     }
+
+
+    private void join(String channelName,User user) {
+        Channel channel = channels.stream().filter(ch -> ch.getChannelName().equals(channelName)).toList().get(0);
+        channel.addUser(user);
+
+    }
+
+    private Channel getChannelByName(String channelName) {
+        return channels.stream()
+                .filter(c -> c.getChannelName().equals(channelName))
+                .toList()
+                .get(0);
+    }
+
+    private void sendMessageToChannel(String channelName, String textMessage) {
+        Channel channel = getChannelByName(channelName);
+        for (User user : channel.getUsers()) {
+            Socket socket = userSocketMap.get(user);
+            PrintStream out = null;
+            try {
+                out = new PrintStream(socket.getOutputStream());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            out.println("PRIVMSG " + channelName + " :" + textMessage);
+        }
+    }
+
+    private void create(String userNickname, String chatroomNickname) {
+        if (chatroomNickname.startsWith("#")) {
+            Channel channel = new Channel(chatroomNickname);
+            try {
+                User user = getUserByNickname(userNickname);
+                //channel.setUsers(new ArrayList<>());
+                channel.getUsers().add(user);
+                channels.add(channel);
+                user.getChannels().add(channel);
+            } catch (UserNotFoundException ignored) {
+
+            }
+        } else {
+            try {
+                User user1 = getUserByNickname(userNickname);
+                User user2 = getUserByNickname(chatroomNickname);
+                PrivateChat privateChat = new PrivateChat(user1, user2);
+                user1.getPrivateChats().add(privateChat);
+            } catch (UserNotFoundException e) {
+                // cuando el user2 no se encuentre en el servidor
+            }
+        }
+    }
+
+
 
     public static String[] splitParts(String header) {
         String[] split = header.split(" ");

@@ -19,6 +19,8 @@ public class Channel {
 
     public Channel(String channelName) {
         this.channelName = channelName;
+        this.users = new ArrayList<>();
+
     }
 
     public void broadcast(String textMessage) {
@@ -36,6 +38,22 @@ public class Channel {
 
     public void addUser(User user) {
         users.add(user);
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public Server getServer() {
+        return server;
+    }
+
+    public void setServer(Server server) {
+        this.server = server;
     }
 
     public String getChannelName() {

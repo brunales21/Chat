@@ -3,10 +3,7 @@ package org.example.chatbmbis;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.util.*;
 
 public class User extends Client {
     private String nickname;
@@ -73,6 +70,7 @@ public class User extends Client {
 
                 if (senderNickname.startsWith("#")){
                     Channel channel = channels.stream().filter(channel1 -> channel1.getChannelName().equals(senderNickname)).toList().get(0);
+
                 }else {
                     try {
                         PrivateChat privateChatResult = privateChats.stream().filter(privateChat -> privateChat.getUser2().equals(senderNickname)).toList().get(0);
@@ -105,12 +103,15 @@ public class User extends Client {
 
     public void sendSaveMessage(String message){
         String[] splitParts = Server.splitParts(message);
+        Arrays.stream(splitParts).forEach(System.out::println);
+        System.out.println(message);
         if (splitParts[1].startsWith("#")){
+            message = message+";"+this.getNickname();
 
         }else {
-            PrivateChat privateChat = privateChats.stream().filter(name -> name.getUser2().equals(splitParts[1])).toList().get(0);
+            /*PrivateChat privateChat = privateChats.stream().filter(privateChat1 -> privateChat1.getUser2().getNickname().equals(splitParts[1])).toList().get(0);
             Message message1 = new Message(this,splitParts[2]);
-            privateChat.getMessages().add(message1);
+            privateChat.getMessages().add(message1);*/
         }
         sendMessage(message);
     }

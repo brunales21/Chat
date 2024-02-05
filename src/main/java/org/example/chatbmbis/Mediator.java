@@ -51,11 +51,13 @@ public class Mediator {
 
     }
 
-    public void sendMessage(String messageText) {
+    public void sendMessage(String messageText){
         String [] split = Server.splitParts(messageText);
         if (split[0].equals("PRIVMSG")){
             user.sendSaveMessage(messageText);
-        }else  {
+        } else if (split[0].equals("JOIN")) {
+            user.sendMessage(split[0]+" "+user.getNickname()+":"+split[1]);
+        } else  {
             user.sendMessage(messageText);
         }
     }
@@ -82,44 +84,21 @@ public class Mediator {
 
     public void createContactItem(String nickname) {
         chatController.createContactItem(nickname);
-        //sendMessage("");
     }
-
-/*
-    public void createItemChat(String nickName) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("contactItemView.fxml"));
-        Parent paren = null;
-        try {
-            paren = loader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        ItemContactController itemContactController1 = loader.getController();
-        String name = itemContactController1.getNicknameLabel();
-
-        itemContactController1.setCallback(() -> {
-            chatController.setFriendNicknameChatLabelText(name);
-        });
-
-        itemContactController1.setNicknameLabelText(name);
-        itemContactControllers.put(itemContactController1, nickName);
-        contacts.add(nickName);
-        chatController.getvBoxPrivate().getChildren().add(paren);
-
-    }
-
- */
 
     public void receiveMessage(String header) {
         String[] headerParts = Server.splitParts(header);
-        String senderNickname = headerParts[0];
-        String messageText = headerParts[1];
-        if (senderNickname.startsWith("#")){
-
-        }else {
-
+        String senderNickname;
+        String messageText;
+        if (headerParts[1].startsWith("#")){
+            String [] splitNicknameSender = headerParts[headerParts.length-1].split(";");
+            senderNickname=splitNicknameSender[1];
+            messageText=splitNicknameSender[0];
+        }else  {
+            senderNickname=headerParts[1];
+            messageText=headerParts[2];
         }
-        chatController.addMessagesForeingUser(senderNickname + ": " + messageText);
+        chatController.addMessagesForeingUser(senderNickname + ": " + messageText+":"+headerParts[1]);
     }
 
 

@@ -30,6 +30,15 @@ public class ChatController extends Controller {
     protected void onClickCreateGroup() {
         createAddView("Nombre grupo", "Unirme");
     }
+    @FXML
+    private void onClickSendMessage() {
+        String header = "PRIVMSG " + receptorChatLabel.getText() + " :" + textMessageField.getText();
+        mediator.sendMessage(header);
+        vBoxMessages.setAlignment(Pos.TOP_RIGHT);
+        vBoxMessages.getChildren().add(propietaryMessageStyle(textMessageField.getText()));
+        textMessageField.setText("");
+
+    }
 
     @FXML
     private void onClickCreateChat() {
@@ -45,19 +54,12 @@ public class ChatController extends Controller {
         mediator.createAddView(promptText, buttonText);
     }
 
-    @FXML
-    private void onClickSendMessage() {
-        String header = "PRIVMSG " + receptorChatLabel.getText() + " :" + textMessageField.getText();
-        mediator.sendMessage(header);
-        vBoxMessages.setAlignment(Pos.TOP_RIGHT);
-        vBoxMessages.getChildren().add(propietaryMessageStyle(textMessageField.getText()));
-        textMessageField.setText("");
 
-    }
+
 
     public void addMessagesForeingUser(String textMessage) {
         String[] parts = textMessage.split(":");
-        if (parts[0].trim().equals(receptorChatLabel.getText())){
+        if (parts[2].trim().equals(receptorChatLabel.getText())){
             Label messageLabel = foreignMessageStyle(textMessage);
             vBoxMessages.setAlignment(Pos.TOP_RIGHT);
             Platform.runLater(() -> {
