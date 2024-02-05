@@ -9,9 +9,9 @@ public class Server {
 
     private ServerSocket serverSocket;
     private int port;
+    private List<Channel> channels;
     private static Map<Socket, User> socketUserMap;
     private static Map<User, Socket> userSocketMap;
-
 
 
     public Server() {
@@ -19,7 +19,7 @@ public class Server {
         //this.channels = new ArrayList<>();
         userSocketMap = new HashMap<>();
         socketUserMap = new HashMap<>();
-
+        channels = new ArrayList<>();
 
     }
 
@@ -58,8 +58,24 @@ public class Server {
         socketUserMap.get(socket).setNickname(nickname);
     }
 
+    private void join(String channelName) {
+        channels.add(new Channel(channelName, this));
+    }
+
+    private Channel getChannelByName(String channelName) {
+        return channels.stream()
+                .filter(c -> c.getChannelName().equals(channelName))
+                .toList()
+                .get(0);
+    }
+
+    private void sendMessageToChannel(String channelName, String textMessage) {
+        Channel channel = getChannelByName(channelName);
+        channel.broadcast(textMessage);
+    }
+
     private void processCommand(Socket socket, String header) {
-        System.out.println(header);
+        System.out.println("Header que recibe servidor: "+header);
         String[] parts = splitParts(header);
         try {
             switch (parts[0]) {
@@ -70,10 +86,14 @@ public class Server {
                     //create(socketUserMap.get(socket).getNickname(), parts[1]);
                     break;
                 case "PRIVMSG":
-                    sendMessage(userSocketMap.get(getUserByNickname(parts[1])), socketUserMap.get(socket), parts[2]);
+                    if (parts[1].startsWith("#")) {
+                        sendMessageToChannel(parts[1], parts[2]);
+                    } else {
+                        sendMessage(userSocketMap.get(getUserByNickname(parts[1])), socketUserMap.get(socket), parts[2]);
+                    }
                     break;
                 case "JOIN":
-                    //join();
+                    join(parts[1]);
                     break;
                 case "LU":
                     //listUsers(socket);
@@ -109,7 +129,6 @@ public class Server {
                     .toList()
                     .get(0);
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("cualquira");
             throw new UserNotFoundException(nickname);
         }
 

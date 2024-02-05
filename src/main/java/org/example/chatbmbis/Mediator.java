@@ -14,14 +14,10 @@ public class Mediator {
     private AddContactViewController addViewController;
     private ItemContactController itemContactController;
     private LoginController loginController;
-
     private Map<Stage, Controller> view = new HashMap<>();
     private Map<ItemContactController, String> itemContactControllers = new HashMap<>();
-
     private List<String> contacts;
-
     private User user;
-
     private static Mediator instance;
 
 
@@ -49,6 +45,7 @@ public class Mediator {
     public void ingresar(String nickname) {
         user.ingresar(nickname);
     }
+
     public void createChatView() {
         Stage stage = null;
         for (Map.Entry<Stage, Controller> entry : view.entrySet()) {
@@ -86,8 +83,8 @@ public class Mediator {
 
     }
 
-    public void createContactItem(String nickname) {
-        chatController.createContactItem(nickname);
+    public void createContactItem(String nickname, boolean isChannel) {
+        chatController.createContactItem(nickname, isChannel);
     }
 
 /*
@@ -116,8 +113,8 @@ public class Mediator {
  */
 
     public void receiveMessage(String header) {
+        System.out.println("header que recibe cliente: "+header);
         String[] headerParts = Server.splitParts(header);
-        System.out.println(header);
         String senderNickname = headerParts[0];
         String messageText = headerParts[1];
         chatController.addMessagesForeingUser(senderNickname + ": " + messageText);

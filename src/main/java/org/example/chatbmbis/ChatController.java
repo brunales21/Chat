@@ -20,21 +20,13 @@ public class ChatController extends Controller {
     @FXML
     private VBox vBoxGroup, vBoxPrivate, messages;
     @FXML
-    private Label friendNicknameChatLabel;
+    private Label receptorChatLabel;
     @FXML
     private TextField textMessageField;
 
-    /*
-    public static synchronized ChatController getInstance() {
-        if (instance == null) {
-            instance = new ChatController();
-        }
-        return instance;
-    }
-     */
     @FXML
     protected void onClickCreateGroup() {
-        createAddView("Nombre grupo", "Crear grupo");
+        createAddView("Nombre grupo", "Unirme");
     }
 
     @FXML
@@ -53,7 +45,7 @@ public class ChatController extends Controller {
 
     @FXML
     private void onClickSendMessage() {
-        String header = "PRIVMSG " + friendNicknameChatLabel.getText() + " :" + textMessageField.getText();
+        String header = "PRIVMSG " + receptorChatLabel.getText() + " :" + textMessageField.getText();
         mediator.sendMessage(header);
         messages.setAlignment(Pos.TOP_RIGHT);
         messages.getChildren().add(propietaryMessageStyle(textMessageField.getText()));
@@ -69,7 +61,7 @@ public class ChatController extends Controller {
         });
     }
 
-    public void createContactItem(String nickname) {
+    public void createContactItem(String nickname, boolean isChannel) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("contactItemView.fxml"));
         Parent paren = null;
         try {
@@ -79,11 +71,17 @@ public class ChatController extends Controller {
         }
         ItemContactController itemContactController = loader.getController();
         itemContactController.setCallback(() -> {
-            setFriendNicknameChatLabelText(nickname);
+            setReceptorChatLabelText(nickname);
         });
 
         itemContactController.setNicknameLabelText(nickname);
-        vBoxPrivate.getChildren().add(paren);
+        itemContactController.setChannel(isChannel);
+
+        if (isChannel) {
+            vBoxGroup.getChildren().add(paren);
+        } else {
+            vBoxPrivate.getChildren().add(paren);
+        }
     }
 
     public Label propietaryMessageStyle(String textmessage) {
@@ -158,12 +156,12 @@ public class ChatController extends Controller {
         this.vBoxPrivate = vBoxPrivate;
     }
 
-    public Label getFriendNicknameChatLabel() {
-        return friendNicknameChatLabel;
+    public Label getReceptorChatLabel() {
+        return receptorChatLabel;
     }
 
-    public void setFriendNicknameChatLabelText(String friendNickname) {
-        friendNicknameChatLabel.setText(friendNickname);
+    public void setReceptorChatLabelText(String friendNickname) {
+        receptorChatLabel.setText(friendNickname);
     }
 
     public VBox getMessages() {

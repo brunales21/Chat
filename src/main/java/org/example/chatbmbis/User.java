@@ -11,14 +11,14 @@ import java.util.Scanner;
 public class User extends Client {
     private String nickname;
     private String command;
-    private List<ChatRoom> chatRooms;
+    private List<Channel> channels;
     Mediator mediator;
 
 
     public User(String nickname, String hostname, int port) {
         super(hostname, port);
         this.nickname = nickname;
-        this.chatRooms = new ArrayList<>();
+        this.channels = new ArrayList<>();
         try {
             this.socket = new Socket(hostname, port);
         } catch (IOException e) {
@@ -29,7 +29,7 @@ public class User extends Client {
 
     public User(String hostname, int port) {
         super(hostname, port);
-        this.chatRooms = new ArrayList<>();
+        this.channels = new ArrayList<>();
         try {
             this.socket = new Socket(hostname, port);
         } catch (IOException e) {
@@ -91,12 +91,12 @@ public class User extends Client {
         sendMessage("CREATE " + idUser);
     }
 
-    public List<ChatRoom> getChatRooms() {
-        return chatRooms;
+    public List<Channel> getChannels() {
+        return channels;
     }
 
-    public void addChatRoom(ChatRoom chatRoom) {
-        chatRooms.add(chatRoom);
+    public void addChatRoom(Channel chatRoom) {
+        channels.add(chatRoom);
     }
 
     public String getNickname() {

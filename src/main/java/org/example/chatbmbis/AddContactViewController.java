@@ -20,13 +20,18 @@ public class AddContactViewController extends Controller {
 
     @FXML
     private void onClickAdd() {
-        mediator.createContactItem(nicknameTextField.getText());
+        if (nicknameTextField.getPromptText().equals("Nombre grupo")) {
+            mediator.createContactItem("#"+nicknameTextField.getText(), true);
+            mediator.sendMessage("JOIN #" + nicknameTextField.getText());
+        } else {
+            mediator.createContactItem(nicknameTextField.getText(), false);
+        }
         Stage stageToClose = (Stage) this.addButton.getScene().getWindow();
         stageToClose.close();
     }
 
-    public void setPromptText(String prompText) {
-        nicknameTextField.setPromptText(prompText);
+    public void setPromptText(String promptText) {
+        nicknameTextField.setPromptText(promptText);
     }
 
     public Button getAddButton() {

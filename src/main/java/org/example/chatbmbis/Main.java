@@ -24,7 +24,7 @@ public class Main extends Application {
         mediator.getView().put(stageChat, chatController);
 
         //Crear vista añadir usuario
-        FXMLLoader fxmlLoader3 = new FXMLLoader(Main.class.getResource("addUserView.fxml"));
+        FXMLLoader fxmlLoader3 = new FXMLLoader(Main.class.getResource("addContactView.fxml"));
         Scene adduserView = new Scene(fxmlLoader3.load());
         Stage stageUser = new Stage();
         stageUser.setScene(adduserView);
