@@ -103,16 +103,20 @@ public class Server {
     }
 
     private void sendMessageToChannel(String channelName, String textMessage) {
+
         Channel channel = getChannelByName(channelName);
+        String[] parts = textMessage.split(";");
         for (User user : channel.getUsers()) {
-            Socket socket = userSocketMap.get(user);
-            PrintStream out = null;
-            try {
-                out = new PrintStream(socket.getOutputStream());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            if (!user.getNickname().equals(parts[1])) {
+                Socket socket = userSocketMap.get(user);
+                PrintStream out = null;
+                try {
+                    out = new PrintStream(socket.getOutputStream());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                out.println("PRIVMSG " + channelName + " :" + textMessage);
             }
-            out.println("PRIVMSG " + channelName + " :" + textMessage);
         }
     }
 

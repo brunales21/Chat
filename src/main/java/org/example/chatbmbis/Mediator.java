@@ -91,14 +91,18 @@ public class Mediator {
         String senderNickname;
         String messageText;
         if (headerParts[1].startsWith("#")){
+            //el mensaje para grupo enviara "#2dam:hola:b"
             String [] splitNicknameSender = headerParts[headerParts.length-1].split(";");
             senderNickname=splitNicknameSender[1];
             messageText=splitNicknameSender[0];
+            chatController.addMessagesForeingUser(senderNickname + ": " + messageText+":"+headerParts[1]);
         }else  {
-            senderNickname=headerParts[1];
-            messageText=headerParts[2];
+            //si el mensaje es privado mandaremos "hola:b"
+            senderNickname=headerParts[0];
+            messageText=headerParts[1];
+            chatController.addMessagesForeingUser(messageText+":"+senderNickname);
         }
-        chatController.addMessagesForeingUser(senderNickname + ": " + messageText+":"+headerParts[1]);
+
     }
 
 
