@@ -57,9 +57,15 @@ public class ChatController extends Controller {
 
 
     public void addMessagesForeingUser(String textMessage) {
-        String[] parts = Server.splitParts(textMessage);
-        if (parts[0].trim().equals(receptorChatLabel.getText())) {
-            Label messageLabel = foreignMessageStyle(parts[1] + ": " + parts[2]);
+        String[] messageParts = Server.splitParts(textMessage);
+        if (messageParts[0].trim().equals(receptorChatLabel.getText())) {
+            Label messageLabel;
+            if (messageParts[0].startsWith("#")) {
+                messageLabel = foreignMessageStyle(messageParts[1] + ": " + messageParts[2]);
+            } else {
+                messageLabel = foreignMessageStyle(messageParts[0] + ": " + messageParts[1]);
+
+            }
             vBoxMessages.setAlignment(Pos.TOP_RIGHT);
             Platform.runLater(() -> {
                 vBoxMessages.getChildren().add(messageLabel);

@@ -13,13 +13,13 @@ public class Server {
     private static Map<Socket, User> socketUserMap = new HashMap<>();
     private static Map<User, Socket> userSocketMap = new HashMap<>();
 
-    private Map<String, List<Message>> chatMap;
+    //private Map<String, List<Message>> chatMap;
 
 
     public Server() {
         //this.privateChats = new ArrayList<>();
         //this.channels = new ArrayList<>();
-        chatMap = new HashMap<>();
+        //chatMap = new HashMap<>();
         channels = new ArrayList<>();
 
     }

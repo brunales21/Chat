@@ -57,7 +57,6 @@ public class Mediator {
         if (command.equals("PRIVMSG")) {
             header = user.adaptHeader(header);
         }
-        System.out.println(header);
         user.sendHeader(header);
     }
 

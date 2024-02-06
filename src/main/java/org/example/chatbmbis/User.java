@@ -65,25 +65,6 @@ public class User extends Client {
             try {
                 in = new Scanner(socket.getInputStream());
                 String header = in.nextLine();
-                System.out.println("Header recibido del servidor: "+header);
-                String[] headerParts = Server.splitParts(header);
-                String senderNickname = headerParts[0];
-                String messageText = headerParts[1];
-/*
-                if (senderNickname.startsWith("#")) {
-                    //Channel channel = getChannelByName(senderNickname);
-
-                } else {
-                    try {
-                        PrivateChat privateChat = getPrivateChatByName(senderNickname);
-                        Message message = new Message(privateChat.getUser1(), messageText);
-                        privateChat.getMessages().add(message);
-                    } catch (IndexOutOfBoundsException errorWindow) {
-
-                    }
-                }
-
- */
                 mediator.receiveMessage(header);
             } catch (NoSuchElementException ignored) {
 
@@ -108,11 +89,6 @@ public class User extends Client {
         String[] headerParts = Server.splitParts(header);
         if (headerParts[1].startsWith("#")) {
             header = headerParts[0] + " " + headerParts[1] + " " + nickname + " :" + headerParts[2];
-            System.out.println(header);
-        } else {
-            PrivateChat privateChat = getPrivateChatByName(headerParts[1]);
-            Message message1 = new Message(this,headerParts[2]);
-            privateChat.getMessages().add(message1);
         }
         return header;
     }
