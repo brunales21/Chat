@@ -51,15 +51,14 @@ public class Mediator {
 
     }
 
-    public void sendMessage(String messageText){
-        String [] split = Server.splitParts(messageText);
-        if (split[0].equals("PRIVMSG")){
-            user.sendSaveMessage(messageText);
-        } else if (split[0].equals("JOIN")) {
-            user.sendMessage(split[0]+" "+user.getNickname()+":"+split[1]);
-        } else  {
-            user.sendMessage(messageText);
+    public void sendHeader(String header) {
+        String[] headerParts = Server.splitParts(header);
+        String command = headerParts[0];
+        if (command.equals("PRIVMSG")) {
+            header = user.adaptHeader(header);
         }
+        System.out.println(header);
+        user.sendHeader(header);
     }
 
     public void setUser(User user) {
@@ -88,19 +87,12 @@ public class Mediator {
 
     public void receiveMessage(String header) {
         String[] headerParts = Server.splitParts(header);
-        String senderNickname;
-        String messageText;
-        if (headerParts[1].startsWith("#")){
-            //el mensaje para grupo enviara "#2dam:hola:b"
-            String [] splitNicknameSender = headerParts[headerParts.length-1].split(";");
-            senderNickname=splitNicknameSender[1];
-            messageText=splitNicknameSender[0];
-            chatController.addMessagesForeingUser(senderNickname + ": " + messageText+":"+headerParts[1]);
-        }else  {
-            //si el mensaje es privado mandaremos "hola:b"
-            senderNickname=headerParts[0];
-            messageText=headerParts[1];
-            chatController.addMessagesForeingUser(messageText+":"+senderNickname);
+        if (headerParts[0].startsWith("#")) {
+            //el mensaje para grupo enviara "#2dam b :hola"
+            chatController.addMessagesForeingUser(headerParts[0] + " " + headerParts[1] + " :" + headerParts[2]);
+        } else {
+            //si el mensaje es privado mandaremos "b:hola"
+            chatController.addMessagesForeingUser(headerParts[0] + " :" + headerParts[1]);
         }
 
     }

@@ -30,10 +30,11 @@ public class ChatController extends Controller {
     protected void onClickCreateGroup() {
         createAddView("Nombre grupo", "Unirme");
     }
+
     @FXML
     private void onClickSendMessage() {
         String header = "PRIVMSG " + receptorChatLabel.getText() + " :" + textMessageField.getText();
-        mediator.sendMessage(header);
+        mediator.sendHeader(header);
         vBoxMessages.setAlignment(Pos.TOP_RIGHT);
         vBoxMessages.getChildren().add(propietaryMessageStyle(textMessageField.getText()));
         textMessageField.setText("");
@@ -55,12 +56,10 @@ public class ChatController extends Controller {
     }
 
 
-
-
     public void addMessagesForeingUser(String textMessage) {
-        String[] parts = textMessage.split(":");
-        if (parts[parts.length-1].trim().equals(receptorChatLabel.getText())){
-            Label messageLabel = foreignMessageStyle(parts[0]+parts[1]);
+        String[] parts = Server.splitParts(textMessage);
+        if (parts[0].trim().equals(receptorChatLabel.getText())) {
+            Label messageLabel = foreignMessageStyle(parts[1] + ": " + parts[2]);
             vBoxMessages.setAlignment(Pos.TOP_RIGHT);
             Platform.runLater(() -> {
                 vBoxMessages.getChildren().add(messageLabel);
@@ -71,42 +70,44 @@ public class ChatController extends Controller {
 
     public void createContactItem(String nickname) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("contactItemView.fxml"));
-        Parent paren = null;
+        Parent parent = null;
         try {
-            paren = loader.load();
+            parent = loader.load();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         ItemContactController itemContactController = loader.getController();
         itemContactController.setCallback(() -> {
             try {
-                PrivateChat privateChat = mediator.getUser().getPrivateChats().stream().filter(name -> name.getUser2().getNickname().equals(nickname)).toList().get(0);
+                PrivateChat privateChat = mediator.getUser().getPrivateChatByName(nickname);
                 setVBoxMessages(privateChat.getMessages());
-            }catch (IndexOutOfBoundsException ignore){
+            } catch (IndexOutOfBoundsException ignore) {
                 setVBoxMessages(new ArrayList<>());
             }
             setReceptorChatLabelText(nickname);
         });
 
         itemContactController.setNicknameLabelText(nickname);
+        addToBox(nickname, parent);
+    }
 
+    public void addToBox(String nickname, Parent parent) {
         if (nickname.startsWith("#")) {
-            vBoxGroup.getChildren().add(paren);
+            vBoxGroup.getChildren().add(parent);
         } else {
-            vBoxPrivate.getChildren().add(paren);
+            vBoxPrivate.getChildren().add(parent);
         }
-
     }
 
     public void setVBoxMessages(List<Message> messages) {
         vBoxMessages.getChildren().clear();
-        for (Message message: messages) {
+        for (Message message : messages) {
             vBoxMessages.getChildren().add(propietaryMessageStyle(message.getTextMessage()));
         }
     }
 
     public Label propietaryMessageStyle(String textmessage) {
-        Label label = new Label("Tú: "+textmessage);
+        Label label = new Label("Tú: " + textmessage);
         label.setStyle("-fx-background-color:" + String.format("#%02X%02X%02X", 180, 160, 200));
         // Cambiar el color del texto
         label.setTextFill(Color.BLACK);

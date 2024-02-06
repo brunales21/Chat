@@ -22,13 +22,13 @@ public class AddContactViewController extends Controller {
     private void onClickAdd() {
         if (nicknameTextField.getPromptText().equals("Nombre grupo")) {
             mediator.createContactItem("#"+nicknameTextField.getText());
-            mediator.sendMessage("CREATE #" + nicknameTextField.getText());
+            mediator.sendHeader("CREATE #" + nicknameTextField.getText());
         } else if (nicknameTextField.getPromptText().equals("Nombre del grupo")) {
-            mediator.sendMessage("JOIN #"+nicknameTextField.getText());
             mediator.createContactItem("#"+nicknameTextField.getText());
+            mediator.sendHeader("JOIN #"+nicknameTextField.getText());
         } else {
             mediator.createContactItem(nicknameTextField.getText());
-            mediator.sendMessage("CREATE " + nicknameTextField.getText());
+            mediator.sendHeader("CREATE " + nicknameTextField.getText());
 
         }
         Stage stageToClose = (Stage) this.addButton.getScene().getWindow();

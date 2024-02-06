@@ -47,9 +47,10 @@ public class User extends Client {
     public User(String nickname) {
         this.nickname = nickname;
     }
+
     public void register(String nickname) {
         setNickname(nickname);
-        sendMessage("REGISTER "+nickname);
+        sendHeader("REGISTER " + nickname);
     }
 
     public void ingresar(String nickname) {
@@ -64,22 +65,25 @@ public class User extends Client {
             try {
                 in = new Scanner(socket.getInputStream());
                 String header = in.nextLine();
+                System.out.println("Header recibido del servidor: "+header);
                 String[] headerParts = Server.splitParts(header);
                 String senderNickname = headerParts[0];
                 String messageText = headerParts[1];
+/*
+                if (senderNickname.startsWith("#")) {
+                    //Channel channel = getChannelByName(senderNickname);
 
-                if (senderNickname.startsWith("#")){
-                    Channel channel = channels.stream().filter(channel1 -> channel1.getChannelName().equals(senderNickname)).toList().get(0);
-
-                }else {
+                } else {
                     try {
-                        PrivateChat privateChatResult = privateChats.stream().filter(privateChat -> privateChat.getUser2().equals(senderNickname)).toList().get(0);
-                        Message message = new Message(privateChatResult.getUser1(), messageText);
-                        privateChatResult.getMessages().add(message);
-                    }catch (IndexOutOfBoundsException errorWindow){
+                        PrivateChat privateChat = getPrivateChatByName(senderNickname);
+                        Message message = new Message(privateChat.getUser1(), messageText);
+                        privateChat.getMessages().add(message);
+                    } catch (IndexOutOfBoundsException errorWindow) {
 
                     }
                 }
+
+ */
                 mediator.receiveMessage(header);
             } catch (NoSuchElementException ignored) {
 
@@ -89,42 +93,53 @@ public class User extends Client {
         }
     }
 
-    public void sendMessage(String message) {
-
+    public void sendHeader(String header) {
         PrintStream out = null;
         try {
             out = new PrintStream(socket.getOutputStream());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        out.println(message);
+        out.println(header);
 
     }
 
-    public void sendSaveMessage(String message){
-        String[] splitParts = Server.splitParts(message);
-        Arrays.stream(splitParts).forEach(System.out::println);
-        System.out.println(message);
-        if (splitParts[1].startsWith("#")){
-            message = message+";"+this.getNickname();
-
-        }else {
-            /*PrivateChat privateChat = privateChats.stream().filter(privateChat1 -> privateChat1.getUser2().getNickname().equals(splitParts[1])).toList().get(0);
-            Message message1 = new Message(this,splitParts[2]);
-            privateChat.getMessages().add(message1);*/
+    public String adaptHeader(String header) {
+        String[] headerParts = Server.splitParts(header);
+        if (headerParts[1].startsWith("#")) {
+            header = headerParts[0] + " " + headerParts[1] + " " + nickname + " :" + headerParts[2];
+            System.out.println(header);
+        } else {
+            PrivateChat privateChat = getPrivateChatByName(headerParts[1]);
+            Message message1 = new Message(this,headerParts[2]);
+            privateChat.getMessages().add(message1);
         }
-        sendMessage(message);
+        return header;
     }
 
+    public PrivateChat getPrivateChatByName(String nickname) {
+        return privateChats
+                .stream()
+                .filter(privateChat1 -> privateChat1.getUser2().getNickname().equals(nickname))
+                .toList()
+                .get(0);
+    }
+
+    public Channel getChannelByName(String nickname) {
+        return channels.stream()
+                .filter(c -> c.getChannelName().equals(nickname))
+                .toList()
+                .get(0);
+    }
 
 
     public void createChannel(String channelName) {
-        sendMessage("CREATE #" + channelName);
+        sendHeader("CREATE #" + channelName);
     }
 
     //Asociar a controlador de la vista
     public void createPrivateChat(String idUser) {
-        sendMessage("CREATE " + idUser);
+        sendHeader("CREATE " + idUser);
     }
 
     public List<Channel> getChannels() {
@@ -169,5 +184,13 @@ public class User extends Client {
 
     public void setMediator(Mediator mediator) {
         this.mediator = mediator;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "nickname='" + nickname + '\'' +
+                ", socket=" + socket +
+                '}';
     }
 }

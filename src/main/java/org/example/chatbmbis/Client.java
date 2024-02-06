@@ -37,6 +37,18 @@ public class Client extends Thread {
         return socket;
     }
 
+    public void setHostname(String hostname) {
+        this.hostname = hostname;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public void setSocket(Socket socket) {
+        this.socket = socket;
+    }
+
     public static void main(String[] args) {
         Client c = new Client();
         c.connect();

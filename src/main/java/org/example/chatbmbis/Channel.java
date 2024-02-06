@@ -23,16 +23,21 @@ public class Channel {
 
     }
 
-    public void broadcast(String textMessage) {
+    public void broadcast(Socket socket1, String textMessage) {
         for (User user : users) {
-            Socket socket = server.getUserSocketMap().get(user);
+            Socket socket = Server.getUserSocketMap().get(user);
+            if (socket1.equals(socket)) {
+                continue;
+            }
+
             PrintStream out = null;
             try {
                 out = new PrintStream(socket.getOutputStream());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            out.println("PRIVMSG #" + channelName + " :" + textMessage);
+            //#2dam bruno :hola
+            out.println(channelName + " " + server.getSocketUserMap().get(socket1).getNickname() +" :" + textMessage);
         }
     }
 

@@ -33,6 +33,7 @@ public class Server {
         while (true) {
             Socket socket = serverSocket.accept();
             User user = new User();
+            user.setSocket(socket);
             socketUserMap.put(socket, user);
             userSocketMap.put(user, socket);
 
@@ -57,25 +58,27 @@ public class Server {
     }
 
     private void processCommand(Socket socket, String header) {
-        System.out.println("Header que recibe servidor: "+header);
-        String[] parts = splitParts(header);
+        System.out.println("Header que recibe servidor: '" + header + "' de "+socketUserMap.get(socket).toString());
+        String[] headerParts = splitParts(header);
+        String command = headerParts[0];
         try {
-            switch (parts[0]) {
+            switch (command) {
                 case "REGISTER":
-                    register(socket, parts[1]);
+                    register(socket, headerParts[1]);
                     break;
                 case "CREATE":
-                    create(socketUserMap.get(socket).getNickname(), parts[1]);
+                    create(socketUserMap.get(socket).getNickname(), headerParts[1]);
                     break;
                 case "PRIVMSG":
-                    if (parts[1].startsWith("#")) {
-                        sendMessageToChannel(parts[1], parts[2]);
+                    if (headerParts[1].startsWith("#")) {
+                        //sendMessageToChannel(headerParts[1], headerParts[3]);
+                        getChannelByName(headerParts[1]).broadcast(socket, headerParts[3]);
                     } else {
-                        sendMessage(userSocketMap.get(getUserByNickname(parts[1])), socketUserMap.get(socket), parts[2]);
+                        sendMessage(userSocketMap.get(getUserByNickname(headerParts[1])), socketUserMap.get(socket), headerParts[2]);
                     }
                     break;
                 case "JOIN":
-                    join(parts[2],getUserByNickname(parts[1]));
+                    join(socket, headerParts[1]);
                     break;
                 case "LU":
                     //listUsers(socket);
@@ -89,7 +92,8 @@ public class Server {
     }
 
 
-    private void join(String channelName,User user) {
+    private void join(Socket socket, String channelName) {
+        User user = socketUserMap.get(socket);
         Channel channel = channels.stream().filter(ch -> ch.getChannelName().equals(channelName)).toList().get(0);
         channel.addUser(user);
 
@@ -103,7 +107,6 @@ public class Server {
     }
 
     private void sendMessageToChannel(String channelName, String textMessage) {
-
         Channel channel = getChannelByName(channelName);
         String[] parts = textMessage.split(";");
         for (User user : channel.getUsers()) {
@@ -122,10 +125,9 @@ public class Server {
 
     private void create(String userNickname, String chatroomNickname) {
         if (chatroomNickname.startsWith("#")) {
-            Channel channel = new Channel(chatroomNickname);
+            Channel channel = new Channel(chatroomNickname, this);
             try {
                 User user = getUserByNickname(userNickname);
-                //channel.setUsers(new ArrayList<>());
                 channel.getUsers().add(user);
                 channels.add(channel);
                 user.getChannels().add(channel);
@@ -143,7 +145,6 @@ public class Server {
             }
         }
     }
-
 
 
     public static String[] splitParts(String header) {
@@ -219,7 +220,7 @@ public class Server {
         this.socketUserMap = socketUserMap;
     }
 
-    public Map<User, Socket> getUserSocketMap() {
+    public static Map<User, Socket> getUserSocketMap() {
         return userSocketMap;
     }
 
