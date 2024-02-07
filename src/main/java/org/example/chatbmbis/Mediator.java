@@ -38,11 +38,13 @@ public class Mediator {
         user.ingresar(nickname);
     }
 
-    public void createChatView() {
+    public void createChatView(String nickname) {
         Stage stage = null;
         for (Map.Entry<Stage, Controller> entry : view.entrySet()) {
             if (entry.getKey().getTitle().equals("Chat")) {
+                ChatController controller = (ChatController) entry.getValue();
                 stage = entry.getKey();
+                controller.getUserNameLabel().setText(nickname);
                 break;
             }
         }

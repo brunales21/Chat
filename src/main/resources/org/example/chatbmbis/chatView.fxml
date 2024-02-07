@@ -62,26 +62,10 @@
                   <Insets bottom="30.0" left="15.0" right="10.0" top="30.0" />
                </HBox.margin>
                <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="37.0" prefWidth="258.0" style="-fx-background-color: white;">
-                     <VBox.margin>
-                        <Insets left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin>
-                     <children>
-                        <ImageView fitHeight="31.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                           <HBox.margin>
-                              <Insets left="5.0" />
-                           </HBox.margin>
-                           <image>
-                              <Image url="@../../../img/search.png" />
-                           </image>
-                        </ImageView>
-                        <TextField prefHeight="27.0" prefWidth="214.0" promptText="Search" style="-fx-background-color: white;">
-                           <HBox.margin>
-                              <Insets left="2.0" />
-                           </HBox.margin>
-                        </TextField>
-                     </children>
-                  </HBox>
+                  <Label fx:id="userNameLabel" alignment="CENTER" prefHeight="63.0" prefWidth="281.0" text="Label" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font></Label>
                   <VBox prefHeight="159.0" prefWidth="250.0">
                      <opaqueInsets>
                         <Insets />

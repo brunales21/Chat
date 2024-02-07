@@ -16,7 +16,7 @@ public class LoginController extends Controller {
 
     @FXML
     private void ingresar() {
-        mediator.createChatView();
+        mediator.createChatView(usernameField.getText());
         mediator.ingresar(usernameField.getText());
         closeLoginView();
     }

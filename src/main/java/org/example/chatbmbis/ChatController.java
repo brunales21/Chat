@@ -22,7 +22,7 @@ public class ChatController extends Controller {
     @FXML
     private VBox vBoxGroup, vBoxPrivate, vBoxMessages;
     @FXML
-    private Label receptorChatLabel;
+    private Label receptorChatLabel,userNameLabel;
     @FXML
     private TextField textMessageField;
 
@@ -167,6 +167,13 @@ public class ChatController extends Controller {
         this.mediator = mediator;
     }
 
+    public Label getUserNameLabel() {
+        return userNameLabel;
+    }
+
+    public void setUserNameLabel(Label userNameLabel) {
+        this.userNameLabel = userNameLabel;
+    }
 
     public VBox getvBoxGroup() {
         return vBoxGroup;
