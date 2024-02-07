@@ -62,7 +62,10 @@
                   <Insets bottom="30.0" left="15.0" right="10.0" top="30.0" />
                </HBox.margin>
                <children>
-                  <Label fx:id="userNameLabel" alignment="CENTER" prefHeight="63.0" prefWidth="281.0" text="Label" textAlignment="CENTER" />
+                  <Label fx:id="userNameLabel" alignment="CENTER" prefHeight="63.0" prefWidth="281.0" text="Label" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font></Label>
                   <VBox prefHeight="159.0" prefWidth="250.0">
                      <opaqueInsets>
                         <Insets />

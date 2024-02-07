@@ -13,7 +13,7 @@ public class Server {
     private static Map<Socket, User> socketUserMap = new HashMap<>();
     private static Map<User, Socket> userSocketMap = new HashMap<>();
 
-    //private Map<String, List<Message>> chatMap;
+    private List<PrivateChat> privateChats;
 
 
     public Server() {

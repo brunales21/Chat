@@ -33,6 +33,10 @@ public class ChatController extends Controller {
 
     @FXML
     private void onClickSendMessage() {
+        if (textMessageField.getText().isEmpty() || receptorChatLabel.getText().isEmpty()) {
+            textMessageField.setText("");
+            return;
+        }
         String header = "PRIVMSG " + receptorChatLabel.getText() + " :" + textMessageField.getText();
         mediator.sendHeader(header);
         vBoxMessages.setAlignment(Pos.TOP_RIGHT);
