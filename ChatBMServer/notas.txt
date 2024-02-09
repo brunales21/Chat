@@ -1,0 +1,4 @@
+Estoy guardando los chatprivados y canales en Servidor
+
+Al querer cargar los mensajes de un chatprivado, este chatprivado es nulo, ya que en user no se conoce de servidor
+porque son dos procesos distintos. Desde User al hacer un Server.*, esta referencia será nula
