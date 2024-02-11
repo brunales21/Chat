@@ -9,6 +9,7 @@ public class Server {
 
     private ServerSocket serverSocket;
     private int port;
+    private Map<String, String> privateChats;
     private Map<String, Channel> channels;
     private Map<String, PrintStream> userOutMap;
     private Map<Socket, String> socketUserMap;
@@ -18,6 +19,7 @@ public class Server {
     public Server(int port) {
         this.port = port;
         channels = new HashMap<>();
+        privateChats = new HashMap<>();
         userOutMap = new HashMap<>();
         socketUserMap = new HashMap<>();
     }
@@ -68,6 +70,14 @@ public class Server {
             case "CREATE":
                 if (arg.startsWith("#")) {
                     createChannel(sender, arg);
+                } else {
+                    try {
+                        findUser(arg);
+                        createPrivChat(sender, arg);
+                    } catch (UserNotFoundException e) {
+                        // rebota comando
+                        sendErrorMsg(sender, e.getMessage());
+                    }
                 }
                 break;
             case "PRIVMSG":
@@ -88,6 +98,19 @@ public class Server {
 
     }
 
+    private PrintStream findUser(String user) throws UserNotFoundException {
+        PrintStream out = userOutMap.get(user);
+        if (out == null) {
+            throw new UserNotFoundException(user);
+        }
+        return out;
+    }
+
+    private void sendErrorMsg(String sender, String errorMessage) {
+        // le rebota el msj
+        userOutMap.get(sender).println("ERROR :" + errorMessage);
+    }
+
     private List<String> getUsersInChannel(String channelName) {
         return getChannelByName(channelName).getUsers();
     }
@@ -100,7 +123,6 @@ public class Server {
                     userOutMap.get(user).println(channelName + " " + sender + " :" + textMessage);
                 });
     }
-
 
     private void join(String sender, String channelName) {
         getChannelByName(channelName).addUser(sender);
@@ -115,6 +137,10 @@ public class Server {
         Channel channel = new Channel(channelName);
         channel.addUser(nickname);
         channels.put(channelName, channel);
+    }
+
+    private void createPrivChat(String user1, String user2) {
+        privateChats.put(user1, user2);
     }
 
 

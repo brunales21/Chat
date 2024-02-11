@@ -8,9 +8,11 @@ import javafx.stage.Stage;
 public class AddContactViewController extends Controller {
 
     @FXML
-    private Button addButton;
-    @FXML
     private TextField nicknameTextField;
+    @FXML
+    private Button button1;
+    @FXML
+    private Button button2;
     private Mediator mediator;
 
 
@@ -19,27 +21,33 @@ public class AddContactViewController extends Controller {
     }
 
     @FXML
-    private void onClickAdd() {
-        if (nicknameTextField.getText().isEmpty()) {
-            Stage stageToClose = (Stage) this.addButton.getScene().getWindow();
-            stageToClose.close();
-            return;
+    private void onClickButton1() {
+        if (!nicknameTextField.getText().isEmpty()) {
+            if (nicknameTextField.getPromptText().equals("Nombre canal")) {
+                mediator.addContactItem(mediator.getChatController().getvBoxGroup(), "#"+nicknameTextField.getText());
+                mediator.sendMessage("CREATE #" + nicknameTextField.getText());
+            } else if (nicknameTextField.getPromptText().equals("Nombre usuario")) {
+                mediator.sendMessage("CREATE " + nicknameTextField.getText());
+                mediator.addContactItem(mediator.getChatController().getvBoxPrivate(), nicknameTextField.getText());
+            }
+            nicknameTextField.setText("");
         }
-        if (nicknameTextField.getPromptText().equals("Nombre grupo")) {
-            mediator.createContactItem("#"+nicknameTextField.getText());
-            mediator.sendHeader("CREATE #" + nicknameTextField.getText());
-        } else if (nicknameTextField.getPromptText().equals("Nombre del grupo")) {
-            mediator.createContactItem("#"+nicknameTextField.getText());
-            mediator.sendHeader("JOIN #"+nicknameTextField.getText());
-        } else {
-            mediator.createContactItem(nicknameTextField.getText());
-            mediator.sendHeader("CREATE " + nicknameTextField.getText());
+        Stage stageToClose = (Stage) this.button1.getScene().getWindow();
+        stageToClose.close();
+    }
 
+    @FXML
+    public void onClickButton2() {
+        if (!nicknameTextField.getText().isEmpty()) {
+            if (nicknameTextField.getPromptText().equals("Nombre canal")) {
+                mediator.addContactItem(mediator.getChatController().getvBoxGroup(), "#"+nicknameTextField.getText());
+                mediator.sendMessage("JOIN #"+nicknameTextField.getText());
+            } else if (nicknameTextField.getPromptText().equals("Nombre usuario")) {
+                mediator.deleteContactItem(nicknameTextField.getText());
+            }
+            nicknameTextField.setText("");
         }
-
-        //mediator.getChatController().getCurrentItemCc().getCallback().run();
-        nicknameTextField.setText("");
-        Stage stageToClose = (Stage) this.addButton.getScene().getWindow();
+        Stage stageToClose = (Stage) this.button1.getScene().getWindow();
         stageToClose.close();
     }
 
@@ -47,10 +55,17 @@ public class AddContactViewController extends Controller {
         nicknameTextField.setPromptText(promptText);
     }
 
-    public Button getAddButton() {
-        return addButton;
+    public Button getButton1() {
+        return button1;
     }
 
+    public Button getButton2() {
+        return button2;
+    }
+
+    public void setButton2(Button button2) {
+        this.button2 = button2;
+    }
 
     public void setMediator(Mediator mediator) {
         this.mediator = mediator;

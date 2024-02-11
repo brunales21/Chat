@@ -1,0 +1,27 @@
+    Comandos enviados por cliente hacia servidor:
+
+        **comandos de creacion de canal
+            CREATE #2dam
+            CREATE pepe -> añadir a pepe a lista de contactos
+
+        **comando para unirse a canal
+            JOIN #2dam
+
+        **comandos de mensaje de texto
+            PRIVMSG #2dam :hola que tal grupo
+            PRIVMSG pepe :hola pepe
+
+        **comando para hacer login
+            REGISTER pepe
+
+        **comando para listar contactos
+            LIST USERS
+
+        **comando para listar canales
+            LIST CHANNELS
+
+    Comando enviado por servidor hacia receptor
+        en canal:
+            #2dam monica :hola que tal grupo
+        en privado:
+            monica :hola pepe

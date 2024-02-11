@@ -12,17 +12,17 @@ public class LoginController extends Controller {
     @FXML
     TextField usernameField, passwordField;
 
-    public LoginController() {}
+    public LoginController() {
+    }
 
     @FXML
     private void ingresar() {
-        if (usernameField.getText().isEmpty()) {
-            return;
+        if (!usernameField.getText().isEmpty()) {
+            mediator.setUser(new User(usernameField.getText(), "localhost", 9001));
+            mediator.ingresar(usernameField.getText());
+            closeLoginView();
+            mediator.createChatView(usernameField.getText());
         }
-        mediator.setUser(new User(usernameField.getText(), "localhost", 9001));
-        mediator.ingresar(usernameField.getText());
-        mediator.createChatView(usernameField.getText());
-        closeLoginView();
     }
 
     public void closeLoginView() {

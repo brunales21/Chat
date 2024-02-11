@@ -23,23 +23,15 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </ImageView>
-                  <ImageView fitHeight="42.0" fitWidth="43.0" onMouseClicked="#onClickCreateGroup" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="42.0" fitWidth="43.0" onMouseClicked="#onClickChannelOptions" pickOnBounds="true" preserveRatio="true">
                      <VBox.margin>
                         <Insets top="30.0" />
                      </VBox.margin>
                      <image>
-                        <Image url="@../../../img/home.png" />
+                        <Image url="@../../../img/anadir-grupo.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="32.0" fitWidth="38.0" onMouseClicked="#onClickCreateChat" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../img/sms.png" />
-                     </image>
-                     <VBox.margin>
-                        <Insets top="40.0" />
-                     </VBox.margin>
-                  </ImageView>
-                  <ImageView fitHeight="48.0" fitWidth="56.0" onMouseClicked="#onClickAddUserToChannel" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="48.0" fitWidth="56.0" onMouseClicked="#onClickPrivChatOptions" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../img/klipartz.com.png" />
                      </image>

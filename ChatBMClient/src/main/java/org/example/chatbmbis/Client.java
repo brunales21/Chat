@@ -17,5 +17,4 @@ public class Client extends Thread {
     public Socket getSocket() {
         return socket;
     }
-
 }

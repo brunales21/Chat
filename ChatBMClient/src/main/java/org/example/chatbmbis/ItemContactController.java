@@ -11,7 +11,7 @@ public class ItemContactController {
     Label nicknameLabel;
     @FXML
     private HBox item;
-    private boolean isChannel;
+
 
     private Callback callback = () -> {
     };
@@ -25,7 +25,7 @@ public class ItemContactController {
         this.callback = callback;
     }
 
-    public String getNicknameLabel() {
+    public String getNicknameLabelText() {
         return nicknameLabel.getText();
     }
 
@@ -45,15 +45,9 @@ public class ItemContactController {
         this.item = item;
     }
 
-    public boolean isChannel() {
-        return isChannel;
-    }
-
-    public void setChannel(boolean channel) {
-        isChannel = channel;
-    }
-
     public Callback getCallback() {
         return callback;
     }
+
+
 }

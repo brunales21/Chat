@@ -1,10 +1,12 @@
 package org.example.chatbmbis;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -13,12 +15,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 
 import java.io.IOException;
-import java.util.List;
 
 
 public class ChatController extends Controller {
     private Mediator mediator;
-    private ItemContactController currentItemCc;
     @FXML
     private VBox vBoxGroup, vBoxPrivate, vBoxMessages;
     @FXML
@@ -27,44 +27,33 @@ public class ChatController extends Controller {
     private TextField textMessageField;
 
     @FXML
-    protected void onClickCreateGroup() {
-        createAddView("Nombre grupo", "Unirme");
+    protected void onClickChannelOptions() {
+        createAddView("Nombre canal", "Crear", "Unirme");
     }
 
     @FXML
     private void onClickSendMessage() {
-        if (textMessageField.getText().isEmpty() || receptorChatLabel.getText().isEmpty()) {
-            textMessageField.setText("");
-            return;
+        String text = textMessageField.getText();
+        String receptor = receptorChatLabel.getText();
+        if (!text.isBlank() && !receptor.isBlank()) {
+            addMessageToVBox(new Message(mediator.getUser().getNickname(), textMessageField.getText()));
+            String message = "PRIVMSG " + receptor + " :" + text;
+            mediator.sendMessage(message);
+            vBoxMessages.setAlignment(Pos.TOP_RIGHT);
         }
-
-        vBoxMessages.getChildren().add(propietaryMessageStyle(textMessageField.getText()));
-        String header = "PRIVMSG " + receptorChatLabel.getText() + " :" + textMessageField.getText();
-        mediator.sendHeader(header);
-        vBoxMessages.setAlignment(Pos.TOP_RIGHT);
         textMessageField.setText("");
     }
 
-    private boolean receptorIsChannel(String name) {
-        return name.startsWith("#");
-    }
-
     @FXML
-    private void onClickCreateChat() {
-        createAddView("Nombre usuario", "Añadir usuario");
-    }
-
-    @FXML
-    private void onClickAddUserToChannel() {
-        createAddView("Nombre del grupo", "Añadir al grupo");
-    }
-
-    public void createAddView(String promptText, String buttonText) {
-        mediator.createAddView(promptText, buttonText);
+    private void onClickPrivChatOptions() {
+        createAddView("Nombre usuario", "Añadir usuario", "Borrar usuario");
     }
 
 
-    // CONTROLAR cuando el receptorchatlabel sea un canal, porque no coincide con el sender de message
+    public void createAddView(String promptText, String opt1, String opt2) {
+        mediator.createAddView(promptText, opt1, opt2);
+    }
+
     public void addMessageToVBox(Message message) {
         Label messageLabel;
         if (message.getSender().equals(receptorChatLabel.getText()) || message.getSender().equals(mediator.getUser().getNickname()) || message.getTargetChannel().equals(receptorChatLabel.getText())) {
@@ -81,7 +70,7 @@ public class ChatController extends Controller {
         }
     }
 
-    public void createContactItem(String nickname) {
+    public void addContactItem(VBox vBox, String nickname) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("contactItemView.fxml"));
         Parent parent = null;
         try {
@@ -90,7 +79,6 @@ public class ChatController extends Controller {
             throw new RuntimeException(e);
         }
         ItemContactController itemContactController = loader.getController();
-        currentItemCc = itemContactController;
         itemContactController.setCallback(() -> {
             setReceptorChatLabelText(nickname);
             vBoxMessages.getChildren().clear();
@@ -98,31 +86,23 @@ public class ChatController extends Controller {
         });
 
         itemContactController.setNicknameLabelText(nickname);
-        addItemToBox(nickname, parent);
+
+        // Añadir el nuevo nodo al final de la lista de nodos hijos del vBoxPrivate
+        vBox.getChildren().add(parent);
+        parent.setUserData(loader);
     }
 
-    public void addItemToBox(String nickname, Parent parent) {
-        if (nickname.startsWith("#")) {
-            vBoxGroup.getChildren().add(parent);
-        } else {
-            vBoxPrivate.getChildren().add(parent);
-        }
-    }
-
-    public void setVBoxMessages(List<Message> messages) {
-        vBoxMessages.getChildren().clear();
-        Label messageLabel;
-        for (Message message : messages) {
-            if (message.getSender().equals(mediator.getUser().getNickname())) {
-                messageLabel = propietaryMessageStyle(message.getText());
-            } else {
-                messageLabel = foreignMessageStyle(message.getSender(), message.getText());
+    public void removeContactItem(String nickname) {
+        ObservableList<Node> children = vBoxPrivate.getChildren();
+        // Iterar sobre los nodos y eliminar el que tenga el nickname deseado
+        for (Node child : children) {
+            if (child instanceof Parent) {
+                ItemContactController itemContactController = ((FXMLLoader) child.getUserData()).getController();
+                if (itemContactController.getNicknameLabelText().equals(nickname)) {
+                    children.remove(child);
+                    break;
+                }
             }
-
-            Label finalMessageLabel = messageLabel;
-            Platform.runLater(() -> {
-                vBoxMessages.getChildren().add(finalMessageLabel);
-            });
         }
     }
 
@@ -157,28 +137,20 @@ public class ChatController extends Controller {
 
     }
 
-
     public void createItem(FXMLLoader itemContactController, String nickName) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("contactItemView.fxml"));
-        Parent paren = null;
+        Parent parent = null;
         try {
-            paren = itemContactController.load();
+            parent = itemContactController.load();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         ItemContactController itemContactController1 = itemContactController.getController();
         itemContactController1.setNicknameLabelText(nickName);
-        vBoxPrivate.getChildren().add(paren);
+        vBoxPrivate.getChildren().add(parent);
 
     }
 
-    public ItemContactController getCurrentItemCc() {
-        return currentItemCc;
-    }
-
-    public void setCurrentItemCc(ItemContactController currentItemCc) {
-        this.currentItemCc = currentItemCc;
-    }
 
     public Mediator getMediator() {
         return mediator;
@@ -227,6 +199,4 @@ public class ChatController extends Controller {
     public void setvBoxMessages(VBox vBoxMessages) {
         this.vBoxMessages = vBoxMessages;
     }
-
-
 }

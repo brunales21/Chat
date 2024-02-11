@@ -1,11 +1,13 @@
 package org.example.chatbmbis;
 
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Mediator {
+    private static Mediator instance;
     private ChatController chatController;
     private AddContactViewController addViewController;
     private ItemContactController itemContactController;
@@ -13,13 +15,10 @@ public class Mediator {
     private Map<Stage, Controller> view = new HashMap<>();
     private Map<ItemContactController, String> itemContactControllers = new HashMap<>();
     private User user;
-    private static Mediator instance;
-
 
     public Mediator() {
 
     }
-
     public static synchronized Mediator getInstance(User user) {
         if (instance == null) {
             instance = new Mediator();
@@ -28,16 +27,12 @@ public class Mediator {
         return instance;
     }
 
-
-
     public static synchronized Mediator getInstance() {
         if (instance == null) {
             instance = new Mediator();
         }
         return instance;
     }
-
-
 
     public void ingresar(String nickname) {
         user.ingresar(nickname);
@@ -58,15 +53,15 @@ public class Mediator {
 
     }
 
-    public void sendHeader(String header) {
-        user.sendHeader(header);
+    public void sendMessage(String message) {
+        user.sendMessage(message);
     }
 
     public void setUser(User user) {
         this.user = user;
     }
 
-    public void createAddView(String promptText, String buttonText) {
+    public void createAddView(String promptText, String opt1, String opt2) {
         Stage stage = null;
         AddContactViewController addController = null;
         for (Map.Entry<Stage, Controller> entry : view.entrySet()) {
@@ -76,18 +71,34 @@ public class Mediator {
             }
         }
         addController.setPromptText(promptText);
-        addController.getAddButton().setText(buttonText);
+        addController.getButton1().setText(opt1);
+        addController.getButton2().setText(opt2);
+
         stage.setResizable(false);
         stage.show();
 
     }
 
-    public void createContactItem(String nickname) {
-        chatController.createContactItem(nickname);
+    public void addContactItem(VBox vBox, String nickname) {
+        chatController.addContactItem(vBox, nickname);
     }
+
+    public void deleteContactItem(String nickname) {
+        chatController.removeContactItem(nickname);
+        chatController.setReceptorChatLabelText("");
+        chatController.setvBoxMessages(null);
+    }
+
+
     public void receiveMessage(String message) {
         String[] headerParts = Utils.split(message);
         Message messageObj;
+
+        if (isErrorMessage(message)) {
+            // gestionar cuando el servidor rechaza la peticion. Ej: quiere crear un contacto q no se encuentra en el servidor
+            // cuando este no exista, el servidor enviará "ERROR: "
+        }
+
         if (headerParts[0].startsWith("#")) {
             // "#2dam bruno :hola"
             messageObj = new Message(headerParts[1], headerParts[0], headerParts[2]);
@@ -100,9 +111,18 @@ public class Mediator {
         if (chatController.getReceptorChatLabel().getText().equals(headerParts[0])) {
             chatController.addMessageToVBox(messageObj);
         }
+
     }
 
-
+    private boolean isErrorMessage(String message) {
+        if (message.split(" ")[0].equals("ERROR")) {
+            return true;
+        }
+        return false;
+    }
+    public User getUser() {
+        return user;
+    }
     public AddContactViewController getAddViewController() {
         return addViewController;
     }
@@ -155,8 +175,4 @@ public class Mediator {
         this.itemContactControllers = itemContactControllers;
     }
 
-
-    public User getUser() {
-        return user;
-    }
 }

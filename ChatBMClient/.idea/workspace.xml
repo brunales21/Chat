@@ -4,11 +4,56 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46d45c23-4adf-40e0-a91c-a5d6e7259c3c" name="Changes" comment="" />
+    <list default="true" id="46d45c23-4adf-40e0-a91c-a5d6e7259c3c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../.idea/Chat.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/ErrorDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/anadir-grupo (1).png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/anadir-grupo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ChatBMServer/commands.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/AddContactViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/AddContactViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/Channel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/Channel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/ChatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/ErrorWindow.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/ItemContactController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/ItemContactController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/Mediator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/Mediator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/PrivateChat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/PrivateChat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/chatbmbis/addContactView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/chatbmbis/addContactView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/chatbmbis/chatView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/chatbmbis/chatView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/AddContactViewController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/AddContactViewController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/Channel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/Channel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/ChatController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/ChatController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/ErrorWindow.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/ItemContactController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/ItemContactController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/LoginController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/Mediator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/Mediator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/PrivateChat.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/PrivateChat.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/addContactView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/addContactView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/chatView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/chatView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/notas.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/UserNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/UserNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/example/chatbmbis/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/example/chatbmbis/Server.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/example/chatbmbis/UserNotFoundException.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/example/chatbmbis/UserNotFoundException.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <excluded-from-favorite>
@@ -39,20 +84,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/2DAM/IdeaProjects/Chat/ChatBMClient",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main (1).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main (2).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main (3).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/bemim/Workspace/brunales-code/Chat/ChatBMClient&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="org.example.chatbmbis" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\bemim\Workspace\brunales-code\Chat\ChatBMClient\src\main\resources\img" />
+    </key>
+  </component>
   <component name="RunManager" selected="Application.Main (1)">
     <configuration name="Main (1)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="org.example.chatbmbis.Main" />
@@ -144,6 +204,13 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.1-openjdk-21.0.1-f644763e9732-f98dd351" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -156,6 +223,9 @@
       <workItem from="1707471178286" duration="105000" />
       <workItem from="1707475849092" duration="5150000" />
       <workItem from="1707481756166" duration="90000" />
+      <workItem from="1707563208633" duration="18149000" />
+      <workItem from="1707679810113" duration="1440000" />
+      <workItem from="1707681288018" duration="791000" />
     </task>
     <servers />
   </component>
