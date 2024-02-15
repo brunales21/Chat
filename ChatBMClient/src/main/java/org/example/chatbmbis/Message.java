@@ -54,7 +54,9 @@ public class Message {
     public String toString() {
         return "Message{" +
                 "sender='" + sender + '\'' +
+                ", targetChannel='" + targetChannel + '\'' +
                 ", text='" + text + '\'' +
+                ", time=" + time +
                 '}';
     }
 }

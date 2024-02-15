@@ -17,13 +17,13 @@ public class Mediator {
     private Map<Stage, Controller> view = new HashMap<>();
     private Map<ItemContactController, String> itemContactControllers = new HashMap<>();
     private User user;
-
-    private boolean existsUser= true;
+    private boolean actionApproved = true;
 
 
     public Mediator() {
 
     }
+
     public static synchronized Mediator getInstance(User user) {
         if (instance == null) {
             instance = new Mediator();
@@ -91,36 +91,38 @@ public class Mediator {
     public void deleteContactItem(String nickname) {
         chatController.removeContactItem(nickname);
         chatController.setReceptorChatLabelText("");
-        chatController.setvBoxMessages(null);
+        chatController.emptyVBoxMessages();
     }
 
 
     public void receiveMessage(String message) {
-        String[] headerParts = Utils.split(message);
+        String[] messageParts = Utils.split(message);
         Message messageObj;
-
         System.out.println(message);
         if (isErrorMessage(message)) {
-            existsUser=false;
-            Platform.runLater(()->{
+            actionApproved = false;
+            Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("UserNotFound");
-                alert.setContentText("El usuario no existe");
+                alert.setTitle("");
+                alert.setContentText(messageParts[1]);
                 alert.showAndWait();
             });
 
+        } else if (messageParts[0].equals("ok")) {
+            actionApproved = true;
+            return;
         }
 
-        if (headerParts[0].startsWith("#")) {
+        if (messageParts[0].startsWith("#")) {
             // "#2dam bruno :hola"
-            messageObj = new Message(headerParts[1], headerParts[0], headerParts[2]);
+            messageObj = new Message(messageParts[1], messageParts[0], messageParts[2]);
         } else {
             // "bruno :hola"
-            messageObj = new Message(headerParts[0], headerParts[1]);
+            messageObj = new Message(messageParts[0], messageParts[1]);
         }
-        user.addMessage(headerParts[0], messageObj);
+        user.addMessage(messageParts[0], messageObj);
         // solo añadir al vbox del chat si este está abierto
-        if (chatController.getReceptorChatLabel().getText().equals(headerParts[0])) {
+        if (chatController.getReceptorChatLabel().getText().equals(messageParts[0])) {
             chatController.addMessageToVBox(messageObj);
         }
 
@@ -132,9 +134,11 @@ public class Mediator {
         }
         return false;
     }
+
     public User getUser() {
         return user;
     }
+
     public AddContactViewController getAddViewController() {
         return addViewController;
     }
@@ -187,11 +191,11 @@ public class Mediator {
         this.itemContactControllers = itemContactControllers;
     }
 
-    public boolean existsUser() {
-        return existsUser;
+    public boolean actionApproved() {
+        return actionApproved;
     }
 
-    public void setExistsUser(boolean existsUser) {
-        this.existsUser = existsUser;
+    public void setActionApproved(boolean actionApproved) {
+        this.actionApproved = actionApproved;
     }
 }

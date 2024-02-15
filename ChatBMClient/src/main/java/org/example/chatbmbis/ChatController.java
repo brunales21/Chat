@@ -55,9 +55,11 @@ public class ChatController extends Controller {
         mediator.createAddView(promptText, opt1, opt2);
     }
 
-    public void addMessageToVBox(Message message) {
+    public void emptyVBoxMessages() {
+        vBoxMessages.getChildren().clear();
+    }
 
-        System.out.println(message);
+    public void addMessageToVBox(Message message) {
         Label messageLabel;
         if (message.getSender().equals(receptorChatLabel.getText()) || message.getSender().equals(mediator.getUser().getNickname()) || message.getTargetChannel().equals(receptorChatLabel.getText())) {
             if (message.getSender().equals(mediator.getUser().getNickname())) {

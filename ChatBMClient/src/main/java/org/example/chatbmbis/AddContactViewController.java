@@ -24,8 +24,15 @@ public class AddContactViewController extends Controller {
     private void onClickButtonLeft() {
         if (!nicknameTextField.getText().isEmpty()) {
             if (nicknameTextField.getPromptText().equals("Nombre canal")) {
-                mediator.addContactItem(mediator.getChatController().getvBoxGroup(), "#"+nicknameTextField.getText());
                 mediator.sendMessage("CREATE #" + nicknameTextField.getText());
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                if (mediator.actionApproved()) {
+                    mediator.addContactItem(mediator.getChatController().getvBoxGroup(), "#"+nicknameTextField.getText());
+                }
             } else if (nicknameTextField.getPromptText().equals("Nombre usuario")) {
                 mediator.sendMessage("CREATE " + nicknameTextField.getText());
                 try {
@@ -33,7 +40,7 @@ public class AddContactViewController extends Controller {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                if (mediator.existsUser()){
+                if (mediator.actionApproved()){
                     mediator.addContactItem(mediator.getChatController().getvBoxPrivate(), nicknameTextField.getText());
                 }
             }
@@ -53,12 +60,21 @@ public class AddContactViewController extends Controller {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                if (mediator.existsUser()){
+                if (mediator.actionApproved()){
                     mediator.addContactItem(mediator.getChatController().getvBoxGroup(), "#"+nicknameTextField.getText());
                 }
 
             } else if (nicknameTextField.getPromptText().equals("Nombre usuario")) {
-                mediator.deleteContactItem(nicknameTextField.getText());
+                mediator.sendMessage("DELETE "+nicknameTextField.getText());
+                try {
+                    // Este hilo espera para que al servidor le de tiempo a enviar la respuesta para validar la acción.
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                if (mediator.actionApproved()){
+                    mediator.deleteContactItem(nicknameTextField.getText());
+                }
             }
             nicknameTextField.setText("");
         }

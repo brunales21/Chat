@@ -2,6 +2,7 @@ package org.example.chatbmbis;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Channel {
     private final String name;
@@ -24,4 +25,16 @@ public class Channel {
         return name;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Channel channel = (Channel) o;
+        return Objects.equals(name, channel.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }

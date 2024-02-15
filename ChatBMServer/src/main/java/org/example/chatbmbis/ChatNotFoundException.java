@@ -1,9 +1,9 @@
 package org.example.chatbmbis;
 
-public class UserNotFoundException extends Exception {
+public class ChatNotFoundException extends ChatException {
     private String nickname;
-    public UserNotFoundException(String nickname) {
-        super("Usuario " + nickname + " no existe.");
+    public ChatNotFoundException(String nickname) {
+        super(nickname + " no existe.");
     }
 
     public String getNickname() {
