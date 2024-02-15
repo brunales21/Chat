@@ -1,5 +1,7 @@
 package org.example.chatbmbis;
 
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -15,6 +17,9 @@ public class Mediator {
     private Map<Stage, Controller> view = new HashMap<>();
     private Map<ItemContactController, String> itemContactControllers = new HashMap<>();
     private User user;
+
+    private boolean existsUser= true;
+
 
     public Mediator() {
 
@@ -95,8 +100,14 @@ public class Mediator {
         Message messageObj;
 
         if (isErrorMessage(message)) {
-            // gestionar cuando el servidor rechaza la peticion. Ej: quiere crear un contacto q no se encuentra en el servidor
-            // cuando este no exista, el servidor enviará "ERROR: "
+            existsUser=false;
+            Platform.runLater(()->{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("UserNotFound");
+                alert.setContentText("El usuario no existe");
+                alert.showAndWait();
+            });
+
         }
 
         if (headerParts[0].startsWith("#")) {
@@ -175,4 +186,11 @@ public class Mediator {
         this.itemContactControllers = itemContactControllers;
     }
 
+    public boolean existsUser() {
+        return existsUser;
+    }
+
+    public void setExistsUser(boolean existsUser) {
+        this.existsUser = existsUser;
+    }
 }

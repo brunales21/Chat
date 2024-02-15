@@ -13,12 +13,12 @@
                   <Insets left="40.0" />
                </HBox.margin>
             </TextField>
-            <Button fx:id="button1" mnemonicParsing="false" onMouseClicked="#onClickButton1" prefHeight="43.0" prefWidth="117.0" text="Agregar usuario">
+            <Button fx:id="button1" mnemonicParsing="false" onMouseClicked="#onClickButtonLeft" prefHeight="43.0" prefWidth="117.0" text="Agregar usuario">
                <HBox.margin>
                   <Insets left="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="button2" layoutX="276.0" layoutY="50.0" mnemonicParsing="false" onMouseClicked="#onClickButton2" prefHeight="43.0" prefWidth="117.0" text="Agregar usuario" translateX="25.0" />
+            <Button fx:id="button2" layoutX="276.0" layoutY="50.0" mnemonicParsing="false" onMouseClicked="#onClickButtonRight" prefHeight="43.0" prefWidth="117.0" text="Agregar usuario" translateX="25.0" />
          </children>
       </HBox>
    </children>

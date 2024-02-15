@@ -21,14 +21,21 @@ public class AddContactViewController extends Controller {
     }
 
     @FXML
-    private void onClickButton1() {
+    private void onClickButtonLeft() {
         if (!nicknameTextField.getText().isEmpty()) {
             if (nicknameTextField.getPromptText().equals("Nombre canal")) {
                 mediator.addContactItem(mediator.getChatController().getvBoxGroup(), "#"+nicknameTextField.getText());
                 mediator.sendMessage("CREATE #" + nicknameTextField.getText());
             } else if (nicknameTextField.getPromptText().equals("Nombre usuario")) {
                 mediator.sendMessage("CREATE " + nicknameTextField.getText());
-                mediator.addContactItem(mediator.getChatController().getvBoxPrivate(), nicknameTextField.getText());
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                if (mediator.existsUser()){
+                    mediator.addContactItem(mediator.getChatController().getvBoxPrivate(), nicknameTextField.getText());
+                }
             }
             nicknameTextField.setText("");
         }
@@ -37,7 +44,7 @@ public class AddContactViewController extends Controller {
     }
 
     @FXML
-    public void onClickButton2() {
+    public void onClickButtonRight() {
         if (!nicknameTextField.getText().isEmpty()) {
             if (nicknameTextField.getPromptText().equals("Nombre canal")) {
                 mediator.addContactItem(mediator.getChatController().getvBoxGroup(), "#"+nicknameTextField.getText());

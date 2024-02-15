@@ -10,10 +10,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 6
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2cAnF0arn1RCzIrRp9BZR7SLrGc" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -25,7 +25,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/bemim/Workspace/brunales-code/Chat/ChatBMServer",
+    "last_opened_file_path": "C:/Users/Monica/Documents/2DAM/PSP/Chat/ChatBMClient",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
@@ -39,6 +39,7 @@
       <option name="presentableId" value="Default" />
       <updated>1707563144781</updated>
       <workItem from="1707563146751" duration="121000" />
+      <workItem from="1707993665503" duration="66000" />
     </task>
     <servers />
   </component>
