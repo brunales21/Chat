@@ -69,7 +69,13 @@ public class Server {
                 break;
             case "CREATE":
                 if (arg.startsWith("#")) {
-                    createChannel(sender, arg);
+                    try {
+                        findUser(arg);
+                        createChannel(sender, arg);
+                    } catch (UserNotFoundException e) {
+                        sendErrorMsg(sender ,e.getMessage());
+                    }
+
                 } else {
                     try {
                         findUser(arg);
@@ -88,7 +94,12 @@ public class Server {
                 }
                 break;
             case "JOIN":
-                join(sender, headerParts[1]);
+                try {
+                    findUser(arg);
+                    join(sender, headerParts[1]);
+                } catch (UserNotFoundException e) {
+                    sendErrorMsg(sender ,e.getMessage());
+                }
                 break;
             case "LU":
                 //listUsers(socket);
@@ -99,9 +110,19 @@ public class Server {
     }
 
     private PrintStream findUser(String user) throws UserNotFoundException {
-        PrintStream out = userOutMap.get(user);
-        if (out == null) {
-            throw new UserNotFoundException(user);
+        PrintStream out = null;
+        Map.Entry channelEntry = null;
+        if (user.startsWith("#")){
+            try {
+                channelEntry = channels.entrySet().stream().filter(c -> c.getKey().equals(user)).toList().get(0);
+            }catch (ArrayIndexOutOfBoundsException e){
+                throw new UserNotFoundException(user);
+            }
+        }else {
+            out = userOutMap.get(user);
+            if (out == null) {
+                throw new UserNotFoundException(user);
+            }
         }
         return out;
     }

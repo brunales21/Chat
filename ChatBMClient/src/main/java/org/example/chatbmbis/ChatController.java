@@ -37,6 +37,7 @@ public class ChatController extends Controller {
         String receptor = receptorChatLabel.getText();
         if (!text.isBlank() && !receptor.isBlank()) {
             addMessageToVBox(new Message(mediator.getUser().getNickname(), textMessageField.getText()));
+            //PRIVMSG MONICA : HOLA SOY BRUNO
             String message = "PRIVMSG " + receptor + " :" + text;
             mediator.sendMessage(message);
             vBoxMessages.setAlignment(Pos.TOP_RIGHT);
@@ -55,6 +56,8 @@ public class ChatController extends Controller {
     }
 
     public void addMessageToVBox(Message message) {
+
+        System.out.println(message);
         Label messageLabel;
         if (message.getSender().equals(receptorChatLabel.getText()) || message.getSender().equals(mediator.getUser().getNickname()) || message.getTargetChannel().equals(receptorChatLabel.getText())) {
             if (message.getSender().equals(mediator.getUser().getNickname())) {

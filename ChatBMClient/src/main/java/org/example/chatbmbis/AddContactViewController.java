@@ -47,8 +47,16 @@ public class AddContactViewController extends Controller {
     public void onClickButtonRight() {
         if (!nicknameTextField.getText().isEmpty()) {
             if (nicknameTextField.getPromptText().equals("Nombre canal")) {
-                mediator.addContactItem(mediator.getChatController().getvBoxGroup(), "#"+nicknameTextField.getText());
                 mediator.sendMessage("JOIN #"+nicknameTextField.getText());
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                if (mediator.existsUser()){
+                    mediator.addContactItem(mediator.getChatController().getvBoxGroup(), "#"+nicknameTextField.getText());
+                }
+
             } else if (nicknameTextField.getPromptText().equals("Nombre usuario")) {
                 mediator.deleteContactItem(nicknameTextField.getText());
             }

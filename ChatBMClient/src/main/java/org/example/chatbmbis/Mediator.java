@@ -99,6 +99,7 @@ public class Mediator {
         String[] headerParts = Utils.split(message);
         Message messageObj;
 
+        System.out.println(message);
         if (isErrorMessage(message)) {
             existsUser=false;
             Platform.runLater(()->{
