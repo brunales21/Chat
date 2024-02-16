@@ -7,11 +7,13 @@ import java.util.*;
 public class User extends Client {
     private final String nickname;
     private final Map<String, List<Message>> chatMessagesMap;
+    private final List<String> contacts;
     private final Mediator mediator;
 
     public User(String nickname, String hostname, int port) {
         super(hostname, port);
         this.nickname = nickname;
+        this.contacts = new ArrayList<>();
         chatMessagesMap = new HashMap<>();
         mediator = Mediator.getInstance();
     }
@@ -19,6 +21,7 @@ public class User extends Client {
     public void register(String nickname) {
         sendMessage("REGISTER " + nickname);
     }
+
 
     public void ingresar(String nickname) {
         register(nickname);
@@ -74,6 +77,14 @@ public class User extends Client {
 
     public Mediator getMediator() {
         return mediator;
+    }
+
+    public Map<String, List<Message>> getChatMessagesMap() {
+        return chatMessagesMap;
+    }
+
+    public List<String> getContacts() {
+        return contacts;
     }
 
     @Override

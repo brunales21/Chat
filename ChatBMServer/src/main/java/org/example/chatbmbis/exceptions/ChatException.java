@@ -1,4 +1,4 @@
-package org.example.chatbmbis;
+package org.example.chatbmbis.exceptions;
 
 public class ChatException extends Exception {
     public ChatException(String arg) {

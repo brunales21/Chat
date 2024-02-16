@@ -1,5 +1,9 @@
 package org.example.chatbmbis;
 
+import org.example.chatbmbis.exceptions.ChatException;
+import org.example.chatbmbis.exceptions.ChatNotFoundException;
+import org.example.chatbmbis.exceptions.ChatRepeatedException;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -221,7 +225,6 @@ public class Server {
 
     public void sendMessage(String sender, String receptor, String text) {
         userOutMap.get(receptor).println(sender + " :" + text);
-        //userOutMap.get(sender).println(sender + " :" + text);
 
     }
 

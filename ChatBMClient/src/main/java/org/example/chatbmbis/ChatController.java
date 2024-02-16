@@ -93,9 +93,25 @@ public class ChatController extends Controller {
         itemContactController.setNicknameLabelText(nickname);
 
         // Añadir el nuevo nodo al final de la lista de nodos hijos del vBoxPrivate
-        vBox.getChildren().add(parent);
-        parent.setUserData(loader);
+        Parent finalParent = parent;
+        Platform.runLater(() -> {
+            vBox.getChildren().add(finalParent);
+            finalParent.setUserData(loader);
+        });
     }
+
+
+    // Método para verificar si el VBox contiene un nodo por su nombre
+    public boolean containsItemContact(String nombre) {
+        for (Node nodo : vBoxPrivate.getChildren()) {
+            if (nodo.getUserData() instanceof String &&
+                    ((String) nodo.getUserData()).equals(nombre)) {
+                return true;
+            }
+        }
+        return false;  // Devuelve false si no se encuentra un nodo con el nombre dado
+    }
+
 
     public void removeContactItem(String nickname) {
         ObservableList<Node> children = vBoxPrivate.getChildren();

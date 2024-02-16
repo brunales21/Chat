@@ -98,36 +98,50 @@ public class Mediator {
     public void receiveMessage(String message) {
         String[] messageParts = Utils.split(message);
         Message messageObj;
-        System.out.println(message);
         if (isErrorMessage(message)) {
             actionApproved = false;
-            Platform.runLater(() -> {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("");
-                alert.setContentText(messageParts[1]);
-                alert.showAndWait();
-            });
-
-        } else if (messageParts[0].equals("ok")) {
+            instanceErrWindow(messageParts[1]);
+            return;
+        } else if (messageApproved(messageParts[0])) {
             actionApproved = true;
             return;
         }
 
-        if (messageParts[0].startsWith("#")) {
+        String chatroomName = messageParts[0];
+        String sender = messageParts[1];
+
+        if (chatroomName.startsWith("#")) {
             // "#2dam bruno :hola"
-            messageObj = new Message(messageParts[1], messageParts[0], messageParts[2]);
+            messageObj = new Message(sender, chatroomName, messageParts[2]);
         } else {
             // "bruno :hola"
-            messageObj = new Message(messageParts[0], messageParts[1]);
+            messageObj = new Message(chatroomName, messageParts[1]);
+            if (!user.getContacts().contains(messageObj.getSender()) && !chatController.containsItemContact(messageObj.getSender())) {
+                chatController.addContactItem(chatController.getvBoxPrivate(), messageObj.getSender());
+                getUser().getContacts().add(messageObj.getSender());
+                sendMessage("CREATE "+messageObj.getSender());
+            }
         }
-        user.addMessage(messageParts[0], messageObj);
+        user.addMessage(chatroomName, messageObj);
         // solo añadir al vbox del chat si este está abierto
-        if (chatController.getReceptorChatLabel().getText().equals(messageParts[0])) {
+        if (chatController.getReceptorChatLabel().getText().equals(chatroomName)) {
             chatController.addMessageToVBox(messageObj);
         }
 
     }
 
+    private void instanceErrWindow(String message) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("");
+            alert.setContentText(message);
+            alert.showAndWait();
+        });
+    }
+
+    private boolean messageApproved(String message) {
+        return message.equals("ok");
+    }
     private boolean isErrorMessage(String message) {
         if (message.split(" ")[0].equals("ERROR")) {
             return true;

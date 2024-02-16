@@ -1,4 +1,4 @@
-package org.example.chatbmbis;
+package org.example.chatbmbis.exceptions;
 
 public class ChatNotFoundException extends ChatException {
     private String nickname;

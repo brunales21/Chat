@@ -22,26 +22,30 @@ public class AddContactViewController extends Controller {
 
     @FXML
     private void onClickButtonLeft() {
-        if (!nicknameTextField.getText().isEmpty()) {
+        String chatroomName = nicknameTextField.getText();
+        if (!chatroomName.isEmpty()) {
             if (nicknameTextField.getPromptText().equals("Nombre canal")) {
-                mediator.sendMessage("CREATE #" + nicknameTextField.getText());
+                mediator.sendMessage("CREATE #" + chatroomName);
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
                 if (mediator.actionApproved()) {
-                    mediator.addContactItem(mediator.getChatController().getvBoxGroup(), "#"+nicknameTextField.getText());
+                    mediator.addContactItem(mediator.getChatController().getvBoxGroup(), "#" + chatroomName);
                 }
             } else if (nicknameTextField.getPromptText().equals("Nombre usuario")) {
-                mediator.sendMessage("CREATE " + nicknameTextField.getText());
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                if (mediator.actionApproved()){
-                    mediator.addContactItem(mediator.getChatController().getvBoxPrivate(), nicknameTextField.getText());
+                if (!chatroomName.equals(mediator.getUser().getNickname())) {
+                    mediator.sendMessage("CREATE " + chatroomName);
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    if (mediator.actionApproved()) {
+                        mediator.getUser().getContacts().add(chatroomName);
+                        mediator.addContactItem(mediator.getChatController().getvBoxPrivate(), chatroomName);
+                    }
                 }
             }
             nicknameTextField.setText("");
@@ -52,28 +56,30 @@ public class AddContactViewController extends Controller {
 
     @FXML
     public void onClickButtonRight() {
-        if (!nicknameTextField.getText().isEmpty()) {
+        String chatName = nicknameTextField.getText();
+        if (!chatName.isEmpty()) {
             if (nicknameTextField.getPromptText().equals("Nombre canal")) {
-                mediator.sendMessage("JOIN #"+nicknameTextField.getText());
+                mediator.sendMessage("JOIN #" + chatName);
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                if (mediator.actionApproved()){
-                    mediator.addContactItem(mediator.getChatController().getvBoxGroup(), "#"+nicknameTextField.getText());
+                if (mediator.actionApproved()) {
+                    mediator.addContactItem(mediator.getChatController().getvBoxGroup(), "#" + chatName);
                 }
 
             } else if (nicknameTextField.getPromptText().equals("Nombre usuario")) {
-                mediator.sendMessage("DELETE "+nicknameTextField.getText());
+                mediator.sendMessage("DELETE " + chatName);
                 try {
                     // Este hilo espera para que al servidor le de tiempo a enviar la respuesta para validar la acción.
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                if (mediator.actionApproved()){
+                if (mediator.actionApproved()) {
                     mediator.deleteContactItem(nicknameTextField.getText());
+                    mediator.getUser().getContacts().remove(chatName);
                 }
             }
             nicknameTextField.setText("");
