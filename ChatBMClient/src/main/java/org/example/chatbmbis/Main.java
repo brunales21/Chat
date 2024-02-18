@@ -17,8 +17,8 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("chatView.fxml"));
         Scene chatView = new Scene(fxmlLoader.load());
         Stage stageChat = new Stage();
-        stageChat.setScene(chatView);
         stageChat.setTitle("Chat");
+        stageChat.setScene(chatView);
         ChatController chatController = fxmlLoader.getController();
         chatController.setMediator(mediator);
         mediator.setChatController(chatController);
@@ -42,8 +42,8 @@ public class Main extends Application {
         LoginController loginController = fxmlLoader2.getController();
         loginController.setMediator(mediator);
         mediator.setLoginController(loginController);
-        stage.setTitle("Inicio de sesión");
         stage.setScene(scene);
+        stage.setTitle("Inicio de Sesion");
         stage.show();
     }
     public static void main(String[] args) {

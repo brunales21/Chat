@@ -1,11 +1,15 @@
 package org.example.chatbmbis;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class LoginController extends Controller {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class LoginController extends Controller{
     private Mediator mediator;
     @FXML
     Button accessButton;
@@ -15,6 +19,13 @@ public class LoginController extends Controller {
     public LoginController() {
     }
 
+    @FXML
+    private void initialize() {
+        // Aquí se llama al método para internacionalizar el texto del botón
+        Internacionalizacion.convertIntoOtherLenguaje("addButton", accessButton);
+        Internacionalizacion.convertIntoOtherLenguaje("userName", usernameField);
+        Internacionalizacion.convertIntoOtherLenguaje("password", passwordField);
+    }
     @FXML
     private void ingresar() {
         if (!usernameField.getText().isEmpty()) {
@@ -37,4 +48,6 @@ public class LoginController extends Controller {
     public void setMediator(Mediator mediator) {
         this.mediator = mediator;
     }
+
+
 }

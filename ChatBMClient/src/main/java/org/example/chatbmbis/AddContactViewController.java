@@ -5,6 +5,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 public class AddContactViewController extends Controller {
 
     @FXML
@@ -15,6 +18,9 @@ public class AddContactViewController extends Controller {
     private Button button2;
     private Mediator mediator;
 
+    private ResourceBundle bundle = ResourceBundle.getBundle("bundle.messages", Locale.getDefault());
+    private String prompChannelFile = bundle.getString("promChannel");
+    private String prompPrivFile = bundle.getString("promPriv");
 
     public AddContactViewController() {
 
@@ -24,7 +30,7 @@ public class AddContactViewController extends Controller {
     private void onClickButtonLeft() {
         String chatroomName = nicknameTextField.getText();
         if (!chatroomName.isEmpty()) {
-            if (nicknameTextField.getPromptText().equals("Nombre canal")) {
+            if (nicknameTextField.getPromptText().equals(prompChannelFile)) {
                 mediator.sendMessage("CREATE #" + chatroomName);
                 try {
                     Thread.sleep(500);
@@ -34,7 +40,7 @@ public class AddContactViewController extends Controller {
                 if (mediator.actionApproved()) {
                     mediator.addContactItem(mediator.getChatController().getvBoxGroup(), "#" + chatroomName);
                 }
-            } else if (nicknameTextField.getPromptText().equals("Nombre usuario")) {
+            } else if (nicknameTextField.getPromptText().equals(prompPrivFile)) {
                 if (!chatroomName.equals(mediator.getUser().getNickname())) {
                     mediator.sendMessage("CREATE " + chatroomName);
                     try {
@@ -58,7 +64,7 @@ public class AddContactViewController extends Controller {
     public void onClickButtonRight() {
         String chatName = nicknameTextField.getText();
         if (!chatName.isEmpty()) {
-            if (nicknameTextField.getPromptText().equals("Nombre canal")) {
+            if (nicknameTextField.getPromptText().equals(prompChannelFile)) {
                 mediator.sendMessage("JOIN #" + chatName);
                 try {
                     Thread.sleep(500);
@@ -69,7 +75,7 @@ public class AddContactViewController extends Controller {
                     mediator.addContactItem(mediator.getChatController().getvBoxGroup(), "#" + chatName);
                 }
 
-            } else if (nicknameTextField.getPromptText().equals("Nombre usuario")) {
+            } else if (nicknameTextField.getPromptText().equals(prompPrivFile)) {
                 mediator.sendMessage("DELETE " + chatName);
                 try {
                     // Este hilo espera para que al servidor le de tiempo a enviar la respuesta para validar la acción.

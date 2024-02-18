@@ -6,7 +6,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public class Mediator {
     private static Mediator instance;
@@ -75,9 +77,15 @@ public class Mediator {
                 addController = (AddContactViewController) entry.getValue();
             }
         }
-        addController.setPromptText(promptText);
-        addController.getButton1().setText(opt1);
-        addController.getButton2().setText(opt2);
+
+        ResourceBundle bundle = ResourceBundle.getBundle("bundle.messages", Locale.getDefault());
+        String promptTextInter = bundle.getString(promptText);
+        String opt1Inter = bundle.getString(opt1);
+        String opt2Inter = bundle.getString(opt2);
+
+        addController.setPromptText(promptTextInter);
+        addController.getButton1().setText(opt1Inter);
+        addController.getButton2().setText(opt2Inter);
 
         stage.setResizable(false);
         stage.show();

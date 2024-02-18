@@ -15,6 +15,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 
 public class ChatController extends Controller {
@@ -25,10 +27,15 @@ public class ChatController extends Controller {
     private Label receptorChatLabel, userNameLabel;
     @FXML
     private TextField textMessageField;
+    private Locale locale = Locale.getDefault();
+    private ResourceBundle bundle = ResourceBundle.getBundle("bundle.messages",locale);
 
     @FXML
     protected void onClickChannelOptions() {
-        createAddView("Nombre canal", "Crear", "Unirme");
+        String prom ="promChannel";
+        String opt1 ="buttonIzqChannel";
+        String opt2 ="buttonDrchChannel";
+        createAddView(prom, opt1, opt2);
     }
 
     @FXML
@@ -47,7 +54,10 @@ public class ChatController extends Controller {
 
     @FXML
     private void onClickPrivChatOptions() {
-        createAddView("Nombre usuario", "Añadir usuario", "Borrar usuario");
+        String prom = "promPriv";
+        String opt1 ="buttonIzqPriv";
+        String opt2 ="buttonDrchPriv";
+        createAddView(prom, opt1,opt2);
     }
 
 
