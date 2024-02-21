@@ -1,13 +1,11 @@
 package org.example.chatbmbis;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.io.IOException;
 
 public class LoginController extends Controller{
     private Mediator mediator;
@@ -22,14 +20,19 @@ public class LoginController extends Controller{
     @FXML
     private void initialize() {
         // Aquí se llama al método para internacionalizar el texto del botón
-        Internacionalizacion.convertIntoOtherLenguaje("addButton", accessButton);
-        Internacionalizacion.convertIntoOtherLenguaje("userName", usernameField);
-        Internacionalizacion.convertIntoOtherLenguaje("password", passwordField);
+        Internacionalizacion.convertIntoOtherLanguage("addButton", accessButton);
+        Internacionalizacion.convertIntoOtherLanguage("userName", usernameField);
+        Internacionalizacion.convertIntoOtherLanguage("password", passwordField);
     }
     @FXML
     private void ingresar() {
         if (!usernameField.getText().isEmpty()) {
-            mediator.setUser(new User(usernameField.getText(), "localhost", 9001));
+            try {
+                mediator.setUser(new User(usernameField.getText(), "localhost", 9001));
+            } catch (IOException e) {
+                ErrorWindow.instanceErrorWindow("No se pudo conectar al servidor.");
+                return;
+            }
             mediator.ingresar(usernameField.getText());
             closeLoginView();
             mediator.createChatView(usernameField.getText());

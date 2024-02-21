@@ -40,7 +40,8 @@ public class Server {
         this.serverSocket = new ServerSocket(port);
         while (true) {
             Socket socket = serverSocket.accept();
-            new Thread(() -> clientHandler(socket)).start();
+            Thread thread = new Thread(() -> clientHandler(socket));
+            thread.start();
         }
     }
 
@@ -105,6 +106,14 @@ public class Server {
                 } catch (ChatNotFoundException e) {
                     sendErrorMsg(sender, e.getMessage());
                 }
+                break;
+            case "EXIT":
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
             case "LU":
                 //listUsers(socket);
             case "LC":
@@ -124,8 +133,8 @@ public class Server {
 
     }
 
-    private void deletePrivChat(String sender, String user2) throws ChatNotFoundException {
-        privateChats.remove(getPrivChatByName(sender, user2));
+    private void deletePrivChat(String sender, String chatName) throws ChatNotFoundException {
+        privateChats.remove(getPrivChatByName(sender, chatName));
     }
 
     private boolean existsUser(String nickname) throws ChatNotFoundException {
@@ -204,6 +213,8 @@ public class Server {
             throw new ChatNotFoundException(user2);
         }
     }
+
+
 
 
     public static String[] splitParts(String header) {

@@ -28,29 +28,32 @@ public class AddContactViewController extends Controller {
 
     @FXML
     private void onClickButtonLeft() {
-        String chatroomName = nicknameTextField.getText();
-        if (!chatroomName.isEmpty()) {
+        String name = nicknameTextField.getText();
+        if (!name.isEmpty()) {
+            StringBuilder channelName;
             if (nicknameTextField.getPromptText().equals(prompChannelFile)) {
-                mediator.sendMessage("CREATE #" + chatroomName);
+                channelName = new StringBuilder("#");
+                channelName.append(name);
+                mediator.sendMessage("CREATE " + channelName);
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
                 if (mediator.actionApproved()) {
-                    mediator.addContactItem(mediator.getChatController().getvBoxGroup(), "#" + chatroomName);
+                    mediator.addContactItem(mediator.getChatController().getvBoxGroup(), channelName.toString());
                 }
             } else if (nicknameTextField.getPromptText().equals(prompPrivFile)) {
-                if (!chatroomName.equals(mediator.getUser().getNickname())) {
-                    mediator.sendMessage("CREATE " + chatroomName);
+                if (!name.equals(mediator.getUser().getNickname())) {
+                    mediator.sendMessage("CREATE " + name);
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
                     if (mediator.actionApproved()) {
-                        mediator.getUser().getContacts().add(chatroomName);
-                        mediator.addContactItem(mediator.getChatController().getvBoxPrivate(), chatroomName);
+                        mediator.getUser().getContacts().add(name);
+                        mediator.addContactItem(mediator.getChatController().getvBoxPrivate(), name);
                     }
                 }
             }
@@ -75,18 +78,6 @@ public class AddContactViewController extends Controller {
                     mediator.addContactItem(mediator.getChatController().getvBoxGroup(), "#" + chatName);
                 }
 
-            } else if (nicknameTextField.getPromptText().equals(prompPrivFile)) {
-                mediator.sendMessage("DELETE " + chatName);
-                try {
-                    // Este hilo espera para que al servidor le de tiempo a enviar la respuesta para validar la acción.
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                if (mediator.actionApproved()) {
-                    mediator.deleteContactItem(nicknameTextField.getText());
-                    mediator.getUser().getContacts().remove(chatName);
-                }
             }
             nicknameTextField.setText("");
         }

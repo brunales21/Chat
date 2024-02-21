@@ -9,8 +9,9 @@ public class User extends Client {
     private final Map<String, List<Message>> chatMessagesMap;
     private final List<String> contacts;
     private final Mediator mediator;
+    private final String persitenceFile = "persistence.bin";
 
-    public User(String nickname, String hostname, int port) {
+    public User(String nickname, String hostname, int port) throws IOException {
         super(hostname, port);
         this.nickname = nickname;
         this.contacts = new ArrayList<>();

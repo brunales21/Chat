@@ -68,6 +68,10 @@ public class Mediator {
         this.user = user;
     }
 
+    public void exit() {
+
+    }
+
     public void createAddView(String promptText, String opt1, String opt2) {
         Stage stage = null;
         AddContactViewController addController = null;
@@ -102,13 +106,17 @@ public class Mediator {
         chatController.emptyVBoxMessages();
     }
 
+    public void deleteContact(String name) {
+        deleteContactItem(name);
+        getUser().getContacts().remove(name);
+    }
 
     public void receiveMessage(String message) {
         String[] messageParts = Utils.split(message);
         Message messageObj;
         if (isErrorMessage(message)) {
             actionApproved = false;
-            instanceErrWindow(messageParts[1]);
+            ErrorWindow.instanceErrorWindow(messageParts[1]);
             return;
         } else if (messageApproved(messageParts[0])) {
             actionApproved = true;

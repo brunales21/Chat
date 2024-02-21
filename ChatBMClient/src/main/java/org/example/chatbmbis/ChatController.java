@@ -28,13 +28,13 @@ public class ChatController extends Controller {
     @FXML
     private TextField textMessageField;
     private Locale locale = Locale.getDefault();
-    private ResourceBundle bundle = ResourceBundle.getBundle("bundle.messages",locale);
+    private ResourceBundle bundle = ResourceBundle.getBundle("bundle.messages", locale);
 
     @FXML
     protected void onClickChannelOptions() {
-        String prom ="promChannel";
-        String opt1 ="buttonIzqChannel";
-        String opt2 ="buttonDrchChannel";
+        String prom = "promChannel";
+        String opt1 = "buttonIzqChannel";
+        String opt2 = "buttonDrchChannel";
         createAddView(prom, opt1, opt2);
     }
 
@@ -55,9 +55,9 @@ public class ChatController extends Controller {
     @FXML
     private void onClickPrivChatOptions() {
         String prom = "promPriv";
-        String opt1 ="buttonIzqPriv";
-        String opt2 ="buttonDrchPriv";
-        createAddView(prom, opt1,opt2);
+        String opt1 = "buttonIzqPriv";
+        String opt2 = "buttonDrchPriv";
+        createAddView(prom, opt1, opt2);
     }
 
 
@@ -94,6 +94,7 @@ public class ChatController extends Controller {
             throw new RuntimeException(e);
         }
         ItemContactController itemContactController = loader.getController();
+        itemContactController.setMediator(mediator);
         itemContactController.setCallback(() -> {
             setReceptorChatLabelText(nickname);
             vBoxMessages.getChildren().clear();
@@ -114,8 +115,7 @@ public class ChatController extends Controller {
     // Método para verificar si el VBox contiene un nodo por su nombre
     public boolean containsItemContact(String nombre) {
         for (Node nodo : vBoxPrivate.getChildren()) {
-            if (nodo.getUserData() instanceof String &&
-                    ((String) nodo.getUserData()).equals(nombre)) {
+            if (nodo.getUserData() instanceof String && ((String) nodo.getUserData()).equals(nombre)) {
                 return true;
             }
         }
@@ -124,7 +124,12 @@ public class ChatController extends Controller {
 
 
     public void removeContactItem(String nickname) {
-        ObservableList<Node> children = vBoxPrivate.getChildren();
+        ObservableList<Node> children;
+        if (nickname.startsWith("#")) {
+            children = vBoxGroup.getChildren();
+        } else {
+            children = vBoxPrivate.getChildren();
+        }
         // Iterar sobre los nodos y eliminar el que tenga el nickname deseado
         for (Node child : children) {
             if (child instanceof Parent) {

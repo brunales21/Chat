@@ -8,11 +8,13 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 public class Main extends Application {
+
+    private Mediator mediator;
     @Override
     public void start(Stage stage) throws IOException {
 
         Mediator mediator = Mediator.getInstance();
-
+        setMediator(mediator);
         //Crear vista chat
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("chatView.fxml"));
         Scene chatView = new Scene(fxmlLoader.load());
@@ -45,7 +47,30 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.setTitle("Inicio de Sesion");
         stage.show();
+
+        // Configurar el evento de cierre de la ventana principal
+        stage.setOnCloseRequest(event -> {
+            // Realizar limpieza o acciones previas al cierre
+            try {
+                if (mediator.getUser() != null) {
+                    mediator.getUser().getSocket().close();
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            // Cerrar la aplicación de manera segura
+            System.exit(0);
+        });
     }
+
+    public Mediator getMediator() {
+        return mediator;
+    }
+
+    public void setMediator(Mediator mediator) {
+        this.mediator = mediator;
+    }
+
     public static void main(String[] args) {
         launch();
     }

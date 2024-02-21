@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 
 public class Internacionalizacion {
 
-    public static void convertIntoOtherLenguaje(String text,Node node){
+    public static void convertIntoOtherLanguage(String text, Node node) {
 
         //Coger idioma del sistema
         Locale locale = Locale.getDefault();
@@ -28,11 +28,8 @@ public class Internacionalizacion {
             ((Label) node).setText(message);
         } else if (node instanceof Button) {
             ((Button) node).setText(message);
-        } else if (node instanceof TextField){
+        } else if (node instanceof TextField) {
             ((TextField) node).setPromptText(message);
-        }else {
-
-
         }
 
     }
