@@ -47,10 +47,15 @@ public class Server {
 
     private void clientHandler(Socket socket) {
         Scanner in = null;
+        boolean firstTime = true;
         try {
             in = new Scanner(socket.getInputStream());
             String header;
             while (!socket.isClosed()) {
+                if (firstTime) {
+                    showFileContent(socket, "welcome.txt");
+                    firstTime = false;
+                }
                 if (in.hasNextLine()) {
                     header = in.nextLine();
                     processCommand(socket, header);
@@ -64,12 +69,16 @@ public class Server {
     private void processCommand(Socket socket, String header) {
         System.out.println("Header que recibe servidor: '" + header + "' de " + socketUserMap.get(socket));
         String[] headerParts = splitParts(header);
-        String command = headerParts[0].toUpperCase();
-        String arg = headerParts[1];
         String sender = socketUserMap.get(socket);
+        String command = headerParts[0].toUpperCase();
+        String arg = "";
+        if (headerParts.length > 1) {
+            arg = headerParts[1];
+        }
         switch (command) {
             case "REGISTER":
                 register(arg, socket);
+                sendMessage(arg, "Bienvenido, " + arg);
                 break;
             case "CREATE":
                 try {
@@ -86,14 +95,14 @@ public class Server {
                 break;
             case "PRIVMSG":
                 if (arg.startsWith("#")) {
-                    broadcast(sender, headerParts[1], headerParts[2]);
+                    broadcast(sender, arg, headerParts[2]);
                 } else {
                     sendMessage(sender, arg, headerParts[2]);
                 }
                 break;
             case "JOIN":
                 try {
-                    join(sender, headerParts[1]);
+                    join(sender, arg);
                     sendOk(sender);
                 } catch (ChatNotFoundException e) {
                     sendErrorMsg(sender, e.getMessage());
@@ -113,11 +122,20 @@ public class Server {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-
+                socketUserMap.remove(socket);
+                userOutMap.remove(sender);
+                break;
             case "LU":
-                //listUsers(socket);
+                listUsers(sender);
+                break;
             case "LC":
-                //listChannels(socket);
+                listChannels(sender);
+                break;
+            case "HELP":
+                showFileContent(socket, "help.txt");
+                break;
+            default:
+                sendMessage(socket, "El comando " + command + " no existe.");
         }
 
     }
@@ -125,8 +143,9 @@ public class Server {
     private void sendOk(String sender) {
         sendMessage(sender, "ok");
     }
+
     private void findReceptor(String nickname) throws ChatNotFoundException {
-        if (userOutMap.get(nickname) != null || existsChannel(nickname) ) {
+        if (userOutMap.get(nickname) != null || existsChannel(nickname)) {
             return;
         }
         throw new ChatNotFoundException(nickname);
@@ -164,6 +183,7 @@ public class Server {
             throw new ChatNotFoundException(user2);
         }
     }
+
     private void sendErrorMsg(String sender, String errorMessage) {
         // le rebota el msj
         userOutMap.get(sender).println("ERROR :" + errorMessage);
@@ -202,7 +222,6 @@ public class Server {
 
     private void createPrivChat(String user1, String user2) throws ChatRepeatedException, ChatNotFoundException {
         if (existsUser(user2)) {
-            System.out.println(user2 + " EXISTE !!");
             PrivateChat privateChat = new PrivateChat(user1, user2);
             if (privateChats.contains(privateChat)) {
                 throw new ChatRepeatedException(user2);
@@ -213,8 +232,6 @@ public class Server {
             throw new ChatNotFoundException(user2);
         }
     }
-
-
 
 
     public static String[] splitParts(String header) {
@@ -239,8 +256,54 @@ public class Server {
 
     }
 
+    public void sendMessage(Socket socket, String message) {
+        PrintStream out = null;
+        try {
+            out = new PrintStream(socket.getOutputStream());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        out.println(message);
+
+    }
+
     public void sendMessage(String sender, String text) {
         userOutMap.get(sender).println(text);
+    }
+
+    private void listChannels(String sender) {
+        channels.forEach(c -> userOutMap.get(sender).println(c.getName()));
+    }
+
+    private void listUsers(String sender) {
+        socketUserMap.values().forEach(u -> userOutMap.get(sender).println("- " + u));
+    }
+
+    private void showFileContent(String sender, String fileName) {
+        try {
+            BufferedReader in = new BufferedReader(new FileReader(fileName));
+            String line;
+            while ((line = in.readLine()) != null) {
+                System.out.println(line);
+                sendMessage(sender, line);
+            }
+            System.out.println("line: " + line);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void showFileContent(Socket socket, String fileName) {
+        try {
+            BufferedReader in = new BufferedReader(new FileReader(fileName));
+            String line;
+            while ((line = in.readLine()) != null) {
+                System.out.println(line);
+                sendMessage(socket, line);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void main(String[] args) {

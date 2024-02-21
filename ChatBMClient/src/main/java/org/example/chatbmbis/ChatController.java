@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -169,8 +170,15 @@ public class ChatController extends Controller {
     }
 
     @FXML
-    private void exitAccount() {
-
+    private void onClickExit() {
+        mediator.getUser().getChatDAO().saveChatMessages(mediator.getUser().getChatMessagesMap());
+        mediator.sendMessage("EXIT");
+        try {
+            mediator.getUser().getSocket().close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        getStage().close();
     }
 
     public void createItem(FXMLLoader itemContactController, String nickName) {
@@ -234,5 +242,9 @@ public class ChatController extends Controller {
 
     public void setvBoxMessages(VBox vBoxMessages) {
         this.vBoxMessages = vBoxMessages;
+    }
+
+    private Stage getStage() {
+        return (Stage) receptorChatLabel.getScene().getWindow();
     }
 }

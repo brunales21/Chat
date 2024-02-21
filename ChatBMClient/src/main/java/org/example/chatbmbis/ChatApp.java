@@ -3,11 +3,10 @@ package org.example.chatbmbis;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-public class Main extends Application {
+public class ChatApp extends Application {
 
     private Mediator mediator;
     @Override
@@ -16,7 +15,7 @@ public class Main extends Application {
         Mediator mediator = Mediator.getInstance();
         setMediator(mediator);
         //Crear vista chat
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("chatView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(ChatApp.class.getResource("chatView.fxml"));
         Scene chatView = new Scene(fxmlLoader.load());
         Stage stageChat = new Stage();
         stageChat.setTitle("Chat");
@@ -26,8 +25,10 @@ public class Main extends Application {
         mediator.setChatController(chatController);
         mediator.getView().put(stageChat, chatController);
 
+        setCloseWindow(stageChat);
+
         //Crear vista añadir usuario
-        FXMLLoader fxmlLoader3 = new FXMLLoader(Main.class.getResource("addContactView.fxml"));
+        FXMLLoader fxmlLoader3 = new FXMLLoader(ChatApp.class.getResource("addContactView.fxml"));
         Scene adduserView = new Scene(fxmlLoader3.load());
         Stage stageUser = new Stage();
         stageUser.setScene(adduserView);
@@ -39,7 +40,7 @@ public class Main extends Application {
 
 
         //cread la vista login
-        FXMLLoader fxmlLoader2 = new FXMLLoader(Main.class.getResource("loginView.fxml"));
+        FXMLLoader fxmlLoader2 = new FXMLLoader(ChatApp.class.getResource("loginView.fxml"));
         Scene scene = new Scene(fxmlLoader2.load(), 350, 500);
         LoginController loginController = fxmlLoader2.getController();
         loginController.setMediator(mediator);
@@ -48,12 +49,18 @@ public class Main extends Application {
         stage.setTitle("Inicio de Sesion");
         stage.show();
 
+        setCloseWindow(stage);
+
+
+    }
+
+    private void setCloseWindow(Stage stage) {
         // Configurar el evento de cierre de la ventana principal
         stage.setOnCloseRequest(event -> {
             // Realizar limpieza o acciones previas al cierre
             try {
                 if (mediator.getUser() != null) {
-                    mediator.getUser().getSocket().close();
+                    mediator.getUser().getSocket() .close();
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);

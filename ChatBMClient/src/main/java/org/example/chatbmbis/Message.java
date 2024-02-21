@@ -1,8 +1,10 @@
 package org.example.chatbmbis;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalTime;
 
-public class Message {
+public class Message implements Serializable {
     private String sender;
     private String targetChannel;
     private String text;

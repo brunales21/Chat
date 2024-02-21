@@ -1,0 +1,19 @@
+Comando para ingresar
+    REGISTER pepe
+
+Comandos de creacion de canal
+    CREATE #canal -> crear canal
+    CREATE pepe -> anadir a pepe a lista de contactos
+
+Comando para unirse a canal
+    JOIN #canal -> unirse a canal
+
+Comandos de mensaje de texto
+    PRIVMSG #canal :hola que tal grupo
+    PRIVMSG pepe :hola pepe
+
+Comando para listar contactos
+    LU
+
+Comando para listar canales
+    LC

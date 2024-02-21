@@ -1,14 +1,9 @@
 package org.example.chatbmbis;
 
-import javafx.application.Platform;
-import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class Mediator {
     private static Mediator instance;
@@ -68,9 +63,6 @@ public class Mediator {
         this.user = user;
     }
 
-    public void exit() {
-
-    }
 
     public void createAddView(String promptText, String opt1, String opt2) {
         Stage stage = null;
@@ -113,64 +105,54 @@ public class Mediator {
 
     public void receiveMessage(String message) {
         String[] messageParts = Utils.split(message);
+        String keyWord = message.split(" ")[0];
         Message messageObj;
-        if (isErrorMessage(message)) {
-            actionApproved = false;
+        if (actionRefused(keyWord)) {
+            // si la accion fue rechazada
+            setActionApproved(false);
             ErrorWindow.instanceErrorWindow(messageParts[1]);
-            return;
-        } else if (messageApproved(messageParts[0])) {
-            actionApproved = true;
-            return;
-        }
-
-        String chatroomName = messageParts[0];
-        String sender = messageParts[1];
-
-        if (chatroomName.startsWith("#")) {
-            // "#2dam bruno :hola"
-            messageObj = new Message(sender, chatroomName, messageParts[2]);
+        } else if (actionApproved(keyWord)) {
+            // si fue aprobada
+            setActionApproved(true);
         } else {
-            // "bruno :hola"
-            messageObj = new Message(chatroomName, messageParts[1]);
-            if (!user.getContacts().contains(messageObj.getSender()) && !chatController.containsItemContact(messageObj.getSender())) {
-                chatController.addContactItem(chatController.getvBoxPrivate(), messageObj.getSender());
-                getUser().getContacts().add(messageObj.getSender());
-                sendMessage("CREATE "+messageObj.getSender());
+            // si tiene que procesar un msj de texto
+            String chatroomName = messageParts[0];
+            String sender = messageParts[1];
+            System.out.println(chatroomName);
+            System.out.println(sender);
+
+            if (chatroomName.startsWith("#")) {
+                // "#2dam bruno :hola"
+                messageObj = new Message(sender, chatroomName, messageParts[2]);
+            } else {
+                // "bruno :hola"
+                messageObj = new Message(chatroomName, messageParts[1]);
+                if (!user.getContacts().contains(messageObj.getSender()) && !chatController.containsItemContact(messageObj.getSender())) {
+                    chatController.addContactItem(chatController.getvBoxPrivate(), messageObj.getSender());
+                    getUser().getContacts().add(messageObj.getSender());
+                    sendMessage("CREATE "+messageObj.getSender());
+                }
+            }
+            user.addMessage(chatroomName, messageObj);
+            // solo añadir al vbox del chat si este está abierto
+            if (chatController.getReceptorChatLabel().getText().equals(chatroomName)) {
+                chatController.addMessageToVBox(messageObj);
             }
         }
-        user.addMessage(chatroomName, messageObj);
-        // solo añadir al vbox del chat si este está abierto
-        if (chatController.getReceptorChatLabel().getText().equals(chatroomName)) {
-            chatController.addMessageToVBox(messageObj);
-        }
+
+
 
     }
 
-    private void instanceErrWindow(String message) {
-        Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("");
-            alert.setContentText(message);
-            alert.showAndWait();
-        });
+    private boolean actionApproved(String message) {
+        return message.equals("ok") || message.equals("Bienvenido,") || message.equals("Bienvenido!") || message.equals("Si");
     }
-
-    private boolean messageApproved(String message) {
-        return message.equals("ok");
-    }
-    private boolean isErrorMessage(String message) {
-        if (message.split(" ")[0].equals("ERROR")) {
-            return true;
-        }
-        return false;
+    private boolean actionRefused(String message) {
+        return message.equals("ERROR");
     }
 
     public User getUser() {
         return user;
-    }
-
-    public AddContactViewController getAddViewController() {
-        return addViewController;
     }
 
     public void setAddViewController(AddContactViewController addViewController) {
@@ -185,40 +167,12 @@ public class Mediator {
         this.chatController = chatController;
     }
 
-    public ItemContactController getItemContactController() {
-        return itemContactController;
-    }
-
-    public void setItemContactController(ItemContactController itemContactController) {
-        this.itemContactController = itemContactController;
-    }
-
     public Map<Stage, Controller> getView() {
         return view;
     }
 
-    public void setView(Map<Stage, Controller> view) {
-        this.view = view;
-    }
-
-    public static void setInstance(Mediator instance) {
-        Mediator.instance = instance;
-    }
-
-    public LoginController getLoginController() {
-        return loginController;
-    }
-
     public void setLoginController(LoginController loginController) {
         this.loginController = loginController;
-    }
-
-    public Map<ItemContactController, String> getItemContactControllers() {
-        return itemContactControllers;
-    }
-
-    public void setItemContactControllers(Map<ItemContactController, String> itemContactControllers) {
-        this.itemContactControllers = itemContactControllers;
     }
 
     public boolean actionApproved() {

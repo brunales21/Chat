@@ -9,7 +9,7 @@ public class User extends Client {
     private final Map<String, List<Message>> chatMessagesMap;
     private final List<String> contacts;
     private final Mediator mediator;
-    private final String persitenceFile = "persistence.bin";
+    private final ChatDAO chatDAO;
 
     public User(String nickname, String hostname, int port) throws IOException {
         super(hostname, port);
@@ -17,6 +17,7 @@ public class User extends Client {
         this.contacts = new ArrayList<>();
         chatMessagesMap = new HashMap<>();
         mediator = Mediator.getInstance();
+        chatDAO = new FileChatDAO("messages.bin");
     }
 
     public void register(String nickname) {
@@ -86,6 +87,10 @@ public class User extends Client {
 
     public List<String> getContacts() {
         return contacts;
+    }
+
+    public ChatDAO getChatDAO() {
+        return chatDAO;
     }
 
     @Override
