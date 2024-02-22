@@ -21,14 +21,6 @@ public class Mediator {
 
     }
 
-    public static synchronized Mediator getInstance(User user) {
-        if (instance == null) {
-            instance = new Mediator();
-            instance.setUser(user);
-        }
-        return instance;
-    }
-
     public static synchronized Mediator getInstance() {
         if (instance == null) {
             instance = new Mediator();
@@ -62,7 +54,6 @@ public class Mediator {
     public void setUser(User user) {
         this.user = user;
     }
-
 
     public void createAddView(String promptText, String opt1, String opt2) {
         Stage stage = null;
@@ -98,12 +89,9 @@ public class Mediator {
         chatController.emptyVBoxMessages();
     }
 
-    public void deleteContact(String name) {
-        deleteContactItem(name);
-        getUser().getContacts().remove(name);
-    }
 
     public void receiveMessage(String message) {
+        //System.out.println(message);
         String[] messageParts = Utils.split(message);
         String keyWord = message.split(" ")[0];
         Message messageObj;
@@ -116,28 +104,24 @@ public class Mediator {
             setActionApproved(true);
         } else {
             // si tiene que procesar un msj de texto
-            Arrays.stream(messageParts).forEach(a -> System.out.println(a));
-            String chatroomName = messageParts[0];
-            String sender = messageParts[1];
-            System.out.println(chatroomName);
-            System.out.println(sender);
-
-            if (chatroomName.startsWith("#")) {
+            if (messageParts[0].startsWith("#")) {
                 // "#2dam bruno :hola"
-                messageObj = new Message(sender, chatroomName, messageParts[2]);
+                messageObj = new Message(messageParts[1], messageParts[0], messageParts[2]);
             } else {
                 // "bruno :hola"
-                messageObj = new Message(chatroomName, messageParts[1]);
-                if (!user.getContacts().contains(messageObj.getSender()) && !chatController.containsItemContact(messageObj.getSender())) {
+                messageObj = new Message(messageParts[0], messageParts[1]);
+                if (!chatController.hasContact(messageParts[0])) {
                     chatController.addContactItem(chatController.getvBoxPrivate(), messageObj.getSender());
-                    getUser().getContacts().add(messageObj.getSender());
                     sendMessage("CREATE " + messageObj.getSender());
                 }
             }
-            user.addMessage(chatroomName, messageObj);
-            // solo añadir al vbox del chat si este está abierto
-            if (chatController.getReceptorChatLabel().getText().equals(chatroomName)) {
+            user.addMessage(messageParts[0], messageObj);
+            // si el chat abierto coincide con el emisor del mensaje..
+            if (chatController.getReceptorChatLabel().getText().equals(messageParts[0])) {
                 chatController.addMessageToVBox(messageObj);
+            } else {
+                // si no, mostramos notificacion
+                chatController.getItemContactsMap().get(messageParts[0]).showNotificationImg(true);
             }
         }
 
@@ -145,7 +129,7 @@ public class Mediator {
     }
 
     private boolean actionApproved(String message) {
-        return message.equals("ok") || message.equals("Bienvenido,") || message.equals("Bienvenido!") || message.equals("Si") || message.equals("Diviertete");
+        return message.isEmpty() || message.equals("ok") || message.equals("Bienvenido,") || message.equals("Bienvenido!") || message.equals("Si") || message.equals("Diviertete");
     }
 
     private boolean actionRefused(String message) {

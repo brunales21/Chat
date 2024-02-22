@@ -91,7 +91,6 @@ public class Server {
                 } catch (ChatException e) {
                     sendErrorMsg(sender, e.getMessage());
                 }
-
                 break;
             case "PRIVMSG":
                 if (arg.startsWith("#")) {
@@ -112,6 +111,14 @@ public class Server {
                 try {
                     deletePrivChat(sender, arg);
                     sendOk(sender);
+                } catch (ChatNotFoundException e) {
+                    sendErrorMsg(sender, e.getMessage());
+                }
+                break;
+
+            case "PART":
+                try {
+                    part(sender, arg);
                 } catch (ChatNotFoundException e) {
                     sendErrorMsg(sender, e.getMessage());
                 }
@@ -144,25 +151,16 @@ public class Server {
         sendMessage(sender, "ok");
     }
 
-    private void findReceptor(String nickname) throws ChatNotFoundException {
-        if (userOutMap.get(nickname) != null || existsChannel(nickname)) {
-            return;
-        }
-        throw new ChatNotFoundException(nickname);
-
-    }
-
     private void deletePrivChat(String sender, String chatName) throws ChatNotFoundException {
         privateChats.remove(getPrivChatByName(sender, chatName));
     }
 
-    private boolean existsUser(String nickname) throws ChatNotFoundException {
+    private boolean existsUser(String nickname) {
         return userOutMap.get(nickname) != null;
     }
 
-
-    private boolean existsChannel(String name) {
-        return channels.stream().anyMatch(c -> c.getName().equals(name));
+    private void part(String sender, String channel) throws ChatNotFoundException {
+        getChannelByName(channel).getUsers().remove(sender);
     }
 
     private Channel getChannelByName(String name) throws ChatNotFoundException {
@@ -170,7 +168,6 @@ public class Server {
             Channel channel = channels.stream().filter(c -> c.getName().equals(name)).toList().get(0);
             return channel;
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("CANAL NO EXISTE");
             throw new ChatNotFoundException(name);
         }
     }
@@ -279,19 +276,6 @@ public class Server {
         socketUserMap.values().forEach(u -> userOutMap.get(sender).println("- " + u));
     }
 
-    private void showFileContent(String sender, String fileName) {
-        try {
-            BufferedReader in = new BufferedReader(new FileReader(fileName));
-            String line;
-            while ((line = in.readLine()) != null) {
-                System.out.println(line);
-                sendMessage(sender, line);
-            }
-            System.out.println("line: " + line);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     private void showFileContent(Socket socket, String fileName) {
         try {

@@ -74,6 +74,7 @@ public class User extends Client {
         return messages;
     }
 
+
     public void loadChatMessagesMap() {
         setChatMessagesMap(chatDAO.loadChatMessages());
     }
@@ -84,7 +85,6 @@ public class User extends Client {
     public Mediator getMediator() {
         return mediator;
     }
-
 
     public Map<String, List<Message>> getChatMessagesMap() {
         return chatMessagesMap;

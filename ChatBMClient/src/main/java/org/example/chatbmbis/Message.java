@@ -28,24 +28,12 @@ public class Message implements Serializable {
         return targetChannel;
     }
 
-    public void setTargetChannel(String targetChannel) {
-        this.targetChannel = targetChannel;
-    }
-
     public String getSender() {
         return sender;
     }
 
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
-
     public String getText() {
         return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
     }
 
     public LocalTime getTime() {

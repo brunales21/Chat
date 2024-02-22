@@ -6,6 +6,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
@@ -19,6 +21,12 @@ public class ItemContactController {
     Label nicknameLabel;
     @FXML
     private HBox item;
+    @FXML
+    private ImageView notificationImg;
+
+    public void showNotificationImg(boolean b) {
+        notificationImg.setVisible(b);
+    }
 
 
     private Callback callback = () -> {
@@ -26,8 +34,9 @@ public class ItemContactController {
 
     public void onBorrarSubMenu(ActionEvent actionEvent) {
         if (getNicknameLabelText().startsWith("#")) {
-            // si es un canal lo queremos borrar de local (de momento nadie tiene permisos de eliminar canal)
-            mediator.deleteContact(getNicknameLabelText());
+            // si es un canal, nos salimos
+            mediator.sendMessage("PART " + getNicknameLabelText());
+            mediator.deleteContactItem(getNicknameLabelText());
         } else {
             // si es un chatprivado lo borramos de servidor tambien
             mediator.sendMessage("DELETE " + getNicknameLabelText());
@@ -38,11 +47,12 @@ public class ItemContactController {
                 throw new RuntimeException(e);
             }
             if (mediator.actionApproved()) {
-                mediator.deleteContact(getNicknameLabelText());
+                mediator.deleteContactItem(getNicknameLabelText());
             }
         }
 
     }
+
     @FXML
     public void onClickItem(MouseEvent event) {
         callback.run();
@@ -60,8 +70,8 @@ public class ItemContactController {
         this.nicknameLabel.setText(nickNameLabel);
     }
 
-    public Mediator getMediator() {
-        return mediator;
+    public ImageView getNotificationImg() {
+        return notificationImg;
     }
 
     public void setMediator(Mediator mediator) {

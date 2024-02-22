@@ -16,8 +16,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
 
 public class ChatController extends Controller {
@@ -28,6 +27,7 @@ public class ChatController extends Controller {
     private Label receptorChatLabel, userNameLabel;
     @FXML
     private TextField textMessageField;
+    private Map<String, ItemContactController> itemContactsMap = new HashMap<>();
     private Locale locale = Locale.getDefault();
     private ResourceBundle bundle = ResourceBundle.getBundle("bundle.messages", locale);
 
@@ -96,12 +96,16 @@ public class ChatController extends Controller {
         }
         ItemContactController itemContactController = loader.getController();
         itemContactController.setMediator(mediator);
+        itemContactController.showNotificationImg(false);
         itemContactController.setCallback(() -> {
+            itemContactController.showNotificationImg(false);
             setReceptorChatLabelText(nickname);
             vBoxMessages.getChildren().clear();
             mediator.getUser().getMessages(nickname).forEach(this::addMessageToVBox);
         });
 
+        mediator.getUser().getContacts().add(nickname);
+        itemContactsMap.put(nickname, itemContactController);
         itemContactController.setNicknameLabelText(nickname);
 
         // Añadir el nuevo nodo al final de la lista de nodos hijos del vBoxPrivate
@@ -110,17 +114,6 @@ public class ChatController extends Controller {
             vBox.getChildren().add(finalParent);
             finalParent.setUserData(loader);
         });
-    }
-
-
-    // Método para verificar si el VBox contiene un nodo por su nombre
-    public boolean containsItemContact(String nombre) {
-        for (Node nodo : vBoxPrivate.getChildren()) {
-            if (nodo.getUserData() instanceof String && ((String) nodo.getUserData()).equals(nombre)) {
-                return true;
-            }
-        }
-        return false;  // Devuelve false si no se encuentra un nodo con el nombre dado
     }
 
 
@@ -137,10 +130,16 @@ public class ChatController extends Controller {
                 ItemContactController itemContactController = ((FXMLLoader) child.getUserData()).getController();
                 if (itemContactController.getNicknameLabelText().equals(nickname)) {
                     children.remove(child);
+                    itemContactsMap.remove(nickname);
+                    mediator.getUser().getContacts().remove(nickname);
                     break;
                 }
             }
         }
+    }
+
+    public boolean hasContact(String nickname) {
+        return itemContactsMap.get(nickname) != null;
     }
 
     public Label propietaryMessageStyle(String text) {
@@ -191,24 +190,6 @@ public class ChatController extends Controller {
         getStage().close();
     }
 
-    public void createItem(FXMLLoader itemContactController, String nickName) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("contactItemView.fxml"));
-        Parent parent = null;
-        try {
-            parent = itemContactController.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        ItemContactController itemContactController1 = itemContactController.getController();
-        itemContactController1.setNicknameLabelText(nickName);
-        vBoxPrivate.getChildren().add(parent);
-
-    }
-
-
-    public Mediator getMediator() {
-        return mediator;
-    }
 
     public void setMediator(Mediator mediator) {
         this.mediator = mediator;
@@ -218,24 +199,12 @@ public class ChatController extends Controller {
         return userNameLabel;
     }
 
-    public void setUserNameLabel(Label userNameLabel) {
-        this.userNameLabel = userNameLabel;
-    }
-
     public VBox getvBoxGroup() {
         return vBoxGroup;
     }
 
-    public void setvBoxGroup(VBox vBoxGroup) {
-        this.vBoxGroup = vBoxGroup;
-    }
-
     public VBox getvBoxPrivate() {
         return vBoxPrivate;
-    }
-
-    public void setvBoxPrivate(VBox vBoxPrivate) {
-        this.vBoxPrivate = vBoxPrivate;
     }
 
     public Label getReceptorChatLabel() {
@@ -246,15 +215,11 @@ public class ChatController extends Controller {
         receptorChatLabel.setText(friendNickname);
     }
 
-    public VBox getvBoxMessages() {
-        return vBoxMessages;
-    }
-
-    public void setvBoxMessages(VBox vBoxMessages) {
-        this.vBoxMessages = vBoxMessages;
-    }
-
     private Stage getStage() {
         return (Stage) receptorChatLabel.getScene().getWindow();
+    }
+
+    public Map<String, ItemContactController> getItemContactsMap() {
+        return itemContactsMap;
     }
 }

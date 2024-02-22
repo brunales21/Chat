@@ -54,9 +54,9 @@ public class AddContactViewController extends Controller {
                     }
                     if (mediator.actionApproved()) {
                         mediator.getUser().getChatMessagesMap().put(name, null);
-                        mediator.getUser().getContacts().add(name);
                         mediator.addContactItem(mediator.getChatController().getvBoxPrivate(), name);
                     }
+
                 }
             }
             nicknameTextField.setText("");
