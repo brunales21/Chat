@@ -41,6 +41,7 @@ public class AddContactViewController extends Controller {
                     throw new RuntimeException(e);
                 }
                 if (mediator.actionApproved()) {
+                    mediator.getUser().getChatMessagesMap().put(channelName.toString(), null);
                     mediator.addContactItem(mediator.getChatController().getvBoxGroup(), channelName.toString());
                 }
             } else if (nicknameTextField.getPromptText().equals(prompPrivFile)) {
@@ -52,6 +53,7 @@ public class AddContactViewController extends Controller {
                         throw new RuntimeException(e);
                     }
                     if (mediator.actionApproved()) {
+                        mediator.getUser().getChatMessagesMap().put(name, null);
                         mediator.getUser().getContacts().add(name);
                         mediator.addContactItem(mediator.getChatController().getvBoxPrivate(), name);
                     }

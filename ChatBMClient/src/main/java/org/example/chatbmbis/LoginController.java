@@ -34,8 +34,12 @@ public class LoginController extends Controller{
                 return;
             }
             mediator.ingresar(usernameField.getText());
+            mediator.getUser().loadChatMessagesMap();
             closeLoginView();
             mediator.createChatView(usernameField.getText());
+            if (mediator.getUser().getChatMessagesMap() != null) {
+                mediator.getChatController().loadSession();
+            }
         }
     }
 

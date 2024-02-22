@@ -6,7 +6,7 @@ import java.util.*;
 
 public class User extends Client {
     private final String nickname;
-    private final Map<String, List<Message>> chatMessagesMap;
+    private Map<String, List<Message>> chatMessagesMap;
     private final List<String> contacts;
     private final Mediator mediator;
     private final ChatDAO chatDAO;
@@ -17,7 +17,7 @@ public class User extends Client {
         this.contacts = new ArrayList<>();
         chatMessagesMap = new HashMap<>();
         mediator = Mediator.getInstance();
-        chatDAO = new FileChatDAO("messages.bin");
+        chatDAO = new FileChatDAO(this.nickname + "-messages.bin");
     }
 
     public void register(String nickname) {
@@ -52,6 +52,7 @@ public class User extends Client {
 
     public void sendMessage(String header) {
         String[] headerParts = Utils.split(header);
+        // si es un mensaje de texto:
         if (headerParts[0].equals("PRIVMSG")) {
             addMessage(headerParts[1], new Message(getNickname(), headerParts[2]));
         }
@@ -73,6 +74,9 @@ public class User extends Client {
         return messages;
     }
 
+    public void loadChatMessagesMap() {
+        setChatMessagesMap(chatDAO.loadChatMessages());
+    }
     public String getNickname() {
         return nickname;
     }
@@ -80,6 +84,7 @@ public class User extends Client {
     public Mediator getMediator() {
         return mediator;
     }
+
 
     public Map<String, List<Message>> getChatMessagesMap() {
         return chatMessagesMap;
@@ -91,6 +96,10 @@ public class User extends Client {
 
     public ChatDAO getChatDAO() {
         return chatDAO;
+    }
+
+    public void setChatMessagesMap(Map<String, List<Message>> chatMessagesMap) {
+        this.chatMessagesMap = chatMessagesMap;
     }
 
     @Override

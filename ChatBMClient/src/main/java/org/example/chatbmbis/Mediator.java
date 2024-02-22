@@ -116,6 +116,7 @@ public class Mediator {
             setActionApproved(true);
         } else {
             // si tiene que procesar un msj de texto
+            Arrays.stream(messageParts).forEach(a -> System.out.println(a));
             String chatroomName = messageParts[0];
             String sender = messageParts[1];
             System.out.println(chatroomName);
@@ -130,7 +131,7 @@ public class Mediator {
                 if (!user.getContacts().contains(messageObj.getSender()) && !chatController.containsItemContact(messageObj.getSender())) {
                     chatController.addContactItem(chatController.getvBoxPrivate(), messageObj.getSender());
                     getUser().getContacts().add(messageObj.getSender());
-                    sendMessage("CREATE "+messageObj.getSender());
+                    sendMessage("CREATE " + messageObj.getSender());
                 }
             }
             user.addMessage(chatroomName, messageObj);
@@ -141,12 +142,12 @@ public class Mediator {
         }
 
 
-
     }
 
     private boolean actionApproved(String message) {
-        return message.equals("ok") || message.equals("Bienvenido,") || message.equals("Bienvenido!") || message.equals("Si");
+        return message.equals("ok") || message.equals("Bienvenido,") || message.equals("Bienvenido!") || message.equals("Si") || message.equals("Diviertete");
     }
+
     private boolean actionRefused(String message) {
         return message.equals("ERROR");
     }

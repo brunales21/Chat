@@ -169,6 +169,16 @@ public class ChatController extends Controller {
         return label;
     }
 
+    public void loadSession() {
+        for (String s : mediator.getUser().getChatMessagesMap().keySet()) {
+            if (s.startsWith("#")) {
+                addContactItem(vBoxGroup, s);
+            } else {
+                addContactItem(vBoxPrivate, s);
+            }
+        }
+    }
+
     @FXML
     private void onClickExit() {
         mediator.getUser().getChatDAO().saveChatMessages(mediator.getUser().getChatMessagesMap());

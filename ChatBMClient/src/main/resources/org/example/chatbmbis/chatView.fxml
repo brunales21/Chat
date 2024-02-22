@@ -184,7 +184,7 @@
                         </TextField>
                         <ImageView fitHeight="37.0" fitWidth="38.0" onMouseClicked="#onClickSendMessage" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../img/img_1.png" />
+                              <Image url="@../../../img/enviar-mensaje.png" />
                            </image>
                            <HBox.margin>
                               <Insets left="10.0" />

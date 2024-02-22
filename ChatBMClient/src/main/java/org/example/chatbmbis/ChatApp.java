@@ -50,8 +50,6 @@ public class ChatApp extends Application {
         stage.show();
 
         setCloseWindow(stage);
-
-
     }
 
     private void setCloseWindow(Stage stage) {
@@ -60,11 +58,17 @@ public class ChatApp extends Application {
             // Realizar limpieza o acciones previas al cierre
             try {
                 if (mediator.getUser() != null) {
-                    mediator.getUser().getSocket() .close();
+                    // Informamos al servidor que cerramos sesion (asi el servidor gestiona menos hilos)
+                    mediator.sendMessage("EXIT");
+                    // guardamos los chats y mensajes en un fichero binario
+                    mediator.getUser().getChatDAO().saveChatMessages(mediator.getUser().getChatMessagesMap());
+                    // cerramos el socket
+                    mediator.getUser().getSocket().close();
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
             // Cerrar la aplicación de manera segura
             System.exit(0);
         });
