@@ -3,6 +3,7 @@ package org.example.chatbmbis;
 import org.example.chatbmbis.exceptions.ChatException;
 import org.example.chatbmbis.exceptions.ChatNotFoundException;
 import org.example.chatbmbis.exceptions.ChatRepeatedException;
+import org.example.chatbmbis.exceptions.UserNotExistsException;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -58,7 +59,7 @@ public class Server {
                 }
                 if (in.hasNextLine()) {
                     header = in.nextLine();
-                    processCommand(socket, header);
+                    processCommand(socket, BackspaceRemover.removeBackspaces(header));
                 }
             }
         } catch (IOException ex) {
@@ -67,7 +68,7 @@ public class Server {
     }
 
     private void processCommand(Socket socket, String header) {
-        System.out.println("Header que recibe servidor: '" + header + "' de " + socketUserMap.get(socket));
+        System.out.println("Header que recibe servidor: " + header);
         String[] headerParts = splitParts(header);
         String sender = socketUserMap.get(socket);
         String command = headerParts[0].toUpperCase();
@@ -96,7 +97,11 @@ public class Server {
                 if (arg.startsWith("#")) {
                     broadcast(sender, arg, headerParts[2]);
                 } else {
-                    sendMessage(sender, arg, headerParts[2]);
+                    try {
+                        sendMessage(sender, arg, headerParts[2]);
+                    } catch (UserNotExistsException e) {
+                        sendErrorMsg(sender, e.getMessage());
+                    }
                 }
                 break;
             case "JOIN":
@@ -142,7 +147,8 @@ public class Server {
                 showFileContent(socket, "help.txt");
                 break;
             default:
-                sendMessage(socket, "El comando " + command + " no existe.");
+                sendErrorMsg(sender, "El comando " + command + " no existe.");
+                break;
         }
 
     }
@@ -194,13 +200,27 @@ public class Server {
         }
     }
 
-    public void broadcast(String sender, String channelName, String textMessage) {
-        getUsersInChannel(channelName).stream()
+    public void broadcast(String sender, String channel, String textMessage) {
+        getUsersInChannel(channel).stream()
                 .filter(u -> !u.equals(sender))
                 .forEach(user -> {
                     //#2dam bruno :hola
-                    userOutMap.get(user).println(channelName + " " + sender + " :" + textMessage);
+                    sendMsgToChannelMember(sender, user, channel, textMessage);
                 });
+    }
+
+    public void sendMsgToChannelMember(String sender, String receptor, String channel, String text) {
+        //Este nunca lanzaría UserNotFoundExc
+        //#2dam bruno :hola
+        userOutMap.get(receptor).println("MESSAGE " + channel + " " + sender + " :" + text);
+    }
+
+    public void sendMessage(String sender, String receptor, String text) throws UserNotExistsException {
+        try {
+            userOutMap.get(receptor).println("MESSAGE " + sender + " :" + text);
+        } catch (NullPointerException e) {
+            throw new UserNotExistsException(receptor);
+        }
     }
 
     private void join(String sender, String channelName) throws ChatNotFoundException {
@@ -247,11 +267,6 @@ public class Server {
         return partsList.toArray(new String[0]);
     }
 
-
-    public void sendMessage(String sender, String receptor, String text) {
-        userOutMap.get(receptor).println(sender + " :" + text);
-
-    }
 
     public void sendMessage(Socket socket, String message) {
         PrintStream out = null;

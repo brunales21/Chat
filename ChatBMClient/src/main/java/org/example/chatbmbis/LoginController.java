@@ -10,7 +10,7 @@ import java.io.IOException;
 public class LoginController extends Controller{
     private Mediator mediator;
     @FXML
-    Button accessButton;
+    Button enterButton;
     @FXML
     TextField usernameField, passwordField;
 
@@ -20,8 +20,8 @@ public class LoginController extends Controller{
     @FXML
     private void initialize() {
         // Aquí se llama al método para internacionalizar el texto del botón
-        Internacionalizacion.convertIntoOtherLanguage("addButton", accessButton);
-        Internacionalizacion.convertIntoOtherLanguage("userName", usernameField);
+        Internacionalizacion.convertIntoOtherLanguage("addButton", enterButton);
+        Internacionalizacion.convertIntoOtherLanguage("username", usernameField);
         Internacionalizacion.convertIntoOtherLanguage("password", passwordField);
     }
     @FXML
@@ -44,7 +44,7 @@ public class LoginController extends Controller{
     }
 
     public void closeLoginView() {
-        Stage stage = (Stage) this.accessButton.getScene().getWindow();
+        Stage stage = (Stage) this.enterButton.getScene().getWindow();
         stage.close();
     }
 

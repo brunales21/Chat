@@ -1,19 +1,26 @@
-Comando para ingresar
-    REGISTER pepe
+Commands for entering
+    REGISTER my-nickname
 
-Comandos de creacion de canal
-    CREATE #canal -> crear canal
-    CREATE pepe -> anadir a pepe a lista de contactos
+Channel creation commands
+    CREATE #channel -> create channel
 
-Comando para unirse a canal
-    JOIN #canal -> unirse a canal
+Add contact command
+    CREATE user -> add user to contacts list
 
-Comandos de mensaje de texto
-    PRIVMSG #canal :hola que tal grupo
-    PRIVMSG pepe :hola pepe
+Command to join a channel
+    JOIN #channel -> join channel
 
-Comando para listar contactos
+Text message commands
+    PRIVMSG #channel :message
+    PRIVMSG user :message
+
+Command to list contacts
     LU
 
-Comando para listar canales
+Command to list channels
     LC
+
+
+
+
+

@@ -68,7 +68,7 @@ public class AddContactViewController extends Controller {
     @FXML
     public void onClickButtonRight() {
         String chatName = nicknameTextField.getText();
-        if (!chatName.isEmpty()) {
+        if (!chatName.isEmpty() && !mediator.getUser().getContacts().contains("#" + chatName)) {
             if (nicknameTextField.getPromptText().equals(prompChannelFile)) {
                 mediator.sendMessage("JOIN #" + chatName);
                 try {
@@ -81,8 +81,9 @@ public class AddContactViewController extends Controller {
                 }
 
             }
-            nicknameTextField.setText("");
         }
+
+        nicknameTextField.setText("");
         Stage stageToClose = (Stage) this.button1.getScene().getWindow();
         stageToClose.close();
     }
