@@ -1,13 +1,12 @@
 package org.example.chatbmbis;
 
-import org.example.chatbmbis.exceptions.ChatException;
-import org.example.chatbmbis.exceptions.ChatNotFoundException;
-import org.example.chatbmbis.exceptions.ChatRepeatedException;
-import org.example.chatbmbis.exceptions.UserNotExistsException;
+import org.example.chatbmbis.exceptions.*;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 public class Server {
@@ -18,6 +17,7 @@ public class Server {
     private List<Channel> channels;
     private Map<String, PrintStream> userOutMap;
     private Map<Socket, String> socketUserMap;
+    private Set<String> historyUsers;
 
 
     public Server(int port) {
@@ -26,15 +26,18 @@ public class Server {
         privateChats = new ArrayList<>();
         userOutMap = new HashMap<>();
         socketUserMap = new HashMap<>();
+        historyUsers = new HashSet<>();
     }
 
     private void register(String nickname, Socket socket) {
         try {
             userOutMap.put(nickname, new PrintStream(socket.getOutputStream()));
+            historyUsers.add(nickname);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         socketUserMap.put(socket, nickname);
+        sendMessagesFromFile(nickname);
     }
 
     public void start() throws IOException {
@@ -101,6 +104,8 @@ public class Server {
                         sendMessage(sender, arg, headerParts[2]);
                     } catch (UserNotExistsException e) {
                         sendErrorMsg(sender, e.getMessage());
+                    } catch (UserNotConnectedException e) {
+                        persistMsg(sender, header, arg + "-messages.csv");
                     }
                 }
                 break;
@@ -130,6 +135,7 @@ public class Server {
                 break;
             case "EXIT":
                 try {
+                    exitMessage(sender);
                     socket.close();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -212,13 +218,22 @@ public class Server {
     public void sendMsgToChannelMember(String sender, String receptor, String channel, String text) {
         //Este nunca lanzaría UserNotFoundExc
         //#2dam bruno :hola
-        userOutMap.get(receptor).println("MESSAGE " + channel + " " + sender + " :" + text);
+        try {
+            userOutMap.get(receptor).println("MESSAGE " + channel + " " + sender + " :" + text);
+        } catch (NullPointerException e) {
+            // guardarle el mensaje
+        }
     }
 
-    public void sendMessage(String sender, String receptor, String text) throws UserNotExistsException {
+    public void sendMessage(String sender, String receptor, String text) throws UserNotExistsException, UserNotConnectedException {
         try {
+            System.out.println("msj que mando: MESSAGE " + sender + " :" + text);
             userOutMap.get(receptor).println("MESSAGE " + sender + " :" + text);
+            System.out.println("SE MANDA MSJ DE FILE..");
         } catch (NullPointerException e) {
+            if (historyUsers.contains(receptor)) {
+                throw new UserNotConnectedException();
+            }
             throw new UserNotExistsException(receptor);
         }
     }
@@ -250,6 +265,44 @@ public class Server {
         }
     }
 
+    private void persistMsg(String sender, String message, String fileName) {
+        Path path = Path.of(fileName);
+        if (!Files.exists(path)) {
+            try {
+                Files.createFile(path);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        try (PrintStream out = new PrintStream(new FileOutputStream(fileName, true))) {
+            out.println(sender + " " + message);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void sendMessagesFromFile(String receptor) {
+        String fileName = receptor+"-messages.csv";
+        if (Files.exists(Path.of(fileName))) {
+            try {
+                BufferedReader in = new BufferedReader(new FileReader(fileName));
+                String message;
+                while ((message = in.readLine()) != null) {
+                    // monica PRIVMSG bruno :hola
+                    String[] parts = splitParts(message);
+                    String sender = parts[0];
+                    String target = parts[2];
+                    String msg = parts[3];
+                    if (target.equals(receptor)) {
+                        sendMessage(sender, target, msg);
+                    }
+                }
+            } catch (UserNotExistsException | IOException | UserNotConnectedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
 
     public static String[] splitParts(String header) {
         String[] split = header.split(" ");
@@ -291,6 +344,9 @@ public class Server {
         socketUserMap.values().forEach(u -> userOutMap.get(sender).println("- " + u));
     }
 
+    private void exitMessage(String sender) {
+        sendMessage(sender, "Hasta pronto!");
+    }
 
     private void showFileContent(Socket socket, String fileName) {
         try {

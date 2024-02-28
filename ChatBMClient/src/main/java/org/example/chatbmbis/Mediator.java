@@ -92,7 +92,6 @@ public class Mediator {
 
     public void receiveMessage(String message) {
         System.out.println(message);
-        //System.out.println(message);
         String[] messageParts = Utils.split(message);
         String keyWord = messageParts[0];
         Message messageObj;
@@ -103,10 +102,10 @@ public class Mediator {
         } else if (isTxtMessage(keyWord)) {
             // si tiene que procesar un msj de texto
             if (messageParts[1].startsWith("#")) {
-                // "#2dam bruno :hola"
+                // "MESSAGE #2dam bruno :hola"
                 messageObj = new Message(messageParts[2], messageParts[1], messageParts[3]);
             } else {
-                // "bruno :hola"
+                // "MESSAGE bruno :hola"
                 messageObj = new Message(messageParts[1], messageParts[2]);
                 if (!chatController.hasContact(messageParts[1])) {
                     chatController.addContactItem(chatController.getvBoxPrivate(), messageObj.getSender());

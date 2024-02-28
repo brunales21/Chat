@@ -25,21 +25,18 @@ public class ChatApp extends Application {
         mediator.setChatController(chatController);
         mediator.getView().put(stageChat, chatController);
 
-        setCloseWindow(stageChat);
-
         //Crear vista añadir usuario
         FXMLLoader fxmlLoader3 = new FXMLLoader(ChatApp.class.getResource("addContactView.fxml"));
         Scene adduserView = new Scene(fxmlLoader3.load());
-        Stage stageUser = new Stage();
-        stageUser.setScene(adduserView);
-        stageUser.setTitle("Add");
+        Stage stageAddChat = new Stage();
+        stageAddChat.setScene(adduserView);
+        stageAddChat.setTitle("Add");
         AddContactViewController addViewController = fxmlLoader3.getController();
         addViewController.setMediator(mediator);
         mediator.setAddViewController(addViewController);
-        mediator.getView().put(stageUser, addViewController);
+        mediator.getView().put(stageAddChat, addViewController);
 
-
-        //cread la vista login
+        //crear la vista login
         FXMLLoader fxmlLoader2 = new FXMLLoader(ChatApp.class.getResource("loginView.fxml"));
         Scene scene = new Scene(fxmlLoader2.load(), 350, 500);
         LoginController loginController = fxmlLoader2.getController();
@@ -50,28 +47,11 @@ public class ChatApp extends Application {
         stage.show();
 
         setCloseWindow(stage);
+        setCloseWindow(stageChat);
     }
 
     private void setCloseWindow(Stage stage) {
-        // Configurar el evento de cierre de la ventana principal
-        stage.setOnCloseRequest(event -> {
-            // Realizar limpieza o acciones previas al cierre
-            try {
-                if (mediator.getUser() != null) {
-                    // Informamos al servidor que cerramos sesion (asi el servidor gestiona menos hilos)
-                    mediator.sendMessage("EXIT");
-                    // guardamos los chats y mensajes en un fichero binario
-                    mediator.getUser().getChatDAO().saveChatMessages(mediator.getUser().getChatMessagesMap());
-                    // cerramos el socket
-                    mediator.getUser().getSocket().close();
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            // Cerrar la aplicación de manera segura
-            System.exit(0);
-        });
+        stage.setOnCloseRequest(event -> mediator.getChatController().onApplicationClose());
     }
 
     public Mediator getMediator() {

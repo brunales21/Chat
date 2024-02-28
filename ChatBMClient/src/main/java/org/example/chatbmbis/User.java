@@ -74,7 +74,15 @@ public class User extends Client {
         return messages;
     }
 
-
+    public void exit() {
+        chatDAO.saveChatMessages(mediator.getUser().getChatMessagesMap());
+        sendMessage("EXIT");
+        try {
+            getSocket().close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public void loadChatMessagesMap() {
         setChatMessagesMap(chatDAO.loadChatMessages());
     }
