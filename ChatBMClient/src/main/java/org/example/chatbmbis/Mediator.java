@@ -107,7 +107,7 @@ public class Mediator {
             } else {
                 // "MESSAGE bruno :hola"
                 messageObj = new Message(messageParts[1], messageParts[2]);
-                if (!chatController.hasContact(messageParts[1])) {
+                if (!getUser().getContacts().contains(messageParts[1])) {
                     chatController.addContactItem(chatController.getvBoxPrivate(), messageObj.getSender());
                     sendMessage("CREATE " + messageObj.getSender());
                 }

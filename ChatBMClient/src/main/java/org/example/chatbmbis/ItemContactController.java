@@ -48,6 +48,7 @@ public class ItemContactController {
             }
             if (mediator.actionApproved()) {
                 mediator.deleteContactItem(getNicknameLabelText());
+                mediator.getUser().getContacts().remove(getNicknameLabelText());
             }
         }
 

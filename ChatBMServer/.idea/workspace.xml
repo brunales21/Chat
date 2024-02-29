@@ -5,21 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6ffc28d6-f167-4c5e-a0a7-d252a53a42e3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/exceptions/UserNotConnectedException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMClient/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/b-messages.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/m-messages.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/org/example/chatbmbis/ChatApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/org/example/chatbmbis/ChatApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/org/example/chatbmbis/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/org/example/chatbmbis/ChatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/org/example/chatbmbis/ItemContactController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/org/example/chatbmbis/ItemContactController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/org/example/chatbmbis/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/org/example/chatbmbis/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/org/example/chatbmbis/Mediator.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/org/example/chatbmbis/Mediator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/org/example/chatbmbis/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/org/example/chatbmbis/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/classes/org/example/chatbmbis/ChatApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/classes/org/example/chatbmbis/ChatApp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/classes/org/example/chatbmbis/ChatController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/classes/org/example/chatbmbis/ChatController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/classes/org/example/chatbmbis/Mediator.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/classes/org/example/chatbmbis/Mediator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/classes/org/example/chatbmbis/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/classes/org/example/chatbmbis/User.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/Server.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +39,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.BackspaceRemover.executor": "Run",
     "Application.Server.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -53,7 +47,7 @@
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/bemim/Workspace/DAM/2Dam/acceso-datos/1trim/BuffersLearning/src/csvDao",
+    "last_opened_file_path": "C:/Users/bemim/IdeaProjects/Chat/ChatBMServer",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -67,7 +61,7 @@
       <recent name="C:\Users\bemim\Workspace\brunales-code\Chat\ChatBMServer" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Server">
+  <component name="RunManager" selected="Application.BackspaceRemover">
     <configuration name="BackspaceRemover" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.chatbmbis.BackspaceRemover" />
       <module name="ChatBMBis" />
@@ -96,8 +90,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Server" />
         <item itemvalue="Application.BackspaceRemover" />
+        <item itemvalue="Application.Server" />
       </list>
     </recent_temporary>
   </component>
@@ -139,22 +133,12 @@
       <workItem from="1708596776977" duration="6731000" />
       <workItem from="1708608490864" duration="7430000" />
       <workItem from="1709108264747" duration="13837000" />
-      <workItem from="1709131298588" duration="14300000" />
+      <workItem from="1709131298588" duration="14521000" />
+      <workItem from="1709154893550" duration="8231000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/example/chatbmbis/Server.java</url>
-          <line>295</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

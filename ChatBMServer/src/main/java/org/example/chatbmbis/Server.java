@@ -51,15 +51,10 @@ public class Server {
 
     private void clientHandler(Socket socket) {
         Scanner in = null;
-        boolean firstTime = true;
         try {
             in = new Scanner(socket.getInputStream());
             String header;
             while (!socket.isClosed()) {
-                if (firstTime) {
-                    showFileContent(socket, "welcome.txt");
-                    firstTime = false;
-                }
                 if (in.hasNextLine()) {
                     header = in.nextLine();
                     processCommand(socket, BackspaceRemover.removeBackspaces(header));
@@ -82,7 +77,6 @@ public class Server {
         switch (command) {
             case "REGISTER":
                 register(arg, socket);
-                sendMessage(arg, "Bienvenido, " + arg);
                 break;
             case "CREATE":
                 try {
@@ -105,7 +99,7 @@ public class Server {
                     } catch (UserNotExistsException e) {
                         sendErrorMsg(sender, e.getMessage());
                     } catch (UserNotConnectedException e) {
-                        persistMsg(sender, header, arg + "-messages.csv");
+                        persistMsg(sender, header, arg);
                     }
                 }
                 break;
@@ -265,7 +259,7 @@ public class Server {
         }
     }
 
-    private void persistMsg(String sender, String message, String fileName) {
+    private void createFileIfNotExists(String fileName) {
         Path path = Path.of(fileName);
         if (!Files.exists(path)) {
             try {
@@ -274,7 +268,12 @@ public class Server {
                 throw new RuntimeException(e);
             }
         }
-        try (PrintStream out = new PrintStream(new FileOutputStream(fileName, true))) {
+    }
+
+    private void persistMsg(String sender, String message, String fileName) {
+        String targetFile = fileName + "-messages.csv";
+        createFileIfNotExists(targetFile);
+        try (PrintStream out = new PrintStream(new FileOutputStream(targetFile, true))) {
             out.println(sender + " " + message);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -283,9 +282,9 @@ public class Server {
 
     private void sendMessagesFromFile(String receptor) {
         String fileName = receptor+"-messages.csv";
-        if (Files.exists(Path.of(fileName))) {
-            try {
-                BufferedReader in = new BufferedReader(new FileReader(fileName));
+        Path path = Path.of(fileName);
+        if (Files.exists(path)) {
+            try (BufferedReader in = new BufferedReader(new FileReader(fileName))) {
                 String message;
                 while ((message = in.readLine()) != null) {
                     // monica PRIVMSG bruno :hola
@@ -296,12 +295,19 @@ public class Server {
                     if (target.equals(receptor)) {
                         sendMessage(sender, target, msg);
                     }
+                    Thread.sleep(300);
                 }
             } catch (UserNotExistsException | IOException | UserNotConnectedException e) {
                 throw new RuntimeException(e);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                Files.delete(path);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
-
     }
 
     public static String[] splitParts(String header) {

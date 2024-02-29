@@ -5,3 +5,5 @@ porque son dos procesos distintos. Desde User al hacer un Server.*, esta referen
 
 
 
+Al vomitarle desde servidor al cliente todos los mensajes guardados mientras este estaba offline, he
+añadido una intervalo de 300 ms para que al cliente le de tiempo a procesar estos mensajes

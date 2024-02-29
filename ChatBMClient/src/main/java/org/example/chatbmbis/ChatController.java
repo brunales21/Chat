@@ -169,12 +169,13 @@ public class ChatController extends Controller {
     }
 
     public void loadSession() {
-        for (String s : mediator.getUser().getChatMessagesMap().keySet()) {
-            if (s.startsWith("#")) {
-                addContactItem(vBoxGroup, s);
+        for (String chatName : mediator.getUser().getChatMessagesMap().keySet()) {
+            if (chatName.startsWith("#")) {
+                addContactItem(vBoxGroup, chatName);
             } else {
-                addContactItem(vBoxPrivate, s);
+                addContactItem(vBoxPrivate, chatName);
             }
+
         }
     }
 

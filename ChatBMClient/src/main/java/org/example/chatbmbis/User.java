@@ -27,6 +27,7 @@ public class User extends Client {
 
     public void ingresar(String nickname) {
         register(nickname);
+        mediator.getChatController().loadSession();
         this.start();
     }
 
@@ -45,15 +46,16 @@ public class User extends Client {
             } catch (NoSuchElementException ignored) {
 
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                break;
             }
         }
     }
 
     public void sendMessage(String header) {
         String[] headerParts = Utils.split(header);
+        String command = headerParts[0];
         // si es un mensaje de texto:
-        if (headerParts[0].equals("PRIVMSG")) {
+        if (command.equals("PRIVMSG")) {
             addMessage(headerParts[1], new Message(getNickname(), headerParts[2]));
         }
         PrintStream out = null;
@@ -83,9 +85,7 @@ public class User extends Client {
             throw new RuntimeException(e);
         }
     }
-    public void loadChatMessagesMap() {
-        setChatMessagesMap(chatDAO.loadChatMessages());
-    }
+
     public String getNickname() {
         return nickname;
     }
