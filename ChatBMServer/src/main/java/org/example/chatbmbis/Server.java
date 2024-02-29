@@ -311,9 +311,9 @@ public class Server {
                         sendMessage(sender, receptor, msg);
 
                     }
-                    Thread.sleep(300);
+                    //Thread.sleep(10);
                 }
-            } catch (UserNotExistsException | IOException | UserNotConnectedException | InterruptedException e) {
+            } catch (UserNotExistsException | IOException | UserNotConnectedException e) {
                 throw new RuntimeException(e);
             }
             try {

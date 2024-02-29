@@ -1,7 +1,6 @@
 package org.example.chatbmbis;
 
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.*;
 
 public class User extends Client {
@@ -37,16 +36,20 @@ public class User extends Client {
 
     @Override
     public void run() {
+        Scanner in = null;
+        try {
+            in = new Scanner(getSocket().getInputStream());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         while (!getSocket().isClosed()) {
-            Scanner in = null;
             try {
-                in = new Scanner(getSocket().getInputStream());
                 String message = in.nextLine();
-                mediator.receiveMessage(message);
+                if (message != null) {
+                    mediator.receiveMessage(message);
+                }
             } catch (NoSuchElementException ignored) {
 
-            } catch (IOException e) {
-                break;
             }
         }
     }
