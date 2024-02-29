@@ -91,16 +91,19 @@ public class Server {
                 }
                 break;
             case "PRIVMSG":
-                if (arg.startsWith("#")) {
-                    broadcast(sender, arg, headerParts[2]);
-                } else {
-                    try {
-                        sendMessage(sender, arg, headerParts[2]);
-                    } catch (UserNotExistsException e) {
-                        sendErrorMsg(sender, e.getMessage());
-                    } catch (UserNotConnectedException e) {
-                        persistMsg(sender, header, arg);
+                String msg = headerParts[2];
+                try {
+                    if (arg.startsWith("#")) {
+                        //PRIVMSG #dam monica :hola
+                        broadcast(sender, arg, msg);
+                    } else {
+                        //PRIVMSG monica :hola
+                        sendMessage(sender, arg, msg);
                     }
+                } catch (UserNotExistsException e) {
+                    sendErrorMsg(sender, e.getMessage());
+                } catch (UserNotConnectedException e) {
+                    persistMsg(sender, arg, msg, null);
                 }
                 break;
             case "JOIN":
@@ -205,25 +208,27 @@ public class Server {
                 .filter(u -> !u.equals(sender))
                 .forEach(user -> {
                     //#2dam bruno :hola
-                    sendMsgToChannelMember(sender, user, channel, textMessage);
+                    try {
+                        sendMsgToChannelMember(sender, user, channel, textMessage);
+                    } catch (UserNotConnectedException e) {
+                        persistMsg(sender, user, textMessage, channel);
+                    }
                 });
     }
 
-    public void sendMsgToChannelMember(String sender, String receptor, String channel, String text) {
+    public void sendMsgToChannelMember(String sender, String receptor, String channel, String text) throws UserNotConnectedException {
         //Este nunca lanzaría UserNotFoundExc
-        //#2dam bruno :hola
         try {
+            //MESSAGGE #2dam bruno :hola
             userOutMap.get(receptor).println("MESSAGE " + channel + " " + sender + " :" + text);
         } catch (NullPointerException e) {
-            // guardarle el mensaje
+            throw new UserNotConnectedException();
         }
     }
 
     public void sendMessage(String sender, String receptor, String text) throws UserNotExistsException, UserNotConnectedException {
         try {
-            System.out.println("msj que mando: MESSAGE " + sender + " :" + text);
             userOutMap.get(receptor).println("MESSAGE " + sender + " :" + text);
-            System.out.println("SE MANDA MSJ DE FILE..");
         } catch (NullPointerException e) {
             if (historyUsers.contains(receptor)) {
                 throw new UserNotConnectedException();
@@ -270,11 +275,15 @@ public class Server {
         }
     }
 
-    private void persistMsg(String sender, String message, String fileName) {
+    private void persistMsg(String sender, String fileName, String message, String channel) {
         String targetFile = fileName + "-messages.csv";
         createFileIfNotExists(targetFile);
         try (PrintStream out = new PrintStream(new FileOutputStream(targetFile, true))) {
-            out.println(sender + " " + message);
+            if (channel == null) {
+                out.println(sender + " :" + message);
+            } else {
+                out.println(channel + " " + sender + " :" + message);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -287,19 +296,24 @@ public class Server {
             try (BufferedReader in = new BufferedReader(new FileReader(fileName))) {
                 String message;
                 while ((message = in.readLine()) != null) {
-                    // monica PRIVMSG bruno :hola
                     String[] parts = splitParts(message);
-                    String sender = parts[0];
-                    String target = parts[2];
-                    String msg = parts[3];
-                    if (target.equals(receptor)) {
-                        sendMessage(sender, target, msg);
+                    String sender;
+                    String msg;
+                    if (parts[0].startsWith("#")) {
+                        // #dam monica :hola
+                        sender = parts[1];
+                        msg = parts[2];
+                        sendMsgToChannelMember(sender, receptor, parts[0], msg);
+                    } else {
+                        // monica :hola
+                        sender = parts[0];
+                        msg = parts[1];
+                        sendMessage(sender, receptor, msg);
+
                     }
                     Thread.sleep(300);
                 }
-            } catch (UserNotExistsException | IOException | UserNotConnectedException e) {
-                throw new RuntimeException(e);
-            } catch (InterruptedException e) {
+            } catch (UserNotExistsException | IOException | UserNotConnectedException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
             try {
