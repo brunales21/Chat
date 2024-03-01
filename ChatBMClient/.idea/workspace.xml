@@ -5,10 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46d45c23-4adf-40e0-a91c-a5d6e7259c3c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/exceptions/UserExistsException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/AddContactViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/AddContactViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/ChatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/Mediator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/Mediator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/exceptions/UserNotConnectedException.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/exceptions/UserNotConnectedException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/example/chatbmbis/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/example/chatbmbis/Server.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +100,7 @@
       <recent name="org.example.chatbmbis" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main (2)">
+  <component name="RunManager" selected="Application.Main (1)">
     <configuration name="ChatApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.chatbmbis.ChatApp" />
       <module name="ChatBMBis" />
@@ -281,6 +288,7 @@
       <workItem from="1709131288415" duration="14677000" />
       <workItem from="1709154840462" duration="8730000" />
       <workItem from="1709202778207" duration="2826000" />
+      <workItem from="1709282919949" duration="10038000" />
     </task>
     <servers />
   </component>

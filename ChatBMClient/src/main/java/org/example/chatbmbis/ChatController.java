@@ -104,9 +104,11 @@ public class ChatController extends Controller {
             mediator.getUser().getMessages(nickname).forEach(this::addMessageToVBox);
         });
 
-        mediator.getUser().getContacts().add(nickname);
-        itemContactsMap.put(nickname, itemContactController);
         itemContactController.setNicknameLabelText(nickname);
+
+        itemContactsMap.put(nickname, itemContactController);
+        mediator.getUser().getChatMessagesMap().put(nickname, mediator.getUser().getMessages(nickname));
+        mediator.getUser().getContacts().add(nickname);
 
         // Añadir el nuevo nodo al final de la lista de nodos hijos del vBoxPrivate
         Parent finalParent = parent;
@@ -168,7 +170,8 @@ public class ChatController extends Controller {
         return label;
     }
 
-    public void loadSession() {
+    public void loadChatItems() {
+        mediator.getUser().setChatMessagesMap(mediator.getUser().getChatDAO().loadChatMessages());
         for (String chatName : mediator.getUser().getChatMessagesMap().keySet()) {
             if (chatName.startsWith("#")) {
                 addContactItem(vBoxGroup, chatName);

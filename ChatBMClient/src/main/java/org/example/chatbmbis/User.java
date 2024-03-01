@@ -26,7 +26,6 @@ public class User extends Client {
 
     public void ingresar(String nickname) {
         register(nickname);
-        mediator.getChatController().loadSession();
         this.start();
     }
 
@@ -36,6 +35,7 @@ public class User extends Client {
 
     @Override
     public void run() {
+        mediator.getChatController().loadChatItems();
         Scanner in = null;
         try {
             in = new Scanner(getSocket().getInputStream());
@@ -46,7 +46,7 @@ public class User extends Client {
             try {
                 String message = in.nextLine();
                 if (message != null) {
-                    mediator.receiveMessage(message);
+                    mediator.processServerMsg(message);
                 }
             } catch (NoSuchElementException ignored) {
 

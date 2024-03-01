@@ -67,17 +67,17 @@ public class AddContactViewController extends Controller {
 
     @FXML
     public void onClickButtonRight() {
-        String chatName = nicknameTextField.getText();
-        if (!chatName.isEmpty() && !mediator.getUser().getContacts().contains("#" + chatName)) {
+        String chatName = "#" + nicknameTextField.getText();
+        if (!chatName.replaceAll("#", "").isEmpty() && !mediator.getUser().getContacts().contains(chatName)) {
             if (nicknameTextField.getPromptText().equals(prompChannelFile)) {
-                mediator.sendMessage("JOIN #" + chatName);
+                mediator.sendMessage("JOIN " + chatName);
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
                 if (mediator.actionApproved()) {
-                    mediator.addContactItem(mediator.getChatController().getvBoxGroup(), "#" + chatName);
+                    mediator.addContactItem(mediator.getChatController().getvBoxGroup(), chatName);
                 }
 
             }

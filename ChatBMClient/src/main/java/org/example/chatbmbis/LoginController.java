@@ -33,11 +33,16 @@ public class LoginController extends Controller{
                 ErrorWindow.instanceErrorWindow("No se pudo conectar al servidor.");
                 return;
             }
-            mediator.getUser().setChatMessagesMap(mediator.getUser().getChatDAO().loadChatMessages());
             mediator.ingresar(usernameField.getText());
-            closeLoginView();
-            mediator.createChatView(usernameField.getText());
-
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            if (mediator.actionApproved()) {
+                closeLoginView();
+                mediator.createChatView();
+            }
         }
     }
 

@@ -11,13 +11,12 @@ import java.util.*;
 
 public class Server {
 
-    private ServerSocket serverSocket;
-    private int port;
-    private List<PrivateChat> privateChats;
-    private List<Channel> channels;
-    private Map<String, PrintStream> userOutMap;
-    private Map<Socket, String> socketUserMap;
-    private Set<String> historyUsers;
+    private final int port;
+    private final List<PrivateChat> privateChats;
+    private final List<Channel> channels;
+    private final Map<String, PrintStream> userOutMap;
+    private final Map<Socket, String> socketUserMap;
+    private final Set<String> historyUsers;
 
 
     public Server(int port) {
@@ -29,8 +28,12 @@ public class Server {
         historyUsers = new HashSet<>();
     }
 
-    private void register(String nickname, Socket socket) {
+    private void register(String nickname, Socket socket) throws UserExistsException {
         try {
+            if (userOutMap.containsKey(nickname)) {
+                socketUserMap.put(socket, null);
+                throw new UserExistsException(nickname);
+            }
             userOutMap.put(nickname, new PrintStream(socket.getOutputStream()));
             historyUsers.add(nickname);
         } catch (IOException e) {
@@ -41,7 +44,7 @@ public class Server {
     }
 
     public void start() throws IOException {
-        this.serverSocket = new ServerSocket(port);
+        ServerSocket serverSocket = new ServerSocket(port);
         while (true) {
             Socket socket = serverSocket.accept();
             Thread thread = new Thread(() -> clientHandler(socket));
@@ -63,12 +66,13 @@ public class Server {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
+
     }
 
-    private void processCommand(Socket socket, String header) {
+    private void processCommand(Socket senderSocket, String header) {
         System.out.println("Header que recibe servidor: " + header);
         String[] headerParts = splitParts(header);
-        String sender = socketUserMap.get(socket);
+        String sender = socketUserMap.get(senderSocket);
         String command = headerParts[0].toUpperCase();
         String arg = "";
         if (headerParts.length > 1) {
@@ -76,7 +80,12 @@ public class Server {
         }
         switch (command) {
             case "REGISTER":
-                register(arg, socket);
+                try {
+                    register(arg, senderSocket);
+                    sendOk(senderSocket);
+                } catch (UserExistsException e) {
+                    sendErrorMsg(senderSocket, e.getMessage());
+                }
                 break;
             case "CREATE":
                 try {
@@ -130,16 +139,6 @@ public class Server {
                     sendErrorMsg(sender, e.getMessage());
                 }
                 break;
-            case "EXIT":
-                try {
-                    exitMessage(sender);
-                    socket.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                socketUserMap.remove(socket);
-                userOutMap.remove(sender);
-                break;
             case "LU":
                 listUsers(sender);
                 break;
@@ -147,7 +146,17 @@ public class Server {
                 listChannels(sender);
                 break;
             case "HELP":
-                showFileContent(socket, "help.txt");
+                showFileContent(senderSocket, "help.txt");
+                break;
+            case "EXIT":
+                try {
+                    //exitMessage(sender);
+                    senderSocket.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                socketUserMap.remove(senderSocket);
+                userOutMap.remove(sender);
                 break;
             default:
                 sendErrorMsg(sender, "El comando " + command + " no existe.");
@@ -160,6 +169,9 @@ public class Server {
         sendMessage(sender, "ok");
     }
 
+    private void sendOk(Socket socket) {
+        sendMessage(socket, "ok");
+    }
     private void deletePrivChat(String sender, String chatName) throws ChatNotFoundException {
         privateChats.remove(getPrivChatByName(sender, chatName));
     }
@@ -174,8 +186,7 @@ public class Server {
 
     private Channel getChannelByName(String name) throws ChatNotFoundException {
         try {
-            Channel channel = channels.stream().filter(c -> c.getName().equals(name)).toList().get(0);
-            return channel;
+            return channels.stream().filter(c -> c.getName().equals(name)).toList().get(0);
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new ChatNotFoundException(name);
         }
@@ -183,8 +194,7 @@ public class Server {
 
     private PrivateChat getPrivChatByName(String user1, String user2) throws ChatNotFoundException {
         try {
-            PrivateChat privateChat = privateChats.stream().filter(c -> c.getUser1().equals(user1) && c.getUser2().equals(user2)).toList().get(0);
-            return privateChat;
+            return privateChats.stream().filter(c -> c.getUser1().equals(user1) && c.getUser2().equals(user2)).toList().get(0);
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new ChatNotFoundException(user2);
         }
@@ -193,6 +203,17 @@ public class Server {
     private void sendErrorMsg(String sender, String errorMessage) {
         // le rebota el msj
         userOutMap.get(sender).println("ERROR :" + errorMessage);
+    }
+
+    private void sendErrorMsg(Socket socket, String errorMessage) {
+        // le rebota el msj
+        PrintStream out;
+        try {
+            out = new PrintStream(socket.getOutputStream());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        out.println("ERROR :" + errorMessage);
     }
 
     private List<String> getUsersInChannel(String channelName) {
@@ -222,7 +243,7 @@ public class Server {
             //MESSAGGE #2dam bruno :hola
             userOutMap.get(receptor).println("MESSAGE " + channel + " " + sender + " :" + text);
         } catch (NullPointerException e) {
-            throw new UserNotConnectedException();
+            throw new UserNotConnectedException(receptor);
         }
     }
 
@@ -231,7 +252,7 @@ public class Server {
             userOutMap.get(receptor).println("MESSAGE " + sender + " :" + text);
         } catch (NullPointerException e) {
             if (historyUsers.contains(receptor)) {
-                throw new UserNotConnectedException();
+                throw new UserNotConnectedException(receptor);
             }
             throw new UserNotExistsException(receptor);
         }
@@ -311,7 +332,6 @@ public class Server {
                         sendMessage(sender, receptor, msg);
 
                     }
-                    //Thread.sleep(10);
                 }
             } catch (UserNotExistsException | IOException | UserNotConnectedException e) {
                 throw new RuntimeException(e);
