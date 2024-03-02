@@ -31,7 +31,6 @@ public class Server {
     private void register(String nickname, Socket socket) throws UserExistsException {
         try {
             if (userOutMap.containsKey(nickname)) {
-                socketUserMap.put(socket, null);
                 throw new UserExistsException(nickname);
             }
             userOutMap.put(nickname, new PrintStream(socket.getOutputStream()));
@@ -127,7 +126,7 @@ public class Server {
                 try {
                     deletePrivChat(sender, arg);
                     sendOk(sender);
-                } catch (ChatNotFoundException e) {
+                } catch (UserNotExistsException e) {
                     sendErrorMsg(sender, e.getMessage());
                 }
                 break;
@@ -172,12 +171,12 @@ public class Server {
     private void sendOk(Socket socket) {
         sendMessage(socket, "ok");
     }
-    private void deletePrivChat(String sender, String chatName) throws ChatNotFoundException {
+    private void deletePrivChat(String sender, String chatName) throws UserNotExistsException {
         privateChats.remove(getPrivChatByName(sender, chatName));
     }
 
     private boolean existsUser(String nickname) {
-        return userOutMap.get(nickname) != null;
+        return historyUsers.contains(nickname);
     }
 
     private void part(String sender, String channel) throws ChatNotFoundException {
@@ -192,11 +191,11 @@ public class Server {
         }
     }
 
-    private PrivateChat getPrivChatByName(String user1, String user2) throws ChatNotFoundException {
+    private PrivateChat getPrivChatByName(String user1, String user2) throws UserNotExistsException {
         try {
             return privateChats.stream().filter(c -> c.getUser1().equals(user1) && c.getUser2().equals(user2)).toList().get(0);
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new ChatNotFoundException(user2);
+            throw new UserNotExistsException(user2);
         }
     }
 
@@ -272,7 +271,7 @@ public class Server {
         }
     }
 
-    private void createPrivChat(String user1, String user2) throws ChatRepeatedException, ChatNotFoundException {
+    private void createPrivChat(String user1, String user2) throws ChatRepeatedException, UserNotExistsException {
         if (existsUser(user2)) {
             PrivateChat privateChat = new PrivateChat(user1, user2);
             if (privateChats.contains(privateChat)) {
@@ -281,7 +280,7 @@ public class Server {
                 privateChats.add(privateChat);
             }
         } else {
-            throw new ChatNotFoundException(user2);
+            throw new UserNotExistsException(user2);
         }
     }
 

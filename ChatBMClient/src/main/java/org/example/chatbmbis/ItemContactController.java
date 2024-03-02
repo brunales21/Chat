@@ -34,24 +34,11 @@ public class ItemContactController {
 
     public void onBorrarSubMenu(ActionEvent actionEvent) {
         if (getNicknameLabelText().startsWith("#")) {
-            // si es un canal, nos salimos
             mediator.sendMessage("PART " + getNicknameLabelText());
-            mediator.deleteContactItem(getNicknameLabelText());
         } else {
-            // si es un chatprivado lo borramos de servidor tambien
             mediator.sendMessage("DELETE " + getNicknameLabelText());
-            try {
-                // Este hilo espera para que al servidor le de tiempo a enviar la respuesta para validar la acción.
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            if (mediator.actionApproved()) {
-                mediator.deleteContactItem(getNicknameLabelText());
-                mediator.getUser().getContacts().remove(getNicknameLabelText());
-            }
         }
-
+        mediator.deleteContactItem(getNicknameLabelText());
     }
 
     @FXML

@@ -108,7 +108,7 @@ public class ChatController extends Controller {
 
         itemContactsMap.put(nickname, itemContactController);
         mediator.getUser().getChatMessagesMap().put(nickname, mediator.getUser().getMessages(nickname));
-        mediator.getUser().getContacts().add(nickname);
+        mediator.getUser().addContact(nickname);
 
         // Añadir el nuevo nodo al final de la lista de nodos hijos del vBoxPrivate
         Parent finalParent = parent;
@@ -133,7 +133,7 @@ public class ChatController extends Controller {
                 if (itemContactController.getNicknameLabelText().equals(nickname)) {
                     children.remove(child);
                     itemContactsMap.remove(nickname);
-                    mediator.getUser().getContacts().remove(nickname);
+                    mediator.getUser().removeContact(nickname);
                     break;
                 }
             }

@@ -34,11 +34,7 @@ public class LoginController extends Controller{
                 return;
             }
             mediator.ingresar(usernameField.getText());
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            ThreadUtils.sleep(100);
             if (mediator.actionApproved()) {
                 closeLoginView();
                 mediator.createChatView();

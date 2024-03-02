@@ -29,7 +29,7 @@ public class Mediator {
     }
 
     public void ingresar(String nickname) {
-        user.ingresar(nickname);
+        user.ingresar(nickname.toLowerCase());
     }
 
     public void createChatView() {
@@ -107,7 +107,7 @@ public class Mediator {
             } else {
                 // "MESSAGE bruno :hola"
                 messageObj = new Message(messageParts[1], messageParts[2]);
-                if (!getUser().getContacts().contains(messageParts[1])) {
+                if (!getUser().containsContact(messageParts[1])) {
                     chatController.addContactItem(chatController.getvBoxPrivate(), messageObj.getSender());
                     sendMessage("CREATE " + messageObj.getSender());
                 }

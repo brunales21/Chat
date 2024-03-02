@@ -61,7 +61,7 @@
          <contextMenu>
             <ContextMenu>
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#onBorrarSubMenu" text="Borrar" />
+                <MenuItem mnemonicParsing="false" onAction="#onBorrarSubMenu" text="Eliminar" />
               </items>
             </ContextMenu>
          </contextMenu>

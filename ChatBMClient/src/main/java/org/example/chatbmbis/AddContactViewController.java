@@ -30,33 +30,20 @@ public class AddContactViewController extends Controller {
     private void onClickButtonLeft() {
         String name = nicknameTextField.getText();
         if (!name.isEmpty()) {
-            StringBuilder channelName;
-            if (nicknameTextField.getPromptText().equals(prompChannelFile)) {
-                channelName = new StringBuilder("#");
-                channelName.append(name);
+            StringBuilder channelName = new StringBuilder("#").append(name);
+            if (isCreateChannelBtn()) {
                 mediator.sendMessage("CREATE " + channelName);
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                ThreadUtils.sleep(100);
                 if (mediator.actionApproved()) {
-                    mediator.getUser().getChatMessagesMap().put(channelName.toString(), null);
                     mediator.addContactItem(mediator.getChatController().getvBoxGroup(), channelName.toString());
                 }
-            } else if (nicknameTextField.getPromptText().equals(prompPrivFile)) {
+            } else if (isCreateContactBtn()) {
                 if (!name.equals(mediator.getUser().getNickname())) {
                     mediator.sendMessage("CREATE " + name);
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+                    ThreadUtils.sleep(100);
                     if (mediator.actionApproved()) {
-                        mediator.getUser().getChatMessagesMap().put(name, null);
                         mediator.addContactItem(mediator.getChatController().getvBoxPrivate(), name);
                     }
-
                 }
             }
             nicknameTextField.setText("");
@@ -68,21 +55,15 @@ public class AddContactViewController extends Controller {
     @FXML
     public void onClickButtonRight() {
         String chatName = "#" + nicknameTextField.getText();
-        if (!chatName.replaceAll("#", "").isEmpty() && !mediator.getUser().getContacts().contains(chatName)) {
+        if (!chatName.replaceAll("#", "").isEmpty() && !mediator.getUser().containsContact(chatName)) {
             if (nicknameTextField.getPromptText().equals(prompChannelFile)) {
                 mediator.sendMessage("JOIN " + chatName);
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                ThreadUtils.sleep(100);
                 if (mediator.actionApproved()) {
                     mediator.addContactItem(mediator.getChatController().getvBoxGroup(), chatName);
                 }
-
             }
         }
-
         nicknameTextField.setText("");
         Stage stageToClose = (Stage) this.button1.getScene().getWindow();
         stageToClose.close();
@@ -106,5 +87,13 @@ public class AddContactViewController extends Controller {
 
     public void setMediator(Mediator mediator) {
         this.mediator = mediator;
+    }
+
+    public boolean isCreateChannelBtn() {
+        return nicknameTextField.getPromptText().equals(prompChannelFile);
+    }
+
+    public boolean isCreateContactBtn() {
+        return nicknameTextField.getPromptText().equals(prompPrivFile);
     }
 }

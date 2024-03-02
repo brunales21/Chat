@@ -113,6 +113,17 @@ public class User extends Client {
         this.chatMessagesMap = chatMessagesMap;
     }
 
+    public boolean containsContact(String name) {
+        return contacts.contains(name);
+    }
+
+    public void addContact(String name) {
+        contacts.add(name);
+    }
+
+    public void removeContact(String nickname) {
+        contacts.remove(nickname);
+    }
     @Override
     public String toString() {
         return "User{" +
