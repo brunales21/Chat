@@ -3,7 +3,7 @@ package org.example.chatbmbis.exceptions;
 public class ChatNotFoundException extends ChatException {
     private String nickname;
     public ChatNotFoundException(String nickname) {
-        super(nickname + " no existe.");
+        super("ChatNotFoundException");
     }
 
     public String getNickname() {

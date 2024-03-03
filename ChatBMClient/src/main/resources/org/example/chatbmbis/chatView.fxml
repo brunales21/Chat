@@ -8,16 +8,16 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="802.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.chatbmbis.ChatController">
    <children>
-      <HBox maxHeight="601.0" maxWidth="802.0" minHeight="600.0" minWidth="800.0" prefHeight="601.0" prefWidth="802.0" style="-fx-background-color: #eff6fc;">
+      <HBox maxHeight="601.0" maxWidth="802.0" minHeight="600.0" minWidth="800.0" prefHeight="601.0" prefWidth="802.0" styleClass="fondo" stylesheets="@styles.css">
          <children>
-            <VBox alignment="TOP_CENTER" maxHeight="539.0" maxWidth="78.0" prefHeight="539.0" prefWidth="78.0" style="-fx-background-color: blue; -fx-border-radius: 0 0 18 18;">
+            <VBox alignment="TOP_CENTER" maxHeight="569.0" maxWidth="78.0" prefHeight="569.0" prefWidth="72.0" styleClass="barra" stylesheets="@styles.css">
                <HBox.margin>
                   <Insets bottom="30.0" left="20.0" right="10.0" top="30.0" />
                </HBox.margin>
                <children>
                   <ImageView fitHeight="48.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../img/img_2.png" />
+                        <Image url="@../../../img/usuario.png" />
                      </image>
                      <VBox.margin>
                         <Insets top="10.0" />
@@ -67,7 +67,7 @@
                         <Image url="@../../../img/exit.png" />
                      </image>
                      <VBox.margin>
-                        <Insets top="180.0" />
+                        <Insets bottom="20.0" top="160.0" />
                      </VBox.margin>
                   </ImageView>
                </children>
@@ -124,7 +124,7 @@
                      <children>
                         <ImageView fitHeight="60.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../img/img_2.png" />
+                              <Image url="@../../../img/usuario.png" />
                            </image>
                            <HBox.margin>
                               <Insets top="10.0" />

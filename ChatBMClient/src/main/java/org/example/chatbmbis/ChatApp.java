@@ -38,11 +38,12 @@ public class ChatApp extends Application {
 
         //crear la vista login
         FXMLLoader fxmlLoader2 = new FXMLLoader(ChatApp.class.getResource("loginView.fxml"));
-        Scene scene = new Scene(fxmlLoader2.load(), 350, 500);
+        Scene scene = new Scene(fxmlLoader2.load(), 328, 498);
         LoginController loginController = fxmlLoader2.getController();
         loginController.setMediator(mediator);
         mediator.setLoginController(loginController);
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.setTitle("Inicio de Sesion");
         stage.show();
 

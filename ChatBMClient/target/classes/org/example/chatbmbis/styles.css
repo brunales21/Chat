@@ -1,0 +1,20 @@
+
+/* Login */
+.login {
+    -fx-background-color: linear-gradient(to bottom, blue,  #eff6fc);
+}
+.texto{
+    -fx-font-size:24;
+}
+
+/* Chat View */
+.barra {
+    -fx-background-color: blue;
+}
+.fondo{
+    -fx-background-color: #eff6fc ;
+}
+
+
+
+

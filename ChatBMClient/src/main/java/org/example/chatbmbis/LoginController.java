@@ -6,6 +6,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class LoginController extends Controller{
     private Mediator mediator;
@@ -30,7 +32,7 @@ public class LoginController extends Controller{
             try {
                 mediator.setUser(new User(usernameField.getText(), "localhost", 9001));
             } catch (IOException e) {
-                ErrorWindow.instanceErrorWindow("No se pudo conectar al servidor.");
+                ErrorWindow.instanceErrorWindow("FailConectToServer");
                 return;
             }
             mediator.ingresar(usernameField.getText());
@@ -39,6 +41,8 @@ public class LoginController extends Controller{
                 closeLoginView();
                 mediator.createChatView();
             }
+        }else {
+            ErrorWindow.instanceErrorWindow("CellEmpty");
         }
     }
 
