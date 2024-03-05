@@ -36,11 +36,11 @@ public class ChatController extends Controller {
         String prom = "promChannel";
         String opt1 = "buttonIzqChannel";
         String opt2 = "buttonDrchChannel";
+        mediator.getAddViewController().getButton2().setVisible(true);
         createAddView(prom, opt1, opt2);
     }
 
-    @FXML
-    private void onClickSendMessage() {
+    public void sendMessage() {
         String text = textMessageField.getText();
         String receptor = receptorChatLabel.getText();
         if (!text.isBlank() && !receptor.isBlank()) {
@@ -54,10 +54,16 @@ public class ChatController extends Controller {
     }
 
     @FXML
+    private void onClickSendMessage() {
+        sendMessage();
+    }
+
+    @FXML
     private void onClickPrivChatOptions() {
         String prom = "promPriv";
         String opt1 = "buttonIzqPriv";
         String opt2 = "buttonDrchPriv";
+        mediator.getAddViewController().getButton2().setVisible(false);
         createAddView(prom, opt1, opt2);
     }
 
@@ -230,8 +236,16 @@ public class ChatController extends Controller {
         receptorChatLabel.setText(friendNickname);
     }
 
-    private Stage getStage() {
+    public Stage getStage() {
         return (Stage) receptorChatLabel.getScene().getWindow();
+    }
+
+    public TextField getTextMessageField() {
+        return textMessageField;
+    }
+
+    public void setTextMessageField(TextField textMessageField) {
+        this.textMessageField = textMessageField;
     }
 
     public Map<String, ItemContactController> getItemContactsMap() {

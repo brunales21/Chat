@@ -91,7 +91,6 @@ public class Mediator {
 
 
     public void processServerMsg(String message) {
-        System.out.println(message);
         String[] messageParts = Utils.split(message);
         String keyWord = messageParts[0];
         Message messageObj;
@@ -121,7 +120,7 @@ public class Mediator {
                 chatController.getItemContactsMap().get(messageParts[1]).showNotificationImg(true);
             }
 
-        } else {
+        } else if (isActionApproved(keyWord)) {
             // si fue aprobada
             setActionApproved(true);
         }
@@ -131,6 +130,12 @@ public class Mediator {
         return message.equals("MESSAGE");
     }
 
+    private boolean isWelcomeMsg(String msg) {
+        return msg.equals("Bienvenido");
+    }
+    private boolean isActionApproved(String message) {
+        return message.equals("ok");
+    }
 
     private boolean actionRefused(String message) {
         return message.equals("ERROR");
@@ -166,5 +171,9 @@ public class Mediator {
 
     public void setActionApproved(boolean actionApproved) {
         this.actionApproved = actionApproved;
+    }
+
+    public AddContactViewController getAddViewController() {
+        return addViewController;
     }
 }

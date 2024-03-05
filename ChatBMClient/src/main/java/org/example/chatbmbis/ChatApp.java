@@ -3,6 +3,7 @@ package org.example.chatbmbis;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -36,6 +37,8 @@ public class ChatApp extends Application {
         mediator.setAddViewController(addViewController);
         mediator.getView().put(stageAddChat, addViewController);
 
+
+
         //crear la vista login
         FXMLLoader fxmlLoader2 = new FXMLLoader(ChatApp.class.getResource("loginView.fxml"));
         Scene scene = new Scene(fxmlLoader2.load(), 328, 498);
@@ -49,6 +52,22 @@ public class ChatApp extends Application {
 
         setCloseWindow(stage);
         setCloseWindow(stageChat);
+
+        // tecla enter para enviar msjs
+        chatController.getTextMessageField().setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+                // Aquí puedes poner la lógica para iniciar sesión
+                chatController.sendMessage();
+            }
+        });
+
+        //tecla enter para registrarse
+        loginController.getUsernameField().setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+                // Aquí puedes poner la lógica para iniciar sesión
+                loginController.ingresar();
+            }
+        });
     }
 
     private void setCloseWindow(Stage stage) {

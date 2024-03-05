@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.function.Consumer;
 
 public class Server {
 
@@ -17,6 +18,8 @@ public class Server {
     private final Map<String, PrintStream> userOutMap;
     private final Map<Socket, String> socketUserMap;
     private final Set<String> historyUsers;
+
+    private final String REGISTER_COMMAND = "REGISTER";
 
 
     public Server(int port) {
@@ -53,13 +56,22 @@ public class Server {
 
     private void clientHandler(Socket socket) {
         Scanner in = null;
+        boolean registered = false;
         try {
             in = new Scanner(socket.getInputStream());
             String header;
-            while (!socket.isClosed()) {
+            showFileContent(socket, "welcome.txt");
+            while (socket.isConnected()) {
                 if (in.hasNextLine()) {
-                    header = in.nextLine();
-                    processCommand(socket, BackspaceRemover.removeBackspaces(header));
+                    header = BackspaceRemover.removeBackspaces(in.nextLine());
+                    if (!registered) {
+                        while (!splitParts(header)[0].equalsIgnoreCase(REGISTER_COMMAND)) {
+                            sendMessage(socket, "Primero debe registrarse. Ej: REGISTER mi_username");
+                            header = BackspaceRemover.removeBackspaces(in.nextLine());
+                        }
+                        registered = true;
+                    }
+                    processCommand(socket, header);
                 }
             }
         } catch (IOException ex) {
@@ -68,19 +80,20 @@ public class Server {
 
     }
 
-    private void processCommand(Socket senderSocket, String header) {
-        System.out.println("Header que recibe servidor: " + header);
-        String[] headerParts = splitParts(header);
+    private void processCommand(Socket senderSocket, String command) {
+        System.out.println("Header que recibe servidor: " + command);
+        String[] commandParts = splitParts(command);
         String sender = socketUserMap.get(senderSocket);
-        String command = headerParts[0].toUpperCase();
+        String commandName = commandParts[0].toUpperCase();
         String arg = "";
-        if (headerParts.length > 1) {
-            arg = headerParts[1];
+        if (commandParts.length > 1) {
+            arg = commandParts[1];
         }
-        switch (command) {
+        switch (commandName) {
             case "REGISTER":
                 try {
                     register(arg, senderSocket);
+                    sendMessage(senderSocket, "Listo para chatear. Puede usar el comando HELP como ayuda.");
                     sendOk(senderSocket);
                 } catch (UserExistsException e) {
                     sendErrorMsg(senderSocket, e.getMessage());
@@ -99,7 +112,7 @@ public class Server {
                 }
                 break;
             case "PRIVMSG":
-                String msg = headerParts[2];
+                String msg = commandParts[2];
                 try {
                     if (arg.startsWith("#")) {
                         //PRIVMSG #dam monica :hola
@@ -139,7 +152,7 @@ public class Server {
                 }
                 break;
             case "LU":
-                listUsers(sender);
+                listAllUsers(sender);
                 break;
             case "LC":
                 listChannels(sender);
@@ -158,7 +171,7 @@ public class Server {
                 userOutMap.remove(sender);
                 break;
             default:
-                sendErrorMsg(sender, "El comando " + command + " no existe.");
+                sendErrorMsg(sender, "El comando " + commandName + " no existe.");
                 break;
         }
 
@@ -375,12 +388,34 @@ public class Server {
         userOutMap.get(sender).println(text);
     }
 
+
+
     private void listChannels(String sender) {
-        channels.forEach(c -> userOutMap.get(sender).println(c.getName()));
+        if (!channels.isEmpty()) {
+            channels.forEach(c -> userOutMap.get(sender).println(c.getName()));
+        } else {
+            userOutMap.get(sender).println("No existen canales en el servidor.");
+        }
     }
 
-    private void listUsers(String sender) {
-        socketUserMap.values().forEach(u -> userOutMap.get(sender).println("- " + u));
+    private void listAllUsers(String sender) {
+        sendMessage(sender, "Usuarios en linea:");
+        listUsers(getOnlineUsers(), sender);
+        sendMessage(sender, "Usuarios desconectados:");
+        listUsers(getOfflineUsers(), sender);
+    }
+
+    private void listUsers(Collection<String> users, String sender) {
+        users.forEach(u -> userOutMap.get(sender).println("- " + u));
+    }
+
+
+    private Collection<String> getOnlineUsers() {
+        return socketUserMap.values();
+    }
+
+    private List<String> getOfflineUsers() {
+        return historyUsers.stream().filter(u -> !getOnlineUsers().contains(u)).toList();
     }
 
     private void exitMessage(String sender) {

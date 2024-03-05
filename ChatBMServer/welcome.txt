@@ -1,4 +1,2 @@
-Bienvenido!
-Diviertete chateando! Para ingresar, introduce "register <nickname>".
-Si necesitas ayuda, puedes usar el comando "help"
-
+Bienvenido al Chat.
+Registrese (Ej: REGISTER tu_nickname)

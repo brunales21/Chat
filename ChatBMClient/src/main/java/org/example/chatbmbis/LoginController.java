@@ -6,8 +6,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 public class LoginController extends Controller{
     private Mediator mediator;
@@ -27,12 +25,17 @@ public class LoginController extends Controller{
         Internacionalizacion.convertIntoOtherLanguage("password", passwordField);
     }
     @FXML
-    private void ingresar() {
-        if (!usernameField.getText().isEmpty()) {
+    private void onClickIngresar() {
+        ingresar();
+    }
+
+    public void ingresar() {
+        if (!usernameField.getText().isBlank()) {
+            usernameField.setText(usernameField.getText().replace(" ", ""));
             try {
                 mediator.setUser(new User(usernameField.getText(), "localhost", 9001));
             } catch (IOException e) {
-                ErrorWindow.instanceErrorWindow("FailConectToServer");
+                ErrorWindow.instanceErrorWindow("FailConnectToServer");
                 return;
             }
             mediator.ingresar(usernameField.getText());
@@ -41,8 +44,8 @@ public class LoginController extends Controller{
                 closeLoginView();
                 mediator.createChatView();
             }
-        }else {
-            ErrorWindow.instanceErrorWindow("CellEmpty");
+        } else {
+            ErrorWindow.instanceErrorWindow("EmptyField");
         }
     }
 
@@ -59,5 +62,7 @@ public class LoginController extends Controller{
         this.mediator = mediator;
     }
 
-
+    public TextField getUsernameField() {
+        return usernameField;
+    }
 }

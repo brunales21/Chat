@@ -29,7 +29,7 @@
             </TextField>
             <HBox alignment="CENTER" prefHeight="193.0" prefWidth="328.0" spacing="50.0">
                <children>
-                  <Button fx:id="enterButton" mnemonicParsing="false" onMouseClicked="#ingresar" prefHeight="54.0" prefWidth="105.0" text="Acceder">
+                  <Button fx:id="enterButton" mnemonicParsing="false" onMouseClicked="#onClickIngresar" prefHeight="54.0" prefWidth="105.0" text="Acceder">
                      <HBox.margin>
                         <Insets top="50.0" />
                      </HBox.margin></Button>

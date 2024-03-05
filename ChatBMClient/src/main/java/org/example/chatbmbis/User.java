@@ -1,5 +1,7 @@
 package org.example.chatbmbis;
 
+import javafx.application.Platform;
+
 import java.io.*;
 import java.util.*;
 
@@ -42,16 +44,31 @@ public class User extends Client {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        while (!getSocket().isClosed()) {
+
+        while (getSocket().isConnected()) {
             try {
+                System.out.println("1");
                 String message = in.nextLine();
                 if (message != null) {
+                    System.out.println(message);
                     mediator.processServerMsg(message);
                 }
             } catch (NoSuchElementException ignored) {
-
+                // Este bloque catch se ejecutará si no hay más líneas para leer, lo que podría indicar una desconexión
+                break;  // Salir del bucle al detectar la desconexión
             }
         }
+
+        Platform.runLater(() -> {
+            mediator.getChatController().getStage().close();
+            ErrorWindow.instanceErrorWindow("ServidorCaido");
+        });
+        try {
+            getSocket().close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public void sendMessage(String header) {
