@@ -13,19 +13,19 @@ import java.util.function.Consumer;
 public class Server {
 
     private final int port;
-    private final List<PrivateChat> privateChats;
-    private final List<Channel> channels;
+    private final Set<PrivateChat> privateChats;
+    private final Set<Channel> channels;
     private final Map<String, PrintStream> userOutMap;
     private final Map<Socket, String> socketUserMap;
     private final Set<String> historyUsers;
 
     private final String REGISTER_COMMAND = "REGISTER";
-
+    private final String MSGS_FOLDER_NAME = "messages";
 
     public Server(int port) {
         this.port = port;
-        channels = new ArrayList<>();
-        privateChats = new ArrayList<>();
+        channels = new HashSet<>();
+        privateChats = new HashSet<>();
         userOutMap = new HashMap<>();
         socketUserMap = new HashMap<>();
         historyUsers = new HashSet<>();
@@ -123,8 +123,6 @@ public class Server {
                     }
                 } catch (UserNotExistsException e) {
                     sendErrorMsg(sender, e.getMessage());
-                } catch (UserNotConnectedException e) {
-                    persistMsg(sender, arg, msg, null);
                 }
                 break;
             case "JOIN":
@@ -184,6 +182,7 @@ public class Server {
     private void sendOk(Socket socket) {
         sendMessage(socket, "ok");
     }
+
     private void deletePrivChat(String sender, String chatName) throws UserNotExistsException {
         privateChats.remove(getPrivChatByName(sender, chatName));
     }
@@ -228,25 +227,34 @@ public class Server {
         out.println("ERROR :" + errorMessage);
     }
 
-    private List<String> getUsersInChannel(String channelName) {
+    private Set<String> getUsersInChannel(String channelName) {
         try {
             return getChannelByName(channelName).getUsers();
         } catch (ChatNotFoundException e) {
-            return new ArrayList<>();
+            return new HashSet<>();
         }
     }
 
+    private boolean isMemberOfChannel(String channel, String member) {
+        return getUsersInChannel(channel).contains(member);
+    }
+
     public void broadcast(String sender, String channel, String textMessage) {
-        getUsersInChannel(channel).stream()
-                .filter(u -> !u.equals(sender))
-                .forEach(user -> {
-                    //#2dam bruno :hola
-                    try {
-                        sendMsgToChannelMember(sender, user, channel, textMessage);
-                    } catch (UserNotConnectedException e) {
-                        persistMsg(sender, user, textMessage, channel);
-                    }
-                });
+        if (isMemberOfChannel(channel, sender)) {
+            getUsersInChannel(channel).stream()
+                    .filter(u -> !u.equals(sender))
+                    .forEach(user -> {
+                        //#2dam bruno :hola
+                        try {
+                            sendMsgToChannelMember(sender, user, channel, textMessage);
+                        } catch (UserNotConnectedException e) {
+                            persistMsg(sender, user, textMessage, channel);
+                        }
+                    });
+        } else {
+            sendErrorMsg(sender, "Para enviar un mensaje a " + channel + ", primero debes unirte.");
+        }
+
     }
 
     public void sendMsgToChannelMember(String sender, String receptor, String channel, String text) throws UserNotConnectedException {
@@ -259,14 +267,14 @@ public class Server {
         }
     }
 
-    public void sendMessage(String sender, String receptor, String text) throws UserNotExistsException, UserNotConnectedException {
+    public void sendMessage(String sender, String receptor, String text) throws UserNotExistsException {
         try {
             userOutMap.get(receptor).println("MESSAGE " + sender + " :" + text);
         } catch (NullPointerException e) {
-            if (historyUsers.contains(receptor)) {
-                throw new UserNotConnectedException(receptor);
+            if (!historyUsers.contains(receptor)) {
+                throw new UserNotExistsException(receptor);
             }
-            throw new UserNotExistsException(receptor);
+            persistMsg(sender, receptor, text, null);
         }
     }
 
@@ -298,18 +306,21 @@ public class Server {
     }
 
     private void createFileIfNotExists(String fileName) {
-        Path path = Path.of(fileName);
-        if (!Files.exists(path)) {
+        Path filePath = Path.of(fileName);
+        if (!Files.exists(filePath)) {
+            Path folderPath = filePath.getParent();
             try {
-                Files.createFile(path);
+                Files.createDirectories(folderPath); // Esto creará la carpeta si no existe
+                Files.createFile(filePath);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
+
     }
 
     private void persistMsg(String sender, String fileName, String message, String channel) {
-        String targetFile = fileName + "-messages.csv";
+        String targetFile = MSGS_FOLDER_NAME + "/" + fileName + "-messages.csv";
         createFileIfNotExists(targetFile);
         try (PrintStream out = new PrintStream(new FileOutputStream(targetFile, true))) {
             if (channel == null) {
@@ -323,7 +334,7 @@ public class Server {
     }
 
     private void sendMessagesFromFile(String receptor) {
-        String fileName = receptor+"-messages.csv";
+        String fileName = MSGS_FOLDER_NAME + "/" + receptor + "-messages.csv";
         Path path = Path.of(fileName);
         if (Files.exists(path)) {
             try (BufferedReader in = new BufferedReader(new FileReader(fileName))) {
@@ -389,7 +400,6 @@ public class Server {
     }
 
 
-
     private void listChannels(String sender) {
         if (!channels.isEmpty()) {
             channels.forEach(c -> userOutMap.get(sender).println(c.getName()));
@@ -436,7 +446,7 @@ public class Server {
     }
 
     public static void main(String[] args) {
-        Server server = new Server(9001);
+        Server server = new Server(23);
         try {
             server.start();
         } catch (IOException e) {

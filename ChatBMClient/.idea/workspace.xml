@@ -6,23 +6,31 @@
   <component name="ChangeListManager">
     <list default="true" id="46d45c23-4adf-40e0-a91c-a5d6e7259c3c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bruno-messages.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Monica-messages.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/juan-messages.bin" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/ChatApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/ChatApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/ChatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/FileChatDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/FileChatDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/ItemContactController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/ItemContactController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/Mediator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/Mediator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/bundle/messages_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bundle/messages_en.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/bundle/messages_es_ES.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bundle/messages_es_ES.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/chatbmbis/loginView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/chatbmbis/loginView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/bundle/messages_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bundle/messages_en.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/bundle/messages_es_ES.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bundle/messages_es_ES.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/ChatApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/ChatApp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/ChatController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/ChatController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/FileChatDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/FileChatDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/ItemContactController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/ItemContactController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/LoginController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/Mediator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/Mediator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/User.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/help.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/help.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/BackspaceRemover.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/BackspaceRemover.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/Channel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/Channel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/exceptions/UserExistsException.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/exceptions/UserExistsException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/exceptions/UserNotExistsException.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/exceptions/UserNotExistsException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/welcome.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/welcome.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/example/chatbmbis/BackspaceRemover.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/example/chatbmbis/BackspaceRemover.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/example/chatbmbis/Channel.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/example/chatbmbis/Channel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/example/chatbmbis/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/example/chatbmbis/Server.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +90,7 @@
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/bemim/Workspace/DAM/2Dam/acceso-datos/2trim/AyllonD_2Ev/Tenis",
+    "last_opened_file_path": "C:/Users/bemim/Workspace/DAM/TFG/Chat/ChatBMClient",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -107,7 +115,7 @@
       <recent name="org.example.chatbmbis" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main (1)">
+  <component name="RunManager" selected="Application.Main (2)">
     <configuration name="ChatApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.chatbmbis.ChatApp" />
       <module name="ChatBMBis" />
@@ -302,6 +310,7 @@
       <workItem from="1709487912376" duration="857000" />
       <workItem from="1709642561071" duration="125000" />
       <workItem from="1709642700568" duration="12781000" />
+      <workItem from="1710240412320" duration="10240000" />
     </task>
     <servers />
   </component>

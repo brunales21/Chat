@@ -11,6 +11,7 @@ public class User extends Client {
     private final List<String> contacts;
     private final Mediator mediator;
     private final ChatDAO chatDAO;
+    private final String CHATS_FOLDER_NAME = "chats_messages";
 
     public User(String nickname, String hostname, int port) throws IOException {
         super(hostname, port);
@@ -18,7 +19,7 @@ public class User extends Client {
         this.contacts = new ArrayList<>();
         chatMessagesMap = new HashMap<>();
         mediator = Mediator.getInstance();
-        chatDAO = new FileChatDAO(this.nickname + "-messages.bin");
+        chatDAO = new FileChatDAO(CHATS_FOLDER_NAME + "/" + this.nickname + "-messages.bin");
     }
 
     public void register(String nickname) {
@@ -47,7 +48,6 @@ public class User extends Client {
 
         while (getSocket().isConnected()) {
             try {
-                System.out.println("1");
                 String message = in.nextLine();
                 if (message != null) {
                     System.out.println(message);

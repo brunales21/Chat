@@ -1,23 +1,21 @@
 package org.example.chatbmbis;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Channel {
     private final String name;
-    private final List<String> users;
+    private final Set<String> users;
 
     public Channel(String name) {
         this.name = name;
-        this.users = new ArrayList<>();
+        this.users = new HashSet<>();
     }
 
     public void addUser(String user) {
         users.add(user);
     }
 
-    public List<String> getUsers() {
+    public Set<String> getUsers() {
         return users;
     }
 

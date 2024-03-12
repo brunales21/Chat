@@ -3,6 +3,7 @@ package org.example.chatbmbis;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -21,6 +22,8 @@ public class ItemContactController {
     Label nicknameLabel;
     @FXML
     private HBox item;
+    @FXML
+    private Parent view;
     @FXML
     private ImageView notificationImg;
 
@@ -64,5 +67,13 @@ public class ItemContactController {
 
     public void setMediator(Mediator mediator) {
         this.mediator = mediator;
+    }
+
+    public Parent getView() {
+        return view;
+    }
+
+    public void setView(Parent view) {
+        this.view = view;
     }
 }

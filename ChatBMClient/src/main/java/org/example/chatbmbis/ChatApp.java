@@ -38,7 +38,6 @@ public class ChatApp extends Application {
         mediator.getView().put(stageAddChat, addViewController);
 
 
-
         //crear la vista login
         FXMLLoader fxmlLoader2 = new FXMLLoader(ChatApp.class.getResource("loginView.fxml"));
         Scene scene = new Scene(fxmlLoader2.load(), 328, 498);

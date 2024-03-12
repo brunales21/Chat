@@ -67,6 +67,30 @@ public class ChatController extends Controller {
         createAddView(prom, opt1, opt2);
     }
 
+    public void overlayChat(String nickname) {
+        // Obtener el controlador del item utilizando el nickname proporcionado
+        ItemContactController itemContactController = itemContactsMap.get(nickname);
+
+        if (itemContactController != null) {
+            // Obtener el nodo (vista) correspondiente al controlador
+            Parent itemNode = itemContactController.getView();
+
+            // Obtener el VBox al que pertenece el item
+            VBox vBox = itemNode.getParent() instanceof VBox ? (VBox) itemNode.getParent() : null;
+
+            if (vBox != null) {
+                Platform.runLater(() -> {
+                    // Eliminar el nodo del VBox si ya estaba presente
+                    vBox.getChildren().remove(itemNode);
+                    // Agregar el nodo al primer lugar en el VBox
+                    vBox.getChildren().add(0, itemNode);
+                });
+
+
+            }
+        }
+    }
+
 
     public void createAddView(String promptText, String opt1, String opt2) {
         mediator.createAddView(promptText, opt1, opt2);
@@ -115,7 +139,7 @@ public class ChatController extends Controller {
         itemContactsMap.put(nickname, itemContactController);
         mediator.getUser().getChatMessagesMap().put(nickname, mediator.getUser().getMessages(nickname));
         mediator.getUser().addContact(nickname);
-
+        itemContactController.setView(parent);
         // Añadir el nuevo nodo al final de la lista de nodos hijos del vBoxPrivate
         Parent finalParent = parent;
         Platform.runLater(() -> {

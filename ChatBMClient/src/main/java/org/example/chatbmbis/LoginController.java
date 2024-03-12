@@ -33,7 +33,7 @@ public class LoginController extends Controller{
         if (!usernameField.getText().isBlank()) {
             usernameField.setText(usernameField.getText().replace(" ", ""));
             try {
-                mediator.setUser(new User(usernameField.getText(), "localhost", 9001));
+                mediator.setUser(new User(usernameField.getText(), "localhost", 23));
             } catch (IOException e) {
                 ErrorWindow.instanceErrorWindow("FailConnectToServer");
                 return;

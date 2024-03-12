@@ -112,6 +112,7 @@ public class Mediator {
                 }
             }
             user.addMessage(messageParts[1], messageObj);
+            chatController.overlayChat(messageParts[1]);
             // si el chat abierto coincide con el emisor del mensaje..
             if (chatController.getReceptorChatLabel().getText().equals(messageParts[1])) {
                 chatController.addMessageToVBox(messageObj);

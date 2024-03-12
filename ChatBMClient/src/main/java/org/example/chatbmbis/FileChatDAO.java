@@ -12,18 +12,17 @@ public class FileChatDAO implements ChatDAO {
 
     public FileChatDAO(String fileName) {
         this.file = Path.of(fileName);
-        createIfNotExists(file);
-    }
-
-    private void createIfNotExists(Path file) {
         if (!Files.exists(file)) {
+            Path folderPath = this.file.getParent();
             try {
+                Files.createDirectories(folderPath); // Esto creará la carpeta si no existe
                 Files.createFile(file);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
     }
+
     @Override
     public void saveChatMessages(Map<String, List<Message>> chatMessagesMap) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(String.valueOf(file)))) {
