@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.example.chatbmbis.constants.Commands;
+import org.example.chatbmbis.utils.ThreadUtils;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -32,17 +34,17 @@ public class AddContactViewController extends Controller {
         if (!name.isEmpty()) {
             StringBuilder channelName = new StringBuilder("#").append(name);
             if (isCreateChannelBtn()) {
-                mediator.sendMessage("CREATE " + channelName);
+                mediator.sendMessage(Commands.CREATE.name() + " " + channelName);
                 ThreadUtils.sleep(100);
-                if (mediator.actionApproved()) {
-                    mediator.addContactItem(mediator.getChatController().getvBoxGroup(), channelName.toString());
+                if (mediator.successfulAction()) {
+                    mediator.addContactItem(mediator.getChatController().getvBoxChannels(), channelName.toString());
                 }
             } else if (isCreateContactBtn()) {
                 if (!name.equals(mediator.getUser().getNickname())) {
-                    mediator.sendMessage("CREATE " + name);
+                    mediator.sendMessage(Commands.CREATE.name() + " " + name);
                     ThreadUtils.sleep(100);
-                    if (mediator.actionApproved()) {
-                        mediator.addContactItem(mediator.getChatController().getvBoxPrivate(), name);
+                    if (mediator.successfulAction()) {
+                        mediator.addContactItem(mediator.getChatController().getvBoxContacts(), name);
                     }
                 }
             }
@@ -57,10 +59,10 @@ public class AddContactViewController extends Controller {
         String chatName = "#" + nicknameTextField.getText();
         if (!chatName.replaceAll("#", "").isEmpty() && !mediator.getUser().containsContact(chatName)) {
             if (nicknameTextField.getPromptText().equals(prompChannelFile)) {
-                mediator.sendMessage("JOIN " + chatName);
+                mediator.sendMessage(Commands.JOIN.name() + " " + chatName);
                 ThreadUtils.sleep(100);
-                if (mediator.actionApproved()) {
-                    mediator.addContactItem(mediator.getChatController().getvBoxGroup(), chatName);
+                if (mediator.successfulAction()) {
+                    mediator.addContactItem(mediator.getChatController().getvBoxChannels(), chatName);
                 }
             }
         }

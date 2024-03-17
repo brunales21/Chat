@@ -1,5 +1,7 @@
 package org.example.chatbmbis;
 
+import org.example.chatbmbis.IAs.AIConnector;
+import org.example.chatbmbis.constants.Commands;
 import org.example.chatbmbis.exceptions.*;
 
 import java.io.*;
@@ -8,7 +10,6 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
-import java.util.function.Consumer;
 
 public class Server {
 
@@ -18,8 +19,6 @@ public class Server {
     private final Map<String, PrintStream> userOutMap;
     private final Map<Socket, String> socketUserMap;
     private final Set<String> historyUsers;
-
-    private final String REGISTER_COMMAND = "REGISTER";
     private final String MSGS_FOLDER_NAME = "messages";
 
     public Server(int port) {
@@ -37,12 +36,13 @@ public class Server {
                 throw new UserExistsException(nickname);
             }
             userOutMap.put(nickname, new PrintStream(socket.getOutputStream()));
-            historyUsers.add(nickname);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        historyUsers.add(nickname);
         socketUserMap.put(socket, nickname);
-        sendMessagesFromFile(nickname);
+        sendOk(socket);
+        sendSavedMessages(nickname);
     }
 
     public void start() throws IOException {
@@ -55,29 +55,21 @@ public class Server {
     }
 
     private void clientHandler(Socket socket) {
-        Scanner in = null;
-        boolean registered = false;
         try {
-            in = new Scanner(socket.getInputStream());
-            String header;
-            showFileContent(socket, "welcome.txt");
-            while (socket.isConnected()) {
-                if (in.hasNextLine()) {
-                    header = BackspaceRemover.removeBackspaces(in.nextLine());
-                    if (!registered) {
-                        while (!splitParts(header)[0].equalsIgnoreCase(REGISTER_COMMAND)) {
-                            sendMessage(socket, "Primero debe registrarse. Ej: REGISTER mi_username");
-                            header = BackspaceRemover.removeBackspaces(in.nextLine());
-                        }
-                        registered = true;
-                    }
-                    processCommand(socket, header);
-                }
-            }
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
+            sendFileContent(socket, "welcome.txt");
+            Scanner in = new Scanner(socket.getInputStream());
+            String command;
+            do {
+                sendMessage(socket, "Primero debe registrarse. Ej: "+Commands.REGISTER+" mi_username");
+                command = BackspaceRemover.removeBackspaces(in.nextLine());
+            } while (!splitParts(command)[0].equalsIgnoreCase(Commands.REGISTER.toString()));
+            do {
+                processCommand(socket, command);
+                command = BackspaceRemover.removeBackspaces(in.nextLine());
+            } while (true);
+        } catch (IOException | NoSuchElementException ignore) {
 
+        }
     }
 
     private void processCommand(Socket senderSocket, String command) {
@@ -94,7 +86,6 @@ public class Server {
                 try {
                     register(arg, senderSocket);
                     sendMessage(senderSocket, "Listo para chatear. Puede usar el comando HELP como ayuda.");
-                    sendOk(senderSocket);
                 } catch (UserExistsException e) {
                     sendErrorMsg(senderSocket, e.getMessage());
                 }
@@ -118,8 +109,14 @@ public class Server {
                         //PRIVMSG #dam monica :hola
                         broadcast(sender, arg, msg);
                     } else {
-                        //PRIVMSG monica :hola
-                        sendMessage(sender, arg, msg);
+                        if (arg.equals("IA")) {
+                            String response = AIConnector.getAISnippetsForQuery(msg);
+                            System.out.println(response);
+                            sendMessage("IA", sender, response);
+                        } else {
+                            //PRIVMSG monica :hola
+                            sendMessage(sender, arg, msg);
+                        }
                     }
                 } catch (UserNotExistsException e) {
                     sendErrorMsg(sender, e.getMessage());
@@ -156,7 +153,7 @@ public class Server {
                 listChannels(sender);
                 break;
             case "HELP":
-                showFileContent(senderSocket, "help.txt");
+                sendFileContent(senderSocket, "help.txt");
                 break;
             case "EXIT":
                 try {
@@ -176,11 +173,11 @@ public class Server {
     }
 
     private void sendOk(String sender) {
-        sendMessage(sender, "ok");
+        sendMessage(sender, Commands.OK.toString().toLowerCase());
     }
 
     private void sendOk(Socket socket) {
-        sendMessage(socket, "ok");
+        sendMessage(socket, Commands.OK.toString().toLowerCase());
     }
 
     private void deletePrivChat(String sender, String chatName) throws UserNotExistsException {
@@ -213,7 +210,7 @@ public class Server {
 
     private void sendErrorMsg(String sender, String errorMessage) {
         // le rebota el msj
-        userOutMap.get(sender).println("ERROR :" + errorMessage);
+        userOutMap.get(sender).println(Commands.ERROR + " :" + errorMessage);
     }
 
     private void sendErrorMsg(Socket socket, String errorMessage) {
@@ -224,7 +221,7 @@ public class Server {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        out.println("ERROR :" + errorMessage);
+        out.println(Commands.ERROR + " :" + errorMessage);
     }
 
     private Set<String> getUsersInChannel(String channelName) {
@@ -261,7 +258,7 @@ public class Server {
         //Este nunca lanzaría UserNotFoundExc
         try {
             //MESSAGGE #2dam bruno :hola
-            userOutMap.get(receptor).println("MESSAGE " + channel + " " + sender + " :" + text);
+            userOutMap.get(receptor).println(Commands.MESSAGE + " " + channel + " " + sender + " :" + text);
         } catch (NullPointerException e) {
             throw new UserNotConnectedException(receptor);
         }
@@ -269,7 +266,7 @@ public class Server {
 
     public void sendMessage(String sender, String receptor, String text) throws UserNotExistsException {
         try {
-            userOutMap.get(receptor).println("MESSAGE " + sender + " :" + text);
+            userOutMap.get(receptor).println(Commands.MESSAGE + " " + sender + " :" + text);
         } catch (NullPointerException e) {
             if (!historyUsers.contains(receptor)) {
                 throw new UserNotExistsException(receptor);
@@ -333,7 +330,7 @@ public class Server {
         }
     }
 
-    private void sendMessagesFromFile(String receptor) {
+    private void sendSavedMessages(String receptor) {
         String fileName = MSGS_FOLDER_NAME + "/" + receptor + "-messages.csv";
         Path path = Path.of(fileName);
         if (Files.exists(path)) {
@@ -432,7 +429,7 @@ public class Server {
         sendMessage(sender, "Hasta pronto!");
     }
 
-    private void showFileContent(Socket socket, String fileName) {
+    private void sendFileContent(Socket socket, String fileName) {
         try {
             BufferedReader in = new BufferedReader(new FileReader(fileName));
             String line;

@@ -2,6 +2,8 @@ package org.example.chatbmbis;
 
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.example.chatbmbis.constants.Commands;
+import org.example.chatbmbis.utils.Utils;
 
 import java.util.*;
 
@@ -9,17 +11,12 @@ public class Mediator {
     private static Mediator instance;
     private ChatController chatController;
     private AddContactViewController addViewController;
-    private ItemContactController itemContactController;
     private LoginController loginController;
     private Map<Stage, Controller> view = new HashMap<>();
-    private Map<ItemContactController, String> itemContactControllers = new HashMap<>();
     private User user;
-    private boolean actionApproved = true;
+    private boolean successfulAction = true;
 
-
-    public Mediator() {
-
-    }
+    public Mediator() {}
 
     public static synchronized Mediator getInstance() {
         if (instance == null) {
@@ -28,8 +25,8 @@ public class Mediator {
         return instance;
     }
 
-    public void ingresar(String nickname) {
-        user.ingresar(nickname.toLowerCase());
+    public void ingresar() {
+        user.ingresar();
     }
 
     public void createChatView() {
@@ -96,8 +93,11 @@ public class Mediator {
         Message messageObj;
         if (actionRefused(keyWord)) {
             // si la accion fue rechazada
-            setActionApproved(false);
+            setSuccessfulAction(false);
             ErrorWindow.instanceErrorWindow(messageParts[1]);
+        } else if (isActionApproved(keyWord)) {
+            // si fue aprobada
+            setSuccessfulAction(true);
         } else if (isTxtMessage(keyWord)) {
             // si tiene que procesar un msj de texto
             if (messageParts[1].startsWith("#")) {
@@ -107,8 +107,8 @@ public class Mediator {
                 // "MESSAGE bruno :hola"
                 messageObj = new Message(messageParts[1], messageParts[2]);
                 if (!getUser().containsContact(messageParts[1])) {
-                    chatController.addContactItem(chatController.getvBoxPrivate(), messageObj.getSender());
-                    sendMessage("CREATE " + messageObj.getSender());
+                    chatController.addContactItem(chatController.getvBoxContacts(), messageObj.getSender());
+                    sendMessage(Commands.CREATE.name() + " " + messageObj.getSender());
                 }
             }
             user.addMessage(messageParts[1], messageObj);
@@ -121,25 +121,19 @@ public class Mediator {
                 chatController.getItemContactsMap().get(messageParts[1]).showNotificationImg(true);
             }
 
-        } else if (isActionApproved(keyWord)) {
-            // si fue aprobada
-            setActionApproved(true);
         }
     }
 
     private boolean isTxtMessage(String message) {
-        return message.equals("MESSAGE");
+        return message.equals(Commands.MESSAGE.name());
     }
 
-    private boolean isWelcomeMsg(String msg) {
-        return msg.equals("Bienvenido");
-    }
     private boolean isActionApproved(String message) {
-        return message.equals("ok");
+        return message.equalsIgnoreCase(Commands.OK.name());
     }
 
     private boolean actionRefused(String message) {
-        return message.equals("ERROR");
+        return message.equals(Commands.ERROR.name());
     }
 
     public User getUser() {
@@ -166,12 +160,12 @@ public class Mediator {
         this.loginController = loginController;
     }
 
-    public boolean actionApproved() {
-        return actionApproved;
+    public boolean successfulAction() {
+        return successfulAction;
     }
 
-    public void setActionApproved(boolean actionApproved) {
-        this.actionApproved = actionApproved;
+    public void setSuccessfulAction(boolean successfulAction) {
+        this.successfulAction = successfulAction;
     }
 
     public AddContactViewController getAddViewController() {

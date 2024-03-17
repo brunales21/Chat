@@ -1,4 +1,4 @@
-package org.example.chatbmbis;
+package org.example.chatbmbis.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

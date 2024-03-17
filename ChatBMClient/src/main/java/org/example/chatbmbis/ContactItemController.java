@@ -2,21 +2,14 @@ package org.example.chatbmbis;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import org.example.chatbmbis.constants.Commands;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-public class ItemContactController {
-
+public class ContactItemController extends Controller {
     private Mediator mediator;
     @FXML
     Label nicknameLabel;
@@ -27,21 +20,20 @@ public class ItemContactController {
     @FXML
     private ImageView notificationImg;
 
-    public void showNotificationImg(boolean b) {
-        notificationImg.setVisible(b);
-    }
-
-
     private Callback callback = () -> {
     };
 
     public void onBorrarSubMenu(ActionEvent actionEvent) {
         if (getNicknameLabelText().startsWith("#")) {
-            mediator.sendMessage("PART " + getNicknameLabelText());
+            mediator.sendMessage(Commands.PART.name() + " " + getNicknameLabelText());
         } else {
-            mediator.sendMessage("DELETE " + getNicknameLabelText());
+            mediator.sendMessage(Commands.DELETE.name() + " " + getNicknameLabelText());
         }
         mediator.deleteContactItem(getNicknameLabelText());
+    }
+
+    public void showNotificationImg(boolean b) {
+        notificationImg.setVisible(b);
     }
 
     @FXML

@@ -1,6 +1,8 @@
 package org.example.chatbmbis;
 
 import javafx.application.Platform;
+import org.example.chatbmbis.constants.Commands;
+import org.example.chatbmbis.utils.Utils;
 
 import java.io.*;
 import java.util.*;
@@ -22,13 +24,13 @@ public class User extends Client {
         chatDAO = new FileChatDAO(CHATS_FOLDER_NAME + "/" + this.nickname + "-messages.bin");
     }
 
-    public void register(String nickname) {
-        sendMessage("REGISTER " + nickname);
+    public void register() {
+        sendMessage(Commands.REGISTER.name() + " " + nickname);
     }
 
 
-    public void ingresar(String nickname) {
-        register(nickname);
+    public void ingresar() {
+        register();
         this.start();
     }
 
@@ -71,12 +73,12 @@ public class User extends Client {
 
     }
 
-    public void sendMessage(String header) {
-        String[] headerParts = Utils.split(header);
-        String command = headerParts[0];
+    public void sendMessage(String commandLine) {
+        String[] commandParts = Utils.split(commandLine);
+        String command = commandParts[0];
         // si es un mensaje de texto:
-        if (command.equals("PRIVMSG")) {
-            addMessage(headerParts[1], new Message(getNickname(), headerParts[2]));
+        if (command.equalsIgnoreCase(Commands.PRIVMSG.name())) {
+            addMessage(commandParts[1], new Message(getNickname(), commandParts[2]));
         }
         PrintStream out = null;
         try {
@@ -84,7 +86,7 @@ public class User extends Client {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        out.println(header);
+        out.println(commandLine);
     }
 
     public List<Message> getMessages(String name) {
@@ -94,16 +96,6 @@ public class User extends Client {
             chatMessagesMap.put(name, messages);
         }
         return messages;
-    }
-
-    public void exit() {
-        chatDAO.saveChatMessages(mediator.getUser().getChatMessagesMap());
-        sendMessage("EXIT");
-        try {
-            getSocket().close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public String getNickname() {
@@ -141,6 +133,7 @@ public class User extends Client {
     public void removeContact(String nickname) {
         contacts.remove(nickname);
     }
+
     @Override
     public String toString() {
         return "User{" +

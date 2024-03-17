@@ -1,4 +1,4 @@
-package org.example.chatbmbis;
+package org.example.chatbmbis.utils;
 
 public class ThreadUtils {
     public static void sleep(int ms) {

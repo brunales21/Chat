@@ -12,19 +12,11 @@ public class FileChatDAO implements ChatDAO {
 
     public FileChatDAO(String fileName) {
         this.file = Path.of(fileName);
-        if (!Files.exists(file)) {
-            Path folderPath = this.file.getParent();
-            try {
-                Files.createDirectories(folderPath); // Esto creará la carpeta si no existe
-                Files.createFile(file);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
     }
 
     @Override
     public void saveChatMessages(Map<String, List<Message>> chatMessagesMap) {
+        createFileIfNotExists();
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(String.valueOf(file)))) {
             out.writeObject(chatMessagesMap);
         } catch (IOException e) {
@@ -34,6 +26,7 @@ public class FileChatDAO implements ChatDAO {
 
     @Override
     public Map<String, List<Message>> loadChatMessages() {
+        System.out.println("Fichero: "+file.toString());
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(String.valueOf(file)))) {
             Map<String, List<Message>> map;
             if ((map = (Map<String, List<Message>>) in.readObject()) != null) {
@@ -43,5 +36,17 @@ public class FileChatDAO implements ChatDAO {
             return new HashMap<>();
         }
         return new HashMap<>();
+    }
+
+    private void createFileIfNotExists() {
+        if (!Files.exists(this.file)) {
+            Path folderPath = this.file.getParent();
+            try {
+                Files.createDirectories(folderPath); // Esto creará la carpeta si no existe
+                Files.createFile(this.file);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

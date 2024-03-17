@@ -92,7 +92,7 @@
                         <Label prefHeight="35.0" prefWidth="264.0" text="Grupos" />
                         <ScrollPane prefHeight="126.0" prefWidth="259.0">
                            <content>
-                              <VBox fx:id="vBoxGroup" prefHeight="125.0" prefWidth="242.0" style="-fx-background-color: white;" />
+                              <VBox fx:id="vBoxChannels" prefHeight="125.0" prefWidth="242.0" style="-fx-background-color: white;" />
                            </content>
                         </ScrollPane>
                      </children>
@@ -105,7 +105,7 @@
                         <Label prefHeight="48.0" prefWidth="284.0" text="Contactos" />
                         <ScrollPane prefHeight="226.0" prefWidth="277.0">
                            <content>
-                              <VBox fx:id="vBoxPrivate" prefHeight="226.0" prefWidth="240.0" style="-fx-background-color: white; -fx-border-color: white;" />
+                              <VBox fx:id="vBoxContacts" prefHeight="226.0" prefWidth="240.0" style="-fx-background-color: white; -fx-border-color: white;" />
                            </content>
                         </ScrollPane>
                      </children>

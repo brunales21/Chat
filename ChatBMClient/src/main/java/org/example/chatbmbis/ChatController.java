@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import org.example.chatbmbis.constants.Commands;
 
 import java.io.IOException;
 import java.util.*;
@@ -22,12 +23,12 @@ import java.util.*;
 public class ChatController extends Controller {
     private Mediator mediator;
     @FXML
-    private VBox vBoxGroup, vBoxPrivate, vBoxMessages;
+    private VBox vBoxChannels, vBoxContacts, vBoxMessages;
     @FXML
     private Label receptorChatLabel, userNameLabel;
     @FXML
     private TextField textMessageField;
-    private Map<String, ItemContactController> itemContactsMap = new HashMap<>();
+    private Map<String, ContactItemController> itemContactsMap = new HashMap<>();
     private Locale locale = Locale.getDefault();
     private ResourceBundle bundle = ResourceBundle.getBundle("bundle.messages", locale);
 
@@ -69,7 +70,7 @@ public class ChatController extends Controller {
 
     public void overlayChat(String nickname) {
         // Obtener el controlador del item utilizando el nickname proporcionado
-        ItemContactController itemContactController = itemContactsMap.get(nickname);
+        ContactItemController itemContactController = itemContactsMap.get(nickname);
 
         if (itemContactController != null) {
             // Obtener el nodo (vista) correspondiente al controlador
@@ -124,7 +125,7 @@ public class ChatController extends Controller {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        ItemContactController itemContactController = loader.getController();
+        ContactItemController itemContactController = loader.getController();
         itemContactController.setMediator(mediator);
         itemContactController.showNotificationImg(false);
         itemContactController.setCallback(() -> {
@@ -152,14 +153,14 @@ public class ChatController extends Controller {
     public void removeContactItem(String nickname) {
         ObservableList<Node> children;
         if (nickname.startsWith("#")) {
-            children = vBoxGroup.getChildren();
+            children = vBoxChannels.getChildren();
         } else {
-            children = vBoxPrivate.getChildren();
+            children = vBoxContacts.getChildren();
         }
         // Iterar sobre los nodos y eliminar el que tenga el nickname deseado
         for (Node child : children) {
             if (child instanceof Parent) {
-                ItemContactController itemContactController = ((FXMLLoader) child.getUserData()).getController();
+                ContactItemController itemContactController = ((FXMLLoader) child.getUserData()).getController();
                 if (itemContactController.getNicknameLabelText().equals(nickname)) {
                     children.remove(child);
                     itemContactsMap.remove(nickname);
@@ -202,13 +203,16 @@ public class ChatController extends Controller {
 
     public void loadChatItems() {
         mediator.getUser().setChatMessagesMap(mediator.getUser().getChatDAO().loadChatMessages());
-        for (String chatName : mediator.getUser().getChatMessagesMap().keySet()) {
+        Map<String, List<Message>> chatMessagesMap = mediator.getUser().getChatMessagesMap();
+        for (String chatName : chatMessagesMap.keySet()) {
             if (chatName.startsWith("#")) {
-                addContactItem(vBoxGroup, chatName);
+                addContactItem(vBoxChannels, chatName);
             } else {
-                addContactItem(vBoxPrivate, chatName);
+                addContactItem(vBoxContacts, chatName);
             }
-
+        }
+        if (!chatMessagesMap.containsKey("IA")) {
+            mediator.addContactItem(vBoxContacts, "IA");
         }
     }
 
@@ -222,7 +226,7 @@ public class ChatController extends Controller {
         try {
             if (mediator.getUser() != null) {
                 // Informamos al servidor que cerramos sesion (asi el servidor gestiona menos hilos)
-                mediator.sendMessage("EXIT");
+                mediator.sendMessage(Commands.EXIT.name());
                 // guardamos los chats y mensajes en un fichero binario
                 mediator.getUser().getChatDAO().saveChatMessages(mediator.getUser().getChatMessagesMap());
                 // cerramos el socket
@@ -244,12 +248,12 @@ public class ChatController extends Controller {
         return userNameLabel;
     }
 
-    public VBox getvBoxGroup() {
-        return vBoxGroup;
+    public VBox getvBoxChannels() {
+        return vBoxChannels;
     }
 
-    public VBox getvBoxPrivate() {
-        return vBoxPrivate;
+    public VBox getvBoxContacts() {
+        return vBoxContacts;
     }
 
     public Label getReceptorChatLabel() {
@@ -272,7 +276,7 @@ public class ChatController extends Controller {
         this.textMessageField = textMessageField;
     }
 
-    public Map<String, ItemContactController> getItemContactsMap() {
+    public Map<String, ContactItemController> getItemContactsMap() {
         return itemContactsMap;
     }
 }
