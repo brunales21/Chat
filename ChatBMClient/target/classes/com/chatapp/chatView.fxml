@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="802.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chatapp.ChatController">
+   <children>
+      <HBox maxHeight="601.0" maxWidth="802.0" minHeight="600.0" minWidth="800.0" prefHeight="601.0" prefWidth="802.0" styleClass="fondo" stylesheets="@../../css/styles.css">
+         <children>
+            <VBox alignment="TOP_CENTER" maxHeight="569.0" maxWidth="78.0" prefHeight="569.0" prefWidth="72.0" styleClass="barra" stylesheets="@../../css/styles.css">
+               <HBox.margin>
+                  <Insets bottom="30.0" left="20.0" right="10.0" top="30.0" />
+               </HBox.margin>
+               <children>
+                  <ImageView fitHeight="48.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../imgs/usuario.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </ImageView>
+                  <VBox alignment="TOP_CENTER" maxHeight="539.0" maxWidth="78.0" prefHeight="539.0" prefWidth="78.0" spacing="20.0" style="-fx-background-color: blue; -fx-border-radius: 0 0 18 18;">
+                     <children>
+                        <!-- Botón para añadir grupo con más separación en la parte superior -->
+                        <Button onMouseClicked="#onClickChannelOptions" style="-fx-background-color: #0000FFFF;">
+                           <graphic>
+                              <ImageView fitHeight="42.0" fitWidth="43.0" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../imgs/anadir-grupo.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="crear o unirse a canal" />
+                           </tooltip>
+                           <!-- Agregar espacio extra en la parte superior del primer botón -->
+                           <VBox.margin>
+                              <Insets top="30.0" />
+                           </VBox.margin>
+                        </Button>
+                        <!-- Botón para opciones de chat privado -->
+                        <Button onMouseClicked="#onClickPrivChatOptions" style="-fx-background-color: #0000FFFF;">
+                           <graphic>
+                              <ImageView fitHeight="48.0" fitWidth="56.0" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../imgs/klipartz.com.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="añadir usuario" />
+                           </tooltip>
+                        </Button>
+                        <!-- Resto de los elementos -->
+                        <!-- ... -->
+                     </children>
+                  </VBox>
+
+
+
+                  <ImageView fitHeight="45.0" fitWidth="51.0" onMouseClicked="#onClickExit" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../imgs/exit.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets bottom="20.0" top="160.0" />
+                     </VBox.margin>
+                  </ImageView>
+               </children>
+            </VBox>
+            <VBox prefHeight="600.0" prefWidth="278.0" style="-fx-background-color: white;">
+               <HBox.margin>
+                  <Insets bottom="30.0" left="15.0" right="10.0" top="30.0" />
+               </HBox.margin>
+               <children>
+                  <Label fx:id="userNameLabel" alignment="CENTER" prefHeight="63.0" prefWidth="281.0" text="Label" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font></Label>
+                  <VBox prefHeight="159.0" prefWidth="250.0">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="20.0" />
+                     </VBox.margin>
+                     <children>
+                        <Label prefHeight="35.0" prefWidth="264.0" text="Grupos" />
+                        <ScrollPane prefHeight="126.0" prefWidth="259.0">
+                           <content>
+                              <VBox fx:id="vBoxChannels" prefHeight="125.0" prefWidth="242.0" style="-fx-background-color: white;" />
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="272.0" prefWidth="280.0">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="20.0" />
+                     </VBox.margin>
+                     <children>
+                        <Label prefHeight="48.0" prefWidth="284.0" text="Contactos" />
+                        <ScrollPane prefHeight="226.0" prefWidth="277.0">
+                           <content>
+                              <VBox fx:id="vBoxContacts" prefHeight="226.0" prefWidth="240.0" style="-fx-background-color: white; -fx-border-color: white;" />
+                           </content>
+                        </ScrollPane>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </VBox>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="538.0" prefWidth="372.0" style="-fx-background-color: white;">
+               <HBox.margin>
+                  <Insets bottom="30.0" right="15.0" top="30.0" />
+               </HBox.margin>
+               <children>
+                  <HBox prefHeight="80.0" prefWidth="350.0">
+                     <children>
+                        <ImageView fitHeight="60.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../imgs/usuario.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets top="10.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <VBox prefHeight="57.0" prefWidth="305.0">
+                           <children>
+                              <Label fx:id="receptorChatLabel" prefHeight="37.0" prefWidth="306.0" text=" ">
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="System Bold" size="24.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label prefHeight="38.0" prefWidth="306.0" text="Online">
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Separator prefHeight="0.0" prefWidth="358.0" style="-fx-background-color: grey;">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </VBox.margin>
+                  </Separator>
+                  <ScrollPane fx:id="spMessages" prefHeight="354.0" prefWidth="354.0">
+                     <content>
+                        <VBox fx:id="vBoxMessages" prefHeight="368.0" prefWidth="333.0" spacing="10.0">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="30.0" right="30.0" top="20.0" />
+                           </padding>
+                        </VBox>
+                     </content>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </ScrollPane>
+                  <HBox alignment="CENTER_LEFT" prefHeight="83.0" prefWidth="371.0">
+                     <children>
+                        <TextField fx:id="textMessageField" prefHeight="44.0" prefWidth="299.0">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <ImageView fitHeight="37.0" fitWidth="38.0" onMouseClicked="#onClickSendMessage" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../imgs/enviar-mensaje.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </ImageView>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children></HBox>
+   </children>
+</Pane>

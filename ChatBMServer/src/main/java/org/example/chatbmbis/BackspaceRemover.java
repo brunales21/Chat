@@ -44,12 +44,4 @@ public class BackspaceRemover {
     }
 
 
-
-    public static void main(String[] args) {
-        String input = "regissssss\b\b\b\b\bter bruno";
-        String result = removeBackspaces(input);
-
-        System.out.println("Original: " + input);
-        System.out.println("Procesado: " + result);
-    }
 }

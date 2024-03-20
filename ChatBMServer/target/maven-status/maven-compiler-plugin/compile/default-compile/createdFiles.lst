@@ -1,0 +1,15 @@
+org\example\chatbmbis\IAs\AIConnector.class
+org\example\chatbmbis\exceptions\ChatNotFoundException.class
+org\example\chatbmbis\Server.class
+org\example\chatbmbis\BackspaceRemover.class
+org\example\chatbmbis\PrivateChat.class
+org\example\chatbmbis\exceptions\UserNotConnectedException.class
+org\example\chatbmbis\exceptions\ChatException.class
+module-info.class
+org\example\chatbmbis\exceptions\ChatRepeatedException.class
+org\example\chatbmbis\Channel.class
+org\example\chatbmbis\exceptions\UserExistsException.class
+org\example\chatbmbis\Utils\Utils.class
+org\example\chatbmbis\constants\Commands.class
+org\example\chatbmbis\IAs\OpenAIConnector.class
+org\example\chatbmbis\exceptions\UserNotExistsException.class

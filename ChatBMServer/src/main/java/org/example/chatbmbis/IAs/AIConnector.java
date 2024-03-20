@@ -12,7 +12,6 @@ import java.net.http.HttpResponse;
 
 public class AIConnector {
     private static final String API_KEY = "d1480039-f769-4c08-a430-53694cdf5927<__>1OuyiBETU8N2v5f4lW02XyYS";
-    private static int n = 0;
 
     public static String getAISnippetsForQuery(String query) {
         HttpClient client = HttpClient.newHttpClient();
@@ -42,7 +41,7 @@ public class AIConnector {
         if (response.statusCode() == 200) {
             // Extraer solo el primer resultado si hay hits
             JSONObject jsonResponse = new JSONObject(response.body());
-            JSONObject firstHit = jsonResponse.getJSONArray("hits").getJSONObject(n++);
+            JSONObject firstHit = jsonResponse.getJSONArray("hits").getJSONObject(0);
             return firstHit.getString("description"); // Obtener solo el mensaje
         } else {
             System.err.println("Error al obtener los snippets: " + response.statusCode());

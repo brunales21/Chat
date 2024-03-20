@@ -1,0 +1,27 @@
+Commands for entering
+    REGISTER my-nickname
+
+Channel creation commands
+    CREATE #channel -> create channel
+
+Add contact command
+    CREATE user -> add user to contacts list
+
+Command to join a channel
+    JOIN #channel -> join channel
+
+Command for quitting from a channel
+    PART #channel
+
+Command for deleting a contact
+    DELETE nickname
+
+Text message commands
+    PRIVMSG #channel :message
+    PRIVMSG user :message
+
+Command to list contacts
+    LU
+
+Command to list channels
+    LC

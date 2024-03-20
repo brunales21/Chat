@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="496.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chatapp.LoginController">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="498.0" prefWidth="328.0" styleClass="login" stylesheets="@../../css/styles.css">
+         <children>
+            <ImageView fitHeight="133.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
+               <VBox.margin>
+                  <Insets top="80.0" />
+               </VBox.margin>
+               <image>
+                  <Image url="@../../imgs/usuario.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" prefHeight="114.0" prefWidth="346.0" stylesheets="@../../css/styles.css" text="B-Nica Messenger">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font></Label>
+            <TextField fx:id="usernameField" prefHeight="29.0" prefWidth="321.0" promptText="User Name">
+               <VBox.margin>
+                  <Insets left="30.0" right="30.0" top="40.0" />
+               </VBox.margin>
+            </TextField>
+            <HBox alignment="CENTER" prefHeight="193.0" prefWidth="328.0" spacing="50.0">
+               <children>
+                  <Button fx:id="enterButton" mnemonicParsing="false" onMouseClicked="#onClickIngresar" prefHeight="54.0" prefWidth="105.0" text="Acceder">
+                     <HBox.margin>
+                        <Insets top="50.0" />
+                     </HBox.margin></Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

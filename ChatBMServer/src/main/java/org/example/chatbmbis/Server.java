@@ -1,6 +1,7 @@
 package org.example.chatbmbis;
 
 import org.example.chatbmbis.IAs.AIConnector;
+import org.example.chatbmbis.Utils.Utils;
 import org.example.chatbmbis.constants.Commands;
 import org.example.chatbmbis.exceptions.*;
 
@@ -30,6 +31,14 @@ public class Server {
         historyUsers = new HashSet<>();
     }
 
+    public Server(String port) {
+        this(Integer.parseInt(port));
+    }
+
+    public Server() {
+        this(8080);
+    }
+
     private void register(String nickname, Socket socket) throws UserExistsException {
         try {
             if (userOutMap.containsKey(nickname)) {
@@ -45,10 +54,23 @@ public class Server {
         sendSavedMessages(nickname);
     }
 
-    public void start() throws IOException {
-        ServerSocket serverSocket = new ServerSocket(port);
+    public void start() {
+        ServerSocket serverSocket;
+        try {
+            serverSocket = new ServerSocket(port);
+            System.out.println("El servidor se ha iniciado correctamente.");
+            System.out.println("Está escuchando en el puerto: " + port + ".");
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         while (true) {
-            Socket socket = serverSocket.accept();
+            Socket socket;
+            try {
+                socket = serverSocket.accept();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             Thread thread = new Thread(() -> clientHandler(socket));
             thread.start();
         }
@@ -62,7 +84,7 @@ public class Server {
             do {
                 sendMessage(socket, "Primero debe registrarse. Ej: "+Commands.REGISTER+" mi_username");
                 command = BackspaceRemover.removeBackspaces(in.nextLine());
-            } while (!splitParts(command)[0].equalsIgnoreCase(Commands.REGISTER.toString()));
+            } while (!Utils.splitCommandLine(command)[0].equalsIgnoreCase(Commands.REGISTER.toString()));
             do {
                 processCommand(socket, command);
                 command = BackspaceRemover.removeBackspaces(in.nextLine());
@@ -74,7 +96,7 @@ public class Server {
 
     private void processCommand(Socket senderSocket, String command) {
         System.out.println("Header que recibe servidor: " + command);
-        String[] commandParts = splitParts(command);
+        String[] commandParts = Utils.splitCommandLine(command);
         String sender = socketUserMap.get(senderSocket);
         String commandName = commandParts[0].toUpperCase();
         String arg = "";
@@ -210,7 +232,7 @@ public class Server {
 
     private void sendErrorMsg(String sender, String errorMessage) {
         // le rebota el msj
-        userOutMap.get(sender).println(Commands.ERROR + " :" + errorMessage);
+        send(userOutMap.get(sender), Commands.ERROR + ":" + errorMessage);
     }
 
     private void sendErrorMsg(Socket socket, String errorMessage) {
@@ -221,7 +243,7 @@ public class Server {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        out.println(Commands.ERROR + " :" + errorMessage);
+        send(out, Commands.ERROR + ":" + errorMessage);
     }
 
     private Set<String> getUsersInChannel(String channelName) {
@@ -258,7 +280,7 @@ public class Server {
         //Este nunca lanzaría UserNotFoundExc
         try {
             //MESSAGGE #2dam bruno :hola
-            userOutMap.get(receptor).println(Commands.MESSAGE + " " + channel + " " + sender + " :" + text);
+            send(userOutMap.get(receptor), Commands.MESSAGE + " " + channel + " " + sender + ":" + text);
         } catch (NullPointerException e) {
             throw new UserNotConnectedException(receptor);
         }
@@ -266,7 +288,7 @@ public class Server {
 
     public void sendMessage(String sender, String receptor, String text) throws UserNotExistsException {
         try {
-            userOutMap.get(receptor).println(Commands.MESSAGE + " " + sender + " :" + text);
+            send(userOutMap.get(receptor), Commands.MESSAGE + " " + sender + ":" + text);
         } catch (NullPointerException e) {
             if (!historyUsers.contains(receptor)) {
                 throw new UserNotExistsException(receptor);
@@ -321,9 +343,9 @@ public class Server {
         createFileIfNotExists(targetFile);
         try (PrintStream out = new PrintStream(new FileOutputStream(targetFile, true))) {
             if (channel == null) {
-                out.println(sender + " :" + message);
+                send(out, sender + ":" + message);
             } else {
-                out.println(channel + " " + sender + " :" + message);
+                send(out, channel + " " + sender + ":" + message);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -337,7 +359,7 @@ public class Server {
             try (BufferedReader in = new BufferedReader(new FileReader(fileName))) {
                 String message;
                 while ((message = in.readLine()) != null) {
-                    String[] parts = splitParts(message);
+                    String[] parts = Utils.splitCommandLine(message);
                     String sender;
                     String msg;
                     if (parts[0].startsWith("#")) {
@@ -364,23 +386,6 @@ public class Server {
         }
     }
 
-    public static String[] splitParts(String header) {
-        String[] split = header.split(" ");
-        int colonIndex = header.indexOf(":");
-        if (split.length == 1 || colonIndex == -1) {
-            return split;
-        }
-
-        String textMessage = header.substring(colonIndex + 1); // +1 para excluir el ':'
-        String prefix = header.substring(0, colonIndex);
-
-        List<String> partsList = new ArrayList<>(Arrays.asList(prefix.split(" ")));
-        partsList.add(textMessage);
-
-        return partsList.toArray(new String[0]);
-    }
-
-
     public void sendMessage(Socket socket, String message) {
         PrintStream out = null;
         try {
@@ -388,20 +393,19 @@ public class Server {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        out.println(message);
-
+        send(out, message);
     }
 
     public void sendMessage(String sender, String text) {
-        userOutMap.get(sender).println(text);
+        send(userOutMap.get(sender), text);
     }
 
 
     private void listChannels(String sender) {
         if (!channels.isEmpty()) {
-            channels.forEach(c -> userOutMap.get(sender).println(c.getName()));
+            channels.forEach(c -> send(userOutMap.get(sender), c.getName()));
         } else {
-            userOutMap.get(sender).println("No existen canales en el servidor.");
+            send(userOutMap.get(sender), "No existen canales en el servidor.");
         }
     }
 
@@ -413,7 +417,7 @@ public class Server {
     }
 
     private void listUsers(Collection<String> users, String sender) {
-        users.forEach(u -> userOutMap.get(sender).println("- " + u));
+        users.forEach(u -> send(userOutMap.get(sender), "- " + u));
     }
 
 
@@ -431,23 +435,33 @@ public class Server {
 
     private void sendFileContent(Socket socket, String fileName) {
         try {
-            BufferedReader in = new BufferedReader(new FileReader(fileName));
+            InputStream inputStream = getClass().getResourceAsStream("/" + fileName);
+            BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
+
             String line;
             while ((line = in.readLine()) != null) {
                 System.out.println(line);
                 sendMessage(socket, line);
             }
+
+            in.close(); // Cierra el BufferedReader cuando termines de leer.
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
+    private void send(PrintStream out, String msg) {
+        out.print(msg+"\r\n");
+    }
+
+
     public static void main(String[] args) {
-        Server server = new Server(23);
-        try {
-            server.start();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        Server server;
+        if (args.length == 1) {
+            server = new Server(args[0]);
+        } else {
+            server = new Server();
         }
+        server.start();
     }
 }
