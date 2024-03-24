@@ -3,20 +3,17 @@ package com.chatapp;
 import com.chatapp.constants.Commands;
 import com.chatapp.conversation.Message;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import com.chatapp.mediator.Mediator;
 
@@ -27,13 +24,16 @@ import java.util.*;
 public class ChatController extends Controller {
     private Mediator mediator;
     @FXML
-    private VBox vBoxChannels, vBoxContacts, vBoxMessages;
+    private AnchorPane mainAnchorPane;
+    @FXML
+    private VBox vBoxChannels, vBoxContacts;
+    @FXML
+    private ListView<Message> messagesListView;
+    private ObservableList<Message> messageList = FXCollections.observableArrayList(); // Lista observable para los mensajes
     @FXML
     private Label receptorChatLabel, userNameLabel;
     @FXML
     private TextField textMessageField;
-    @FXML
-    private ScrollPane spMessages;
     private Map<String, ContactItemController> itemContactsMap = new HashMap<>();
     private Locale locale = Locale.getDefault();
     private ResourceBundle bundle = ResourceBundle.getBundle("bundle.messages", locale);
@@ -51,11 +51,10 @@ public class ChatController extends Controller {
         String text = textMessageField.getText();
         String receptor = receptorChatLabel.getText();
         if (!text.isBlank() && !receptor.isBlank()) {
-            addMessageToVBox(new Message(mediator.getUser().getNickname(), textMessageField.getText()));
+            addMessageToListView(new Message(mediator.getUser().getNickname(), textMessageField.getText()));
             //PRIVMSG MONICA : HOLA SOY BRUNO
             String message = "PRIVMSG " + receptor + ":" + text;
             mediator.sendMessage(message);
-            vBoxMessages.setAlignment(Pos.TOP_RIGHT);
         }
         textMessageField.setText("");
     }
@@ -103,64 +102,67 @@ public class ChatController extends Controller {
         mediator.createAddView(promptText, opt1, opt2);
     }
 
-    public void emptyVBoxMessages() {
-        vBoxMessages.getChildren().clear();
+    public void emptyListView() {
+        messagesListView.getItems().clear();
     }
-    private StackPane createMessageNode(String text, boolean isCurrentUser) {
-        Text textNode = new Text(text);
-        textNode.setFill(Color.BLACK);
-        textNode.setFont(new Font("Arial", 15));
-        textNode.setWrappingWidth(200); // Ancho máximo del texto
 
-        // Configuración del mensaje según el remitente
-        VBox messageContainer = new VBox();
-        messageContainer.setPadding(new Insets(5));
-        messageContainer.setMaxWidth(200); // Ancho máximo del contenedor del mensaje
+    @FXML
+    public void initialize() {
 
-        // Establecer estilo y alineación según el remitente
-        if (isCurrentUser) {
-            messageContainer.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, new CornerRadii(10), Insets.EMPTY)));
-            messageContainer.setAlignment(Pos.CENTER_RIGHT); // Alinear a la derecha para mensajes propios
-        } else {
-            messageContainer.setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(10), Insets.EMPTY)));
-            messageContainer.setAlignment(Pos.CENTER_LEFT); // Alinear a la izquierda para mensajes ajenos
-        }
+        // Asignar la lista observable al ListView
+        messagesListView.setItems(messageList);
+        messagesListView.setStyle("-fx-background-color: #fffdf9; -fx-padding: 1px;");
 
-        // Establecer radio de borde al fondo del contenedor del mensaje
-        StackPane messageStackPane = new StackPane(messageContainer);
-        messageStackPane.setPadding(new Insets(5));
-        messageStackPane.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, new CornerRadii(10), Insets.EMPTY)));
+        messagesListView.setCellFactory(param -> new ListCell<>() {
+            @Override
+            protected void updateItem(Message msg, boolean empty) {
+                super.updateItem(msg, empty);
+                if (empty || msg == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    Label messageLabel = new Label(msg.getSender() + ": " + msg.getText());
+                    messageLabel.setWrapText(true);
 
-        // Ajustar el texto al tamaño del contenedor
-        textNode.boundsInLocalProperty().addListener((observable, oldValue, newValue) -> {
-            double width = newValue.getWidth();
-            if (width > 200) {
-                messageContainer.setMaxWidth(200);
-                textNode.setWrappingWidth(200);
-            } else {
-                messageContainer.setMaxWidth(width + 10); // Añadir un pequeño espacio adicional
-                textNode.setWrappingWidth(width);
+                    VBox messageBox = new VBox();
+                    messageBox.setStyle("-fx-background-color: white");
+                    messageBox.getChildren().add(messageLabel);
+
+                    HBox container = new HBox(messageBox);
+                    container.setStyle("-fx-background-color: white");
+
+                    boolean messageOwner = msg.getSender().equals(userNameLabel.getText());
+                    container.setAlignment(messageOwner ? Pos.CENTER_RIGHT : Pos.CENTER_LEFT);
+                    setGraphic(container);
+                    container.setStyle("-fx-background-color: #ffffff;");
+
+                    if (messageOwner) {
+                        messageBox.setStyle("-fx-padding: 5px; -fx-background-radius: 20px; -fx-background-color: rgb(131,184,241);");
+                    } else {
+                        messageBox.setStyle("-fx-padding: 5px; -fx-background-radius: 20px; -fx-background-color: rgb(246,254,255);");
+                    }
+
+                    // Ajustar el ancho máximo del mensaje al ancho disponible en la ventana
+                    messageLabel.setMaxWidth(messagesListView.getWidth() * 0.7); // ajusta el ancho del mensaje al 70% del ancho de la ventana
+                    getStage().widthProperty().addListener(new ChangeListener<Number>() {
+                        @Override
+                        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                            messageLabel.setMaxWidth(newValue.doubleValue() * 0.7);
+                        }
+                    });
+                }
             }
         });
-
-        // Agregar el texto al contenedor
-        messageContainer.getChildren().add(textNode);
-
-        return messageStackPane;
     }
 
-    public void addMessageToVBox(Message message) {
-        boolean isCurrentUser = message.getSender().equals(mediator.getUser().getNickname());
-        if (message.getSender().equals(receptorChatLabel.getText()) || isCurrentUser || message.getTargetChannel().equals(receptorChatLabel.getText())) {
-            StackPane messageStackPane = createMessageNode(message.getSender()+": "+message.getText(), isCurrentUser);
-            Platform.runLater(() -> {
-                HBox container = new HBox(messageStackPane);
-                container.setAlignment(isCurrentUser ? Pos.CENTER_RIGHT : Pos.CENTER_LEFT); // Alinear a la derecha para mensajes propios y a la izquierda para mensajes ajenos
-                container.setPadding(new Insets(5));
-                vBoxMessages.getChildren().add(container);
-            });
-        }
+    public void addMessageToListView(Message message) {
+        Platform.runLater(() -> {
+            messagesListView.getItems().add(message);
+            messagesListView.scrollTo(messagesListView.getItems().size() - 1);
+        });
     }
+
+
     public void addContactItem(VBox vBox, String nickname) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("contactItemView.fxml"));
         Parent parent = null;
@@ -175,8 +177,8 @@ public class ChatController extends Controller {
         itemContactController.setCallback(() -> {
             itemContactController.showNotificationImg(false);
             setReceptorChatLabelText(nickname);
-            vBoxMessages.getChildren().clear();
-            mediator.getUser().getMessages(nickname).forEach(this::addMessageToVBox);
+            messagesListView.getItems().clear();
+            mediator.getUser().getMessages(nickname).forEach(this::addMessageToListView);
         });
 
         itemContactController.setNicknameLabelText(nickname);
@@ -221,8 +223,8 @@ public class ChatController extends Controller {
 
 
     public void loadChatItems() {
-        mediator.getUser().setChatMessagesMap(mediator.getUser().getChatDAO().loadChatMessages());
-        Map<String, List<Message>> chatMessagesMap = mediator.getUser().getChatMessagesMap();
+        Map<String, List<Message>> chatMessagesMap = mediator.getUser().getChatDAO().loadChatMessages();
+        mediator.getUser().setChatMessagesMap(chatMessagesMap);
         for (String chatName : chatMessagesMap.keySet()) {
             if (chatName.startsWith("#")) {
                 addContactItem(vBoxChannels, chatName);
@@ -230,9 +232,7 @@ public class ChatController extends Controller {
                 addContactItem(vBoxContacts, chatName);
             }
         }
-        if (!chatMessagesMap.containsKey("IA")) {
-            mediator.addContactItem(vBoxContacts, "IA");
-        }
+
     }
 
     @FXML
@@ -299,11 +299,8 @@ public class ChatController extends Controller {
         return itemContactsMap;
     }
 
-    public VBox getvBoxMessages() {
-        return vBoxMessages;
+    public ListView getMessagesListView() {
+        return messagesListView;
     }
 
-    public ScrollPane getSpMessages() {
-        return spMessages;
-    }
 }

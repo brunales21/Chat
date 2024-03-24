@@ -20,6 +20,8 @@ public class Server {
     private final Map<String, PrintStream> userOutMap;
     private final Map<Socket, String> socketUserMap;
     private final Set<String> historyUsers;
+    private final Set<String> chatbots;
+
     private final String MSGS_FOLDER_NAME = "messages";
 
     public Server(int port) {
@@ -29,6 +31,8 @@ public class Server {
         userOutMap = new HashMap<>();
         socketUserMap = new HashMap<>();
         historyUsers = new HashSet<>();
+        chatbots = new HashSet<>();
+
     }
 
     public Server(String port) {
@@ -55,6 +59,7 @@ public class Server {
     }
 
     public void start() {
+        createIA();
         ServerSocket serverSocket;
         try {
             serverSocket = new ServerSocket(port);
@@ -101,7 +106,7 @@ public class Server {
         String commandName = commandParts[0].toUpperCase();
         String arg = "";
         if (commandParts.length > 1) {
-            arg = commandParts[1];
+            arg = commandParts[1].toLowerCase();
         }
         switch (commandName) {
             case "REGISTER":
@@ -131,10 +136,10 @@ public class Server {
                         //PRIVMSG #dam monica :hola
                         broadcast(sender, arg, msg);
                     } else {
-                        if (arg.equals("IA")) {
+                        if (arg.equalsIgnoreCase(Commands.IA.name())) {
                             String response = AIConnector.getAISnippetsForQuery(msg);
                             System.out.println(response);
-                            sendMessage("IA", sender, response);
+                            sendMessage(Commands.IA.name(), sender, response);
                         } else {
                             //PRIVMSG monica :hola
                             sendMessage(sender, arg, msg);
@@ -207,7 +212,7 @@ public class Server {
     }
 
     private boolean existsUser(String nickname) {
-        return historyUsers.contains(nickname);
+        return historyUsers.contains(nickname) || chatbots.contains(nickname);
     }
 
     private void part(String sender, String channel) throws ChatNotFoundException {
@@ -311,14 +316,10 @@ public class Server {
         }
     }
 
-    private void createPrivChat(String user1, String user2) throws ChatRepeatedException, UserNotExistsException {
+    private void createPrivChat(String user1, String user2) throws UserNotExistsException {
         if (existsUser(user2)) {
             PrivateChat privateChat = new PrivateChat(user1, user2);
-            if (privateChats.contains(privateChat)) {
-                throw new ChatRepeatedException(user2);
-            } else {
-                privateChats.add(privateChat);
-            }
+            privateChats.add(privateChat);
         } else {
             throw new UserNotExistsException(user2);
         }
@@ -414,10 +415,16 @@ public class Server {
         listUsers(getOnlineUsers(), sender);
         sendMessage(sender, "Usuarios desconectados:");
         listUsers(getOfflineUsers(), sender);
+        sendMessage(sender, "Chatbots disponibles:");
+        listUsers(chatbots, sender);
     }
 
     private void listUsers(Collection<String> users, String sender) {
-        users.forEach(u -> send(userOutMap.get(sender), "- " + u));
+        if (users.isEmpty()) {
+            send(userOutMap.get(sender), "Vacio");
+        } else {
+            users.forEach(u -> send(userOutMap.get(sender), "- " + u));
+        }
     }
 
 
@@ -452,6 +459,10 @@ public class Server {
 
     private void send(PrintStream out, String msg) {
         out.print(msg+"\r\n");
+    }
+
+    private void createIA() {
+        chatbots.add(Commands.IA.name().toLowerCase());
     }
 
 

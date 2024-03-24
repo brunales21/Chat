@@ -11,7 +11,7 @@ public class Message implements Serializable {
     private final LocalTime time;
 
     public Message(String sender, String textMessage) {
-        this.sender = sender;
+        this.sender = sender.toLowerCase();
         this.text = textMessage;
         this.targetChannel = "";
         time = LocalTime.now();
@@ -19,7 +19,7 @@ public class Message implements Serializable {
 
     public Message(String sender, String targetChannel, String text) {
         this.sender = sender;
-        this.targetChannel = targetChannel;
+        this.targetChannel = targetChannel.toLowerCase();
         this.text = text;
         time = LocalTime.now();
     }

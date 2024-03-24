@@ -23,7 +23,8 @@ public class Mediator {
     private User user;
     private boolean successfulAction = true;
 
-    public Mediator() {}
+    public Mediator() {
+    }
 
     public static synchronized Mediator getInstance() {
         if (instance == null) {
@@ -46,7 +47,7 @@ public class Mediator {
                 break;
             }
         }
-        stage.setResizable(false);
+        stage.setResizable(true);
         stage.show();
 
     }
@@ -90,9 +91,8 @@ public class Mediator {
     public void deleteContactItem(String nickname) {
         chatController.removeContactItem(nickname);
         chatController.setReceptorChatLabelText("");
-        chatController.emptyVBoxMessages();
+        chatController.emptyListView();
     }
-
 
     public void processServerMsg(String message) {
         String[] messageParts = Utils.splitCommandLine(message);
@@ -107,11 +107,12 @@ public class Mediator {
             setSuccessfulAction(true);
         } else if (isTxtMessage(keyWord)) {
             // si tiene que procesar un msj de texto
+            messageParts[1] = messageParts[1].toLowerCase();
             if (messageParts[1].startsWith("#")) {
-                // "MESSAGE #2dam bruno :hola"
+                // "MESSAGE #2dam bruno:hola"
                 messageObj = new Message(messageParts[2], messageParts[1], messageParts[3]);
             } else {
-                // "MESSAGE bruno :hola"
+                // "MESSAGE bruno:hola"
                 messageObj = new Message(messageParts[1], messageParts[2]);
                 if (!getUser().containsContact(messageParts[1])) {
                     chatController.addContactItem(chatController.getvBoxContacts(), messageObj.getSender());
@@ -122,7 +123,7 @@ public class Mediator {
             chatController.overlayChat(messageParts[1]);
             // si el chat abierto coincide con el emisor del mensaje..
             if (chatController.getReceptorChatLabel().getText().equals(messageParts[1])) {
-                chatController.addMessageToVBox(messageObj);
+                chatController.addMessageToListView(messageObj);
             } else {
                 // si no, mostramos notificacion
                 chatController.getItemContactsMap().get(messageParts[1]).showNotificationImg(true);
@@ -142,6 +143,7 @@ public class Mediator {
     private boolean actionRefused(String message) {
         return message.equals(Commands.ERROR.name());
     }
+
 
     public User getUser() {
         return user;

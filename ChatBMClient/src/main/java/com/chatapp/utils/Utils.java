@@ -1,5 +1,7 @@
 package com.chatapp.utils;
 
+import java.util.Arrays;
+
 public class Utils {
     public static String[] splitCommandLine(String input) {
         int colonIndex = input.indexOf(":");
@@ -26,5 +28,4 @@ public class Utils {
             return new String[]{command, channel, nickname, msg};
         }
     }
-
 }

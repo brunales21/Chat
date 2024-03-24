@@ -41,6 +41,7 @@ public class User extends Client {
     public void ingresar() {
         register();
         this.start();
+
     }
 
     public void addMessage(String chatroomName, Message message) {

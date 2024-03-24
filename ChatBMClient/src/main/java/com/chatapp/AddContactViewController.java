@@ -3,6 +3,7 @@ package com.chatapp;
 import com.chatapp.constants.Commands;
 import com.chatapp.mediator.Mediator;
 import com.chatapp.utils.ThreadUtils;
+import com.chatapp.utils.WarningWindow;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -31,9 +32,13 @@ public class AddContactViewController extends Controller {
 
     @FXML
     private void onClickButtonLeft() {
-        String name = nicknameTextField.getText();
+        String name = nicknameTextField.getText().toLowerCase();
         if (!name.isEmpty()) {
             StringBuilder channelName = new StringBuilder("#").append(name);
+            if (mediator.getUser().containsContact(String.valueOf(channelName))) {
+                WarningWindow.instanceWarningWindow("ChatRepeatedException");
+                return;
+            }
             if (isCreateChannelBtn()) {
                 mediator.sendMessage(Commands.CREATE.name() + " " + channelName);
                 ThreadUtils.sleep(100);
@@ -41,6 +46,10 @@ public class AddContactViewController extends Controller {
                     mediator.addContactItem(mediator.getChatController().getvBoxChannels(), channelName.toString());
                 }
             } else if (isCreateContactBtn()) {
+                if (mediator.getUser().containsContact(name)) {
+                    WarningWindow.instanceWarningWindow("ChatRepeatedException");
+                    return;
+                }
                 if (!name.equals(mediator.getUser().getNickname())) {
                     mediator.sendMessage(Commands.CREATE.name() + " " + name);
                     ThreadUtils.sleep(100);

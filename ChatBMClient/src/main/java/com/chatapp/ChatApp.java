@@ -26,9 +26,6 @@ public class ChatApp extends Application {
         chatController.setMediator(mediator);
         mediator.setChatController(chatController);
         mediator.getView().put(stageChat, chatController);
-        mediator.getChatController().getvBoxMessages().setSpacing(15);
-        mediator.getChatController().getSpMessages().setContent(mediator.getChatController().getvBoxMessages());
-        mediator.getChatController().getSpMessages().setFitToWidth(true);
 
         FXMLLoader fxmlLoader3 = new FXMLLoader(ChatApp.class.getResource("addContactView.fxml"));
         Scene adduserView = new Scene(fxmlLoader3.load());

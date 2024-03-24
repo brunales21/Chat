@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="802.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chatapp.ChatController">
+<AnchorPane fx:id="mainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="802.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chatapp.ChatController">
    <children>
       <HBox maxHeight="601.0" maxWidth="802.0" minHeight="600.0" minWidth="800.0" prefHeight="601.0" prefWidth="802.0" styleClass="fondo" stylesheets="@../../css/styles.css">
          <children>
@@ -160,21 +160,16 @@
                         <Insets left="10.0" right="10.0" />
                      </VBox.margin>
                   </Separator>
-                  <ScrollPane fx:id="spMessages" prefHeight="354.0" prefWidth="354.0">
-                     <content>
-                        <VBox fx:id="vBoxMessages" prefHeight="368.0" prefWidth="333.0" spacing="10.0">
+
+                        <ListView  fx:id="messagesListView" prefHeight="368.0" prefWidth="333.0">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
                            <padding>
                               <Insets left="30.0" right="30.0" top="20.0" />
                            </padding>
-                        </VBox>
-                     </content>
-                     <VBox.margin>
-                        <Insets left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin>
-                  </ScrollPane>
+                        </ListView >
+
                   <HBox alignment="CENTER_LEFT" prefHeight="83.0" prefWidth="371.0">
                      <children>
                         <TextField fx:id="textMessageField" prefHeight="44.0" prefWidth="299.0">
@@ -196,4 +191,4 @@
             </VBox>
          </children></HBox>
    </children>
-</Pane>
+</AnchorPane >

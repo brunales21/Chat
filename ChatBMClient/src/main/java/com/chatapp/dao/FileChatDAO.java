@@ -28,7 +28,6 @@ public class FileChatDAO implements ChatDAO {
 
     @Override
     public Map<String, List<Message>> loadChatMessages() {
-        System.out.println("Fichero: "+file.toString());
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(String.valueOf(file)))) {
             Map<String, List<Message>> map;
             if ((map = (Map<String, List<Message>>) in.readObject()) != null) {
