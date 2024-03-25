@@ -1,2 +1,2 @@
 Bienvenido al Chat.
-Registrese (Ej: REGISTER tu_nickname)
+Registrese (REGISTER tu_nickname)

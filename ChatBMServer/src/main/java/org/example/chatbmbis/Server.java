@@ -55,7 +55,6 @@ public class Server {
         historyUsers.add(nickname);
         socketUserMap.put(socket, nickname);
         sendOk(socket);
-        sendSavedMessages(nickname);
     }
 
     public void start() {
@@ -113,6 +112,7 @@ public class Server {
                 try {
                     register(arg, senderSocket);
                     sendMessage(senderSocket, "Listo para chatear. Puede usar el comando HELP como ayuda.");
+                    sendSavedMessages(arg);
                 } catch (UserExistsException e) {
                     sendErrorMsg(senderSocket, e.getMessage());
                 }
@@ -184,7 +184,7 @@ public class Server {
                 break;
             case "EXIT":
                 try {
-                    //exitMessage(sender);
+                    exitMessage(sender);
                     senderSocket.close();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -192,6 +192,7 @@ public class Server {
                 socketUserMap.remove(senderSocket);
                 userOutMap.remove(sender);
                 break;
+
             default:
                 sendErrorMsg(sender, "El comando " + commandName + " no existe.");
                 break;
@@ -360,16 +361,17 @@ public class Server {
             try (BufferedReader in = new BufferedReader(new FileReader(fileName))) {
                 String message;
                 while ((message = in.readLine()) != null) {
+                    System.out.println(message);
                     String[] parts = Utils.splitCommandLine(message);
                     String sender;
                     String msg;
                     if (parts[0].startsWith("#")) {
-                        // #dam monica :hola
+                        // #dam monica:hola
                         sender = parts[1];
                         msg = parts[2];
                         sendMsgToChannelMember(sender, receptor, parts[0], msg);
                     } else {
-                        // monica :hola
+                        // monica:hola
                         sender = parts[0];
                         msg = parts[1];
                         sendMessage(sender, receptor, msg);
@@ -437,7 +439,7 @@ public class Server {
     }
 
     private void exitMessage(String sender) {
-        sendMessage(sender, "Hasta pronto!");
+        sendMessage(sender, "Sesion cerrada con exito. Hasta pronto!");
     }
 
     private void sendFileContent(Socket socket, String fileName) {
@@ -464,7 +466,13 @@ public class Server {
     private void createIA() {
         chatbots.add(Commands.IA.name().toLowerCase());
     }
-
+    private void closeSocket(Socket socket) {
+        try {
+            socket.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static void main(String[] args) {
         Server server;

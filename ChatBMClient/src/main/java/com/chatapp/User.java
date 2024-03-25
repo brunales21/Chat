@@ -10,15 +10,18 @@ import com.chatapp.dao.FileChatDAO;
 import com.chatapp.utils.Utils;
 
 import java.io.*;
+import java.nio.file.Path;
 import java.util.*;
 
 public class User extends Client {
-    private final String nickname;
+    private String nickname;
     private Map<String, List<Message>> chatMessagesMap;
     private final List<String> contacts;
     private final Mediator mediator;
-    private final ChatDAO chatDAO;
+    private ChatDAO chatDAO;
     private final String CHATS_FOLDER_NAME = "chats_messages";
+    private boolean registered = false;
+    private boolean firstTime = true;
 
     public User(String nickname, String hostname, int port) {
         super(hostname, port);
@@ -27,6 +30,15 @@ public class User extends Client {
         chatMessagesMap = new HashMap<>();
         mediator = Mediator.getInstance();
         chatDAO = new FileChatDAO(CHATS_FOLDER_NAME + "/" + this.nickname + "-messages.bin");
+    }
+
+    public User() {
+        super(DEFAULT_HOSTNAME, DEFAULT_PORT);
+        this.nickname = "";
+        this.contacts = new ArrayList<>();
+        chatMessagesMap = new HashMap<>();
+        mediator = Mediator.getInstance();
+        chatDAO = new FileChatDAO();
     }
 
     public User(String nickname) {
@@ -40,7 +52,32 @@ public class User extends Client {
 
     public void ingresar() {
         register();
-        this.start();
+        if (successfulRegister()) {
+            setRegistered(true);
+            this.start();
+        } else {
+            firstTime = false;
+            setRegistered(false);
+        }
+    }
+
+    private boolean successfulRegister() {
+        Scanner in = null;
+        try {
+            in = new Scanner(getSocket().getInputStream());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        String msg;
+        if (!firstTime) {
+            msg = in.nextLine();
+        } else {
+            for (int i = 0; i < 3; i++) {
+                String thrash = in.nextLine();
+            }
+            msg = in.nextLine();
+        }
+        return mediator.isActionApproved(msg);
 
     }
 
@@ -108,6 +145,11 @@ public class User extends Client {
         return messages;
     }
 
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+        ((FileChatDAO) chatDAO).setFile(Path.of(CHATS_FOLDER_NAME + "/" + this.nickname + "-messages.bin"));
+    }
+
     public String getNickname() {
         return nickname;
     }
@@ -142,6 +184,14 @@ public class User extends Client {
 
     public void removeContact(String nickname) {
         contacts.remove(nickname);
+    }
+
+    public boolean isRegistered() {
+        return registered;
+    }
+
+    public void setRegistered(boolean registered) {
+        this.registered = registered;
     }
 
     @Override

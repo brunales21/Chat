@@ -9,18 +9,24 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/AddContactViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/AddContactViewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/ChatApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/ChatApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/ChatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/constants/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/constants/Commands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/conversation/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/conversation/Message.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/dao/FileChatDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/dao/FileChatDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/mediator/Mediator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/mediator/Mediator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/utils/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/utils/Utils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/chatapp/chatView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/chatapp/chatView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/chatapp/addContactView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/chatapp/addContactView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/chatapp/contactItemView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/chatapp/contactItemView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/LoginController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/mediator/Mediator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/mediator/Mediator.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/constants/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/constants/Commands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/ServerChat.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/original-ServerChat.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/resources/help.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/resources/help.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/resources/welcome.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/resources/welcome.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/ServerChat.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/ServerChat.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/help.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/help.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/example/chatbmbis/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/example/chatbmbis/Server.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/welcome.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/welcome.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/original-ServerChat.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/original-ServerChat.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +66,9 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="jar://$USER_HOME$/.jdks/openjdk-21.0.1/lib/src.zip!/java.base/java/lang/Thread.java" root0="SKIP_INSPECTION" />
   </component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -117,7 +126,7 @@
       <recent name="org.example.chatbmbis" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main (3)">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main (1)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.chatapp.ChatApp" />
       <module name="ChatBMBis" />
@@ -276,7 +285,9 @@
       <workItem from="1710794256193" duration="12657000" />
       <workItem from="1710872622077" duration="394000" />
       <workItem from="1710873682831" duration="4026000" />
-      <workItem from="1711230144095" duration="18818000" />
+      <workItem from="1711230144095" duration="19096000" />
+      <workItem from="1711292360965" duration="7387000" />
+      <workItem from="1711305694270" duration="10756000" />
     </task>
     <servers />
   </component>

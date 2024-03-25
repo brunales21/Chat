@@ -16,6 +16,9 @@ public class FileChatDAO implements ChatDAO {
         this.file = Path.of(fileName);
     }
 
+    public FileChatDAO() {
+    }
+
     @Override
     public void saveChatMessages(Map<String, List<Message>> chatMessagesMap) {
         createFileIfNotExists();
@@ -49,5 +52,9 @@ public class FileChatDAO implements ChatDAO {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public void setFile(Path file) {
+        this.file = file;
     }
 }

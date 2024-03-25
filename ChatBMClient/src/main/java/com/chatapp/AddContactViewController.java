@@ -7,6 +7,8 @@ import com.chatapp.utils.WarningWindow;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.util.Locale;
@@ -14,6 +16,8 @@ import java.util.ResourceBundle;
 
 public class AddContactViewController extends Controller {
 
+    @FXML
+    private HBox hbox;
     @FXML
     private TextField nicknameTextField;
     @FXML
@@ -107,5 +111,13 @@ public class AddContactViewController extends Controller {
 
     public boolean isCreateContactBtn() {
         return nicknameTextField.getPromptText().equals(prompPrivFile);
+    }
+
+    public HBox getHbox() {
+        return hbox;
+    }
+
+    public Stage getStage() {
+        return (Stage) this.button1.getScene().getWindow();
     }
 }

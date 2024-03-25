@@ -136,7 +136,7 @@ public class Mediator {
         return message.equals(Commands.MESSAGE.name());
     }
 
-    private boolean isActionApproved(String message) {
+    public boolean isActionApproved(String message) {
         return message.equalsIgnoreCase(Commands.OK.name());
     }
 

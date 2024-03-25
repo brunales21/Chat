@@ -20,6 +20,16 @@ public class LoginController extends Controller {
 
     public LoginController() {}
 
+    public void init() {
+        User user = new User();
+        mediator.setUser(user);
+        try {
+            mediator.getUser().connect();
+        } catch (IOException e) {
+            WarningWindow.instanceWarningWindow("FailConnectToServer");
+        }
+    }
+
     @FXML
     private void initialize() {
         // Aquí se llama al método para internacionalizar el texto del botón
@@ -35,24 +45,19 @@ public class LoginController extends Controller {
     public void ingresar() {
         if (!usernameField.getText().isBlank()) {
             String nickname = usernameField.getText().replace(" ", "").toLowerCase();
-            User user;
-            try {
-                user = new User(nickname);
-                user.connect();
-                if (invalidName(nickname)) {
-                    WarningWindow.instanceWarningWindow("ForbiddenSymbols");
-                    return;
-                }
-            } catch (IOException e) {
-                WarningWindow.instanceWarningWindow("FailConnectToServer");
+            if (invalidName(nickname)) {
+                WarningWindow.instanceWarningWindow("ForbiddenSymbols");
                 return;
             }
-            mediator.setUser(user);
+            mediator.getUser().setNickname(nickname);
             mediator.ingresar();
-            ThreadUtils.sleep(200);
-            if (mediator.successfulAction()) {
+            ThreadUtils.sleep(400);
+            if (mediator.getUser().isRegistered()) {
                 closeLoginView();
                 mediator.createChatView();
+
+            } else {
+                WarningWindow.instanceWarningWindow("UserExists");
             }
         } else {
             WarningWindow.instanceWarningWindow("EmptyField");

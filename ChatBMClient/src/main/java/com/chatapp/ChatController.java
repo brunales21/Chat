@@ -40,10 +40,25 @@ public class ChatController extends Controller {
 
     @FXML
     protected void onClickChannelOptions() {
+        mediator.getAddViewController().getStage().close();
         String prom = "promChannel";
         String opt1 = "buttonIzqChannel";
         String opt2 = "buttonDrchChannel";
         mediator.getAddViewController().getButton2().setVisible(true);
+        mediator.getAddViewController().getButton1().setTranslateX(0);
+        mediator.getAddViewController().getHbox().setPrefWidth(556);
+        createAddView(prom, opt1, opt2);
+    }
+
+    @FXML
+    private void onClickPrivChatOptions() {
+        mediator.getAddViewController().getStage().close();
+        String prom = "promPriv";
+        String opt1 = "buttonIzqPriv";
+        String opt2 = "buttonDrchPriv";
+        mediator.getAddViewController().getButton2().setVisible(false);
+        mediator.getAddViewController().getButton1().setTranslateX(37);
+        mediator.getAddViewController().getHbox().setPrefWidth(420);
         createAddView(prom, opt1, opt2);
     }
 
@@ -64,15 +79,6 @@ public class ChatController extends Controller {
         sendMessage();
     }
 
-    @FXML
-    private void onClickPrivChatOptions() {
-        String prom = "promPriv";
-        String opt1 = "buttonIzqPriv";
-        String opt2 = "buttonDrchPriv";
-        mediator.getAddViewController().getButton2().setVisible(false);
-        createAddView(prom, opt1, opt2);
-    }
-
     public void overlayChat(String nickname) {
         // Obtener el controlador del item utilizando el nickname proporcionado
         ContactItemController itemContactController = itemContactsMap.get(nickname);
@@ -91,8 +97,6 @@ public class ChatController extends Controller {
                     // Agregar el nodo al primer lugar en el VBox
                     vBox.getChildren().add(0, itemNode);
                 });
-
-
             }
         }
     }
@@ -108,7 +112,6 @@ public class ChatController extends Controller {
 
     @FXML
     public void initialize() {
-
         // Asignar la lista observable al ListView
         messagesListView.setItems(messageList);
         messagesListView.setStyle("-fx-background-color: #fffdf9; -fx-padding: 1px;");
@@ -125,11 +128,10 @@ public class ChatController extends Controller {
                     messageLabel.setWrapText(true);
 
                     VBox messageBox = new VBox();
-                    messageBox.setStyle("-fx-background-color: white");
                     messageBox.getChildren().add(messageLabel);
 
                     HBox container = new HBox(messageBox);
-                    container.setStyle("-fx-background-color: white");
+                    container.setStyle("-fx-background-color: white;");
 
                     boolean messageOwner = msg.getSender().equals(userNameLabel.getText());
                     container.setAlignment(messageOwner ? Pos.CENTER_RIGHT : Pos.CENTER_LEFT);
@@ -137,9 +139,9 @@ public class ChatController extends Controller {
                     container.setStyle("-fx-background-color: #ffffff;");
 
                     if (messageOwner) {
-                        messageBox.setStyle("-fx-padding: 5px; -fx-background-radius: 20px; -fx-background-color: rgb(131,184,241);");
+                        messageBox.setStyle("-fx-padding: 6px; -fx-background-radius: 15px; -fx-background-color: rgb(131,184,241);");
                     } else {
-                        messageBox.setStyle("-fx-padding: 5px; -fx-background-radius: 20px; -fx-background-color: rgb(246,254,255);");
+                        messageBox.setStyle("-fx-padding: 6px; -fx-background-radius: 15px; -fx-background-color: #bbf6a4; ");
                     }
 
                     // Ajustar el ancho máximo del mensaje al ancho disponible en la ventana

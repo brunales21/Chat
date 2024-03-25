@@ -41,6 +41,7 @@ public class ChatApp extends Application {
         Scene scene = new Scene(fxmlLoader2.load(), 328, 498);
         LoginController loginController = fxmlLoader2.getController();
         loginController.setMediator(mediator);
+        loginController.init();
         mediator.setLoginController(loginController);
         stage.setScene(scene);
         stage.setResizable(false);
