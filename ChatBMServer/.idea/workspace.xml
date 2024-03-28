@@ -4,27 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ffc28d6-f167-4c5e-a0a7-d252a53a42e3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/ChatApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/ChatApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/dao/FileChatDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/dao/FileChatDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/mediator/Mediator.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/mediator/Mediator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/LoginController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/mediator/Mediator.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/mediator/Mediator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/help.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/help.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/welcome.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/welcome.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/ServerChat.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/ServerChat.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/help.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/help.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/chatbmbis/Server.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/welcome.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/welcome.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/original-ServerChat.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-ServerChat.jar" afterDir="false" />
-    </list>
+    <list default="true" id="6ffc28d6-f167-4c5e-a0a7-d252a53a42e3" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -157,7 +137,7 @@
       <workItem from="1710789427859" duration="18494000" />
       <workItem from="1710873686530" duration="1404000" />
       <workItem from="1711240573519" duration="6729000" />
-      <workItem from="1711292364728" duration="10104000" />
+      <workItem from="1711292364728" duration="12435000" />
     </task>
     <servers />
   </component>
