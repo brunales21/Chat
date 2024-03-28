@@ -4,6 +4,7 @@ import com.chatapp.mediator.Mediator;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
@@ -27,9 +28,15 @@ public class ChatApp extends Application {
         mediator.setChatController(chatController);
         mediator.getView().put(stageChat, chatController);
 
+        Image icon = new Image(getClass().getResourceAsStream("/imgs/appIcon3.png"));
+
+        // Establecer el ícono en la barra de tareas
+        stageChat.getIcons().add(icon);
+
         FXMLLoader fxmlLoader3 = new FXMLLoader(ChatApp.class.getResource("addContactView.fxml"));
         Scene adduserView = new Scene(fxmlLoader3.load());
         Stage stageAddChat = new Stage();
+        stageAddChat.getIcons().add(icon);
         stageAddChat.setScene(adduserView);
         stageAddChat.setTitle("Add");
         AddContactViewController addViewController = fxmlLoader3.getController();
@@ -46,6 +53,7 @@ public class ChatApp extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle("Inicio de Sesion");
+        stage.getIcons().add(icon);
         stage.show();
 
         setCloseWindow(stage);
