@@ -131,7 +131,7 @@ public class User extends Client {
         try {
             out = new PrintStream(getSocket().getOutputStream());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            WarningWindow.instanceWarningWindow("ServidorCaido");
         }
         out.println(commandLine);
     }

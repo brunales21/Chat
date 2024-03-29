@@ -48,14 +48,12 @@ public class ChatApp extends Application {
         Scene scene = new Scene(fxmlLoader2.load(), 328, 498);
         LoginController loginController = fxmlLoader2.getController();
         loginController.setMediator(mediator);
-        loginController.init();
         mediator.setLoginController(loginController);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle("Inicio de Sesion");
         stage.getIcons().add(icon);
         stage.show();
-
         setCloseWindow(stage);
         setCloseWindow(stageChat);
 
@@ -70,6 +68,7 @@ public class ChatApp extends Application {
                 loginController.ingresar();
             }
         });
+
     }
 
     private void setCloseWindow(Stage stage) {

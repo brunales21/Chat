@@ -34,7 +34,11 @@ public class Mediator {
     }
 
     public void ingresar() {
-        user.ingresar();
+        if (getUser().getSocket() != null) {
+            user.ingresar();
+        } else {
+            WarningWindow.instanceWarningWindow("ServidorCaido");
+        }
     }
 
     public void createChatView() {
@@ -179,5 +183,9 @@ public class Mediator {
 
     public AddContactViewController getAddViewController() {
         return addViewController;
+    }
+
+    public LoginController getLoginController() {
+        return loginController;
     }
 }

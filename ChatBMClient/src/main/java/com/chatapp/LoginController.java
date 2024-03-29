@@ -20,13 +20,15 @@ public class LoginController extends Controller {
 
     public LoginController() {}
 
-    public void init() {
+    public boolean initUser() {
         User user = new User();
         mediator.setUser(user);
         try {
             mediator.getUser().connect();
+            return true;
         } catch (IOException e) {
-            WarningWindow.instanceWarningWindow("FailConnectToServer");
+            WarningWindow.instanceWarningWindow("ServidorCaido");
+            return false;
         }
     }
 
@@ -43,24 +45,27 @@ public class LoginController extends Controller {
     }
 
     public void ingresar() {
-        if (!usernameField.getText().isBlank()) {
-            String nickname = usernameField.getText().replace(" ", "").toLowerCase();
-            if (invalidName(nickname)) {
-                WarningWindow.instanceWarningWindow("ForbiddenSymbols");
-                return;
-            }
-            mediator.getUser().setNickname(nickname);
-            mediator.ingresar();
-            ThreadUtils.sleep(400);
-            if (mediator.getUser().isRegistered()) {
-                closeLoginView();
-                mediator.createChatView();
+        if (mediator.getLoginController().initUser()) {
+            // entra solo si pudo conectar con el servidor
+            if (!usernameField.getText().isBlank()) {
+                String nickname = usernameField.getText().replace(" ", "").toLowerCase();
+                if (invalidName(nickname)) {
+                    WarningWindow.instanceWarningWindow("ForbiddenSymbols");
+                    return;
+                }
+                mediator.getUser().setNickname(nickname);
+                mediator.ingresar();
+                ThreadUtils.sleep(400);
+                if (mediator.getUser().isRegistered()) {
+                    closeLoginView();
+                    mediator.createChatView();
+                } else {
+                    WarningWindow.instanceWarningWindow("UserExists");
+                }
 
             } else {
-                WarningWindow.instanceWarningWindow("UserExists");
+                WarningWindow.instanceWarningWindow("EmptyField");
             }
-        } else {
-            WarningWindow.instanceWarningWindow("EmptyField");
         }
     }
 

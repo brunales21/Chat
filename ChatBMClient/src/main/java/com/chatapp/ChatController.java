@@ -248,7 +248,9 @@ public class ChatController extends Controller {
         try {
             if (mediator.getUser() != null) {
                 // Informamos al servidor que cerramos sesion (asi el servidor gestiona menos hilos)
-                mediator.sendMessage(Commands.EXIT.name());
+                if (mediator.getUser().getSocket() != null) {
+                    mediator.sendMessage(Commands.EXIT.name());
+                }
                 // guardamos los chats y mensajes en un fichero binario
                 if (((FileChatDAO)mediator.getUser().getChatDAO()).getFile() != null) {
                     mediator.getUser().getChatDAO().saveChatMessages(mediator.getUser().getChatMessagesMap());
