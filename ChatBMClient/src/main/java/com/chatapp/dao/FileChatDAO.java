@@ -57,4 +57,8 @@ public class FileChatDAO implements ChatDAO {
     public void setFile(Path file) {
         this.file = file;
     }
+
+    public Path getFile() {
+        return file;
+    }
 }

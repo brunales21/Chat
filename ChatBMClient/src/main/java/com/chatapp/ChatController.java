@@ -2,6 +2,7 @@ package com.chatapp;
 
 import com.chatapp.constants.Commands;
 import com.chatapp.conversation.Message;
+import com.chatapp.dao.FileChatDAO;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -249,7 +250,9 @@ public class ChatController extends Controller {
                 // Informamos al servidor que cerramos sesion (asi el servidor gestiona menos hilos)
                 mediator.sendMessage(Commands.EXIT.name());
                 // guardamos los chats y mensajes en un fichero binario
-                mediator.getUser().getChatDAO().saveChatMessages(mediator.getUser().getChatMessagesMap());
+                if (((FileChatDAO)mediator.getUser().getChatDAO()).getFile() != null) {
+                    mediator.getUser().getChatDAO().saveChatMessages(mediator.getUser().getChatMessagesMap());
+                }
                 // cerramos el socket
                 mediator.getUser().getSocket().close();
             }

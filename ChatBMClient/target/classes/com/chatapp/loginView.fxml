@@ -18,7 +18,7 @@
                   <Image url="@../../imgs/usuario.png" />
                </image>
             </ImageView>
-            <Label alignment="CENTER" prefHeight="114.0" prefWidth="346.0" stylesheets="@../../css/styles.css" text="B-Nica Messenger">
+            <Label alignment="CENTER" prefHeight="114.0" prefWidth="346.0" stylesheets="@../../css/styles.css" text="BM chat">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font></Label>

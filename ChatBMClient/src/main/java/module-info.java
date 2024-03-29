@@ -1,4 +1,4 @@
-module org.example.chatbmbis {
+module com.chatapp {
     requires javafx.controls;
     requires javafx.fxml;
 
