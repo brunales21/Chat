@@ -240,31 +240,10 @@ public class ChatController extends Controller {
 
     @FXML
     private void onClickExit() {
-        onApplicationClose();
+        mediator.onApplicationClose(getStage());
     }
 
-    public void onApplicationClose() {
-        // Realizar limpieza o acciones previas al cierre
-        try {
-            if (mediator.getUser() != null) {
-                // Informamos al servidor que cerramos sesion (asi el servidor gestiona menos hilos)
-                if (mediator.getUser().getSocket() != null) {
-                    mediator.sendMessage(Commands.EXIT.name());
-                }
-                // guardamos los chats y mensajes en un fichero binario
-                if (((FileChatDAO)mediator.getUser().getChatDAO()).getFile() != null) {
-                    mediator.getUser().getChatDAO().saveChatMessages(mediator.getUser().getChatMessagesMap());
-                }
-                // cerramos el socket
-                mediator.getUser().getSocket().close();
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        getStage().close();
-        Platform.exit();
-        System.exit(0);
-    }
+
 
     public void setMediator(Mediator mediator) {
         this.mediator = mediator;

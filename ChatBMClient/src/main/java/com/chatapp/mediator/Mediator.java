@@ -6,12 +6,15 @@ import com.chatapp.ChatController;
 import com.chatapp.Controller;
 import com.chatapp.LoginController;
 import com.chatapp.conversation.Message;
+import com.chatapp.dao.FileChatDAO;
 import com.chatapp.utils.Utils;
 import com.chatapp.utils.WarningWindow;
 import com.chatapp.AddContactViewController;
+import javafx.application.Platform;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.*;
 
 public class Mediator {
@@ -39,6 +42,32 @@ public class Mediator {
         } else {
             WarningWindow.instanceWarningWindow("ServidorCaido");
         }
+    }
+
+
+
+    public void onApplicationClose(Stage stage) {
+        // Realizar limpieza o acciones previas al cierre
+        try {
+            if (getUser() != null) {
+                if (getUser().getSocket() != null) {
+                    // Informamos al servidor que cerramos sesion (asi el servidor gestiona menos hilos)
+                    sendMessage(Commands.EXIT.name());
+                    // cerramos el socket
+                    getUser().getSocket().close();
+                }
+                // guardamos los chats y mensajes en un fichero binario
+                if (((FileChatDAO)getUser().getChatDAO()).getFile() != null) {
+                    getUser().getChatDAO().saveChatMessages(getUser().getChatMessagesMap());
+                }
+
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        stage.close();
+        Platform.exit();
+        System.exit(0);
     }
 
     public void createChatView() {

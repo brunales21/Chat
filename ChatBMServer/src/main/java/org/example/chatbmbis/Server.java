@@ -17,11 +17,11 @@ public class Server {
     private final int port;
     private final Set<PrivateChat> privateChats;
     private final Set<Channel> channels;
-    private final Map<String, PrintStream> userOutMap;
-    private final Map<Socket, String> socketUserMap;
-    private final Set<String> historyUsers;
-    private final Set<String> chatbots;
-
+    private final Map<User, PrintStream> userOutMap;
+    private final Map<Socket, User> socketUserMap;
+    private final Map<User, Socket> userSocketMap;
+    private final Set<User> historyUsers;
+    private final Set<User> chatbots;
     private final String MSGS_FOLDER_NAME = "messages";
 
     public Server(int port) {
@@ -30,9 +30,9 @@ public class Server {
         privateChats = new HashSet<>();
         userOutMap = new HashMap<>();
         socketUserMap = new HashMap<>();
+        userSocketMap = new HashMap<>();
         historyUsers = new HashSet<>();
         chatbots = new HashSet<>();
-
     }
 
     public Server(String port) {
@@ -43,27 +43,13 @@ public class Server {
         this(8080);
     }
 
-    private void register(String nickname, Socket socket) throws UserExistsException {
-        try {
-            if (userOutMap.containsKey(nickname)) {
-                throw new UserExistsException(nickname);
-            }
-            userOutMap.put(nickname, new PrintStream(socket.getOutputStream()));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        historyUsers.add(nickname);
-        socketUserMap.put(socket, nickname);
-        sendOk(socket);
-    }
-
     public void start() {
         createIA();
         ServerSocket serverSocket;
         try {
             serverSocket = new ServerSocket(port);
             System.out.println("El servidor se ha iniciado correctamente.");
-            System.out.println("Está escuchando en el puerto: " + port + ".");
+            System.out.println("Está escuchando en el puerto " + port + ".");
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -75,148 +61,216 @@ public class Server {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            Thread thread = new Thread(() -> clientHandler(socket));
+            Thread thread = new Thread(() -> clientHandler(getClientType(socket), socket));
             thread.start();
         }
     }
 
-    private void clientHandler(Socket socket) {
+    private void registerUI(User user, Socket socket) throws NicknameInUseException {
+        if (userOutMap.containsKey(user)) {
+            throw new NicknameInUseException(user.getNickname());
+        }
+        try {
+            userOutMap.put(user, new PrintStream(socket.getOutputStream()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        historyUsers.add(user);
+        socketUserMap.put(socket, user);
+        userSocketMap.put(user, socket);
+        sendOk(socket);
+    }
+
+    private void registerCLI(User user, Socket socket) throws NicknameInUseException {
+        try {
+            if (userOutMap.containsKey(user)) {
+                throw new NicknameInUseException(user.getNickname());
+            }
+            userOutMap.put(user, new PrintStream(socket.getOutputStream()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        socketUserMap.put(socket, user);
+        userSocketMap.put(user, socket);
+        historyUsers.add(user);
+    }
+
+
+    private String getClientType(Socket socket) {
+        Scanner in = null;
+        try {
+            in = new Scanner(socket.getInputStream());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return in.nextLine();
+
+    }
+
+    private void handleUIClient(Socket socket) {
+        try {
+            Scanner in = new Scanner(socket.getInputStream());
+            User user = new User(ClientType.UI_CLIENT);
+            do {
+                user.setNickname(getNicknameFromUICommand(in.nextLine()));
+                try {
+                    registerUI(user, socket);
+                    break;
+                } catch (NicknameInUseException e) {
+                    sendErrorMsg(socket, e.getMessage());
+                }
+            } while (!socket.isClosed());
+            sendOk(socket);
+            sendSavedMessages(user);
+            do {
+                processCommand(socket, in.nextLine());
+            } while (!socket.isClosed());
+        } catch (IOException | NoSuchElementException ignore) {
+
+        }
+    }
+
+    private void handleCliClient(Socket socket) {
         try {
             sendFileContent(socket, "welcome.txt");
             Scanner in = new Scanner(socket.getInputStream());
-            String command;
+            User user = null;
             do {
-                sendMessage(socket, "Primero debe registrarse. Ej: "+Commands.REGISTER+" mi_username");
-                command = BackspaceRemover.removeBackspaces(in.nextLine());
-            } while (!Utils.splitCommandLine(command)[0].equalsIgnoreCase(Commands.REGISTER.toString()));
-            do {
-                processCommand(socket, command);
-                command = BackspaceRemover.removeBackspaces(in.nextLine());
+                sendFileContent(socket, "instructions.txt");
+                try {
+                    user = new User(getNickname(BackspaceRemover.removeBackspaces(in.nextLine())), ClientType.CLI_CLIENT);
+                    registerCLI(user, socket);
+                    sendMessage(socket, "Listo para chatear. Puede usar el comando HELP como ayuda.");
+                    break;
+                } catch (RegisterException e) {
+                    sendErrorMsg(socket, e.getMessage());
+                }
             } while (true);
+            sendSavedMessages(user);
+            do {
+                processCommand(socket, BackspaceRemover.removeBackspaces(in.nextLine()));
+            } while (!socket.isClosed());
         } catch (IOException | NoSuchElementException ignore) {
 
+        }
+    }
+
+    private void clientHandler(String clientType, Socket socket) {
+        if (clientType.equalsIgnoreCase("UI_CLIENT")) {
+            handleUIClient(socket);
+        } else {
+            handleCliClient(socket);
         }
     }
 
     private void processCommand(Socket senderSocket, String command) {
         System.out.println("Header que recibe servidor: " + command);
         String[] commandParts = Utils.splitCommandLine(command);
-        String sender = socketUserMap.get(senderSocket);
+        User user = socketUserMap.get(senderSocket);
         String commandName = commandParts[0].toUpperCase();
         String arg = "";
         if (commandParts.length > 1) {
             arg = commandParts[1].toLowerCase();
         }
         switch (commandName) {
-            case "REGISTER":
-                try {
-                    register(arg, senderSocket);
-                    sendMessage(senderSocket, "Listo para chatear. Puede usar el comando HELP como ayuda.");
-                    sendSavedMessages(arg);
-                } catch (UserExistsException e) {
-                    sendErrorMsg(senderSocket, e.getMessage());
-                }
-                break;
             case "CREATE":
                 try {
                     if (arg.startsWith("#")) {
-                        createChannel(sender, arg);
+                        createChannel(user, arg);
                     } else {
-                        createPrivChat(sender, arg);
+                        createPrivChat(user.getNickname(), arg);
                     }
-                    sendOk(sender);
+                    sendOk(user);
                 } catch (ChatException e) {
-                    sendErrorMsg(sender, e.getMessage());
+                    sendErrorMsg(user, e.getMessage());
                 }
                 break;
             case "PRIVMSG":
                 String msg = commandParts[2];
                 try {
                     if (arg.startsWith("#")) {
-                        //PRIVMSG #dam monica :hola
-                        broadcast(sender, arg, msg);
+                        broadcast(user, arg, msg);
                     } else {
                         if (arg.equalsIgnoreCase(Commands.IA.name())) {
                             String response = AIConnector.getAISnippetsForQuery(msg);
-                            System.out.println(response);
-                            sendMessage(Commands.IA.name(), sender, response);
+                            sendMessage(getChatBotByName(Commands.IA.name()), user, response);
                         } else {
-                            //PRIVMSG monica :hola
-                            sendMessage(sender, arg, msg);
+                            sendMessage(user, getUserByNickname(arg), msg);
                         }
                     }
                 } catch (UserNotExistsException e) {
-                    sendErrorMsg(sender, e.getMessage());
+                    sendErrorMsg(user, e.getMessage());
                 }
                 break;
             case "JOIN":
                 try {
-                    join(sender, arg);
-                    sendOk(sender);
+                    join(user, getChannelByName(arg));
+                    sendOk(user);
                 } catch (ChatNotFoundException e) {
-                    sendErrorMsg(sender, e.getMessage());
+                    sendErrorMsg(user, e.getMessage());
                 }
                 break;
             case "DELETE":
                 try {
-                    deletePrivChat(sender, arg);
-                    sendOk(sender);
+                    deletePrivChat(user, arg);
+                    sendOk(user);
                 } catch (UserNotExistsException e) {
-                    sendErrorMsg(sender, e.getMessage());
+                    sendErrorMsg(user, e.getMessage());
                 }
                 break;
 
             case "PART":
                 try {
-                    part(sender, arg);
+                    part(user, arg);
                 } catch (ChatNotFoundException e) {
-                    sendErrorMsg(sender, e.getMessage());
+                    sendErrorMsg(user, e.getMessage());
                 }
                 break;
             case "LU":
-                listAllUsers(sender);
+                listAllUsers(user);
                 break;
             case "LC":
-                listChannels(sender);
+                listChannels(user);
                 break;
             case "HELP":
                 sendFileContent(senderSocket, "help.txt");
                 break;
             case "EXIT":
                 try {
-                    exitMessage(sender);
+                    if (user.isCLIUser()) {
+                        exitMessage(user);
+                    }
                     senderSocket.close();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
                 socketUserMap.remove(senderSocket);
-                userOutMap.remove(sender);
+                userOutMap.remove(user);
                 break;
-
             default:
-                sendErrorMsg(sender, "El comando " + commandName + " no existe.");
+                sendErrorMsg(user, "El comando " + commandName + " no existe.");
                 break;
         }
 
     }
 
-    private void sendOk(String sender) {
-        sendMessage(sender, Commands.OK.toString().toLowerCase());
+    private void sendOk(User user) {
+        sendMessage(user, Commands.OK.toString().toLowerCase());
     }
 
     private void sendOk(Socket socket) {
         sendMessage(socket, Commands.OK.toString().toLowerCase());
     }
 
-    private void deletePrivChat(String sender, String chatName) throws UserNotExistsException {
+    private void deletePrivChat(User sender, String chatName) throws UserNotExistsException {
         privateChats.remove(getPrivChatByName(sender, chatName));
     }
 
     private boolean existsUser(String nickname) {
-        return historyUsers.contains(nickname) || chatbots.contains(nickname);
+        return historyUsers.contains(getUserByNickname(nickname)) || chatbots.contains(getChatBotByName(nickname));
     }
 
-    private void part(String sender, String channel) throws ChatNotFoundException {
+    private void part(User sender, String channel) throws ChatNotFoundException {
         getChannelByName(channel).getUsers().remove(sender);
     }
 
@@ -228,43 +282,58 @@ public class Server {
         }
     }
 
-    private PrivateChat getPrivChatByName(String user1, String user2) throws UserNotExistsException {
+    private PrivateChat getPrivChatByName(User user1, String user2) throws UserNotExistsException {
         try {
-            return privateChats.stream().filter(c -> c.getUser1().equals(user1) && c.getUser2().equals(user2)).toList().get(0);
+            return privateChats.stream().filter(c -> c.getUser1().equals(user1.getNickname()) && c.getUser2().equals(user2)).toList().get(0);
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new UserNotExistsException(user2);
         }
     }
 
-    private void sendErrorMsg(String sender, String errorMessage) {
-        // le rebota el msj
-        send(userOutMap.get(sender), Commands.ERROR + ":" + errorMessage);
+    private void sendErrorMsg(User user, String errorMessage) {
+        send(userOutMap.get(user), Commands.ERROR + ":" + errorMessage);
+    }
+
+    private User getClientByName(String nickname) {
+        return socketUserMap.values().stream().filter(c -> c.getNickname().equalsIgnoreCase(nickname)).toList().get(0);
     }
 
     private void sendErrorMsg(Socket socket, String errorMessage) {
-        // le rebota el msj
         PrintStream out;
         try {
             out = new PrintStream(socket.getOutputStream());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        send(out, Commands.ERROR + ":" + errorMessage);
-    }
-
-    private Set<String> getUsersInChannel(String channelName) {
-        try {
-            return getChannelByName(channelName).getUsers();
-        } catch (ChatNotFoundException e) {
-            return new HashSet<>();
+        if (isUIClient(socket)) {
+            // gestionar envio de codigo de error
+            send(out, Commands.ERROR + ":" + errorMessage);
+        } else {
+            // hacer que el user cli reciba un mensaje intuitivo
+            send(out, Commands.ERROR + ":" + errorMessage);
         }
     }
 
-    private boolean isMemberOfChannel(String channel, String member) {
+    private boolean isUIClient(Socket socket) {
+        return socketUserMap.get(socket).getClientType().equals(ClientType.UI_CLIENT);
+    }
+
+    private Set<User> getUsersInChannel(Channel channel) {
+        return channel.getUsers();
+    }
+
+    private boolean isMemberOfChannel(Channel channel, User member) {
         return getUsersInChannel(channel).contains(member);
     }
 
-    public void broadcast(String sender, String channel, String textMessage) {
+    public void broadcast(User sender, String channelName, String textMessage) {
+        Channel channel;
+        try {
+            channel = getChannelByName(channelName);
+        } catch (ChatNotFoundException e) {
+            sendErrorMsg(sender, "El canal " + channelName + " no existe. Consulta el comando LU.");
+            return;
+        }
         if (isMemberOfChannel(channel, sender)) {
             getUsersInChannel(channel).stream()
                     .filter(u -> !u.equals(sender))
@@ -273,7 +342,7 @@ public class Server {
                         try {
                             sendMsgToChannelMember(sender, user, channel, textMessage);
                         } catch (UserNotConnectedException e) {
-                            persistMsg(sender, user, textMessage, channel);
+                            persistMsg(sender, user.getNickname(), textMessage, channelName);
                         }
                     });
         } else {
@@ -282,37 +351,36 @@ public class Server {
 
     }
 
-    public void sendMsgToChannelMember(String sender, String receptor, String channel, String text) throws UserNotConnectedException {
+    public void sendMsgToChannelMember(User sender, User receptor, Channel channel, String text) throws UserNotConnectedException {
         //Este nunca lanzaría UserNotFoundExc
         try {
-            //MESSAGGE #2dam bruno :hola
-            send(userOutMap.get(receptor), Commands.MESSAGE + " " + channel + " " + sender + ":" + text);
+            //MESSAGE #2dam bruno :hola
+            send(userOutMap.get(receptor), Commands.MESSAGE + " " + channel.getName() + " " + sender + ":" + text);
         } catch (NullPointerException e) {
-            throw new UserNotConnectedException(receptor);
+            throw new UserNotConnectedException(receptor.getNickname());
         }
     }
 
-    public void sendMessage(String sender, String receptor, String text) throws UserNotExistsException {
-        try {
+    public void sendMessage(User sender, User receptor, String text) throws UserNotExistsException {
+        if (getOnlineUsers().contains(receptor)) {
             send(userOutMap.get(receptor), Commands.MESSAGE + " " + sender + ":" + text);
-        } catch (NullPointerException e) {
-            if (!historyUsers.contains(receptor)) {
-                throw new UserNotExistsException(receptor);
-            }
-            persistMsg(sender, receptor, text, null);
+        } else if (getOfflineUsers().contains(receptor)) {
+            persistMsg(sender, receptor.getNickname(), text, null);
+        } else {
+            throw new UserNotExistsException(receptor.getNickname());
         }
     }
 
-    private void join(String sender, String channelName) throws ChatNotFoundException {
-        getChannelByName(channelName).addUser(sender);
+    private void join(User sender, Channel channel) throws ChatNotFoundException {
+        channel.addUser(sender);
     }
 
-    private void createChannel(String nickname, String channelName) throws ChatRepeatedException {
+    private void createChannel(User user, String channelName) throws ChatRepeatedException {
         Channel channel = new Channel(channelName);
         if (channels.contains(channel)) {
             throw new ChatRepeatedException(channelName);
         } else {
-            channel.addUser(nickname);
+            channel.addUser(user);
             channels.add(channel);
         }
     }
@@ -340,7 +408,7 @@ public class Server {
 
     }
 
-    private void persistMsg(String sender, String fileName, String message, String channel) {
+    private void persistMsg(User sender, String fileName, String message, String channel) {
         String targetFile = MSGS_FOLDER_NAME + "/" + fileName + "-messages.csv";
         createFileIfNotExists(targetFile);
         try (PrintStream out = new PrintStream(new FileOutputStream(targetFile, true))) {
@@ -354,7 +422,7 @@ public class Server {
         }
     }
 
-    private void sendSavedMessages(String receptor) {
+    private void sendSavedMessages(User receptor) {
         String fileName = MSGS_FOLDER_NAME + "/" + receptor + "-messages.csv";
         Path path = Path.of(fileName);
         if (Files.exists(path)) {
@@ -366,19 +434,19 @@ public class Server {
                     String sender;
                     String msg;
                     if (parts[0].startsWith("#")) {
-                        // #dam monica:hola
+                        // #dam pepe:hola
                         sender = parts[1];
                         msg = parts[2];
-                        sendMsgToChannelMember(sender, receptor, parts[0], msg);
+                        sendMsgToChannelMember(getUserByNickname(sender), receptor, getChannelByName(parts[0]), msg);
                     } else {
-                        // monica:hola
+                        // pepe:hola
                         sender = parts[0];
                         msg = parts[1];
-                        sendMessage(sender, receptor, msg);
+                        sendMessage(getUserByNickname(sender), receptor, msg);
 
                     }
                 }
-            } catch (UserNotExistsException | IOException | UserNotConnectedException e) {
+            } catch (UserNotExistsException | IOException | UserNotConnectedException | ChatNotFoundException e) {
                 throw new RuntimeException(e);
             }
             try {
@@ -399,12 +467,12 @@ public class Server {
         send(out, message);
     }
 
-    public void sendMessage(String sender, String text) {
+    public void sendMessage(User sender, String text) {
         send(userOutMap.get(sender), text);
     }
 
 
-    private void listChannels(String sender) {
+    private void listChannels(User sender) {
         if (!channels.isEmpty()) {
             channels.forEach(c -> send(userOutMap.get(sender), c.getName()));
         } else {
@@ -412,7 +480,7 @@ public class Server {
         }
     }
 
-    private void listAllUsers(String sender) {
+    private void listAllUsers(User sender) {
         sendMessage(sender, "Usuarios en linea:");
         listUsers(getOnlineUsers(), sender);
         sendMessage(sender, "Usuarios desconectados:");
@@ -421,7 +489,7 @@ public class Server {
         listUsers(chatbots, sender);
     }
 
-    private void listUsers(Collection<String> users, String sender) {
+    private void listUsers(Collection<User> users, User sender) {
         if (users.isEmpty()) {
             send(userOutMap.get(sender), "Vacio");
         } else {
@@ -430,16 +498,20 @@ public class Server {
     }
 
 
-    private Collection<String> getOnlineUsers() {
+    private Collection<User> getOnlineUsers() {
         return socketUserMap.values();
     }
 
-    private List<String> getOfflineUsers() {
+    private List<User> getOfflineUsers() {
         return historyUsers.stream().filter(u -> !getOnlineUsers().contains(u)).toList();
     }
 
-    private void exitMessage(String sender) {
-        sendMessage(sender, "Sesion cerrada con exito. Hasta pronto!");
+    private void exitMessage(User sender) {
+        sendFileContent(userSocketMap.get(sender), "exitMessage.txt");
+    }
+
+    private User getChatBotByName(String nickname) {
+        return chatbots.stream().filter(c -> c.getNickname().equalsIgnoreCase(nickname)).toList().get(0);
     }
 
     private void sendFileContent(Socket socket, String fileName) {
@@ -459,13 +531,45 @@ public class Server {
         }
     }
 
+    private User getUserByNickname(String nickname) {
+        return userSocketMap.keySet().stream().filter(u -> u.getNickname().equalsIgnoreCase(nickname)).toList().get(0);
+    }
+
     private void send(PrintStream out, String msg) {
-        out.print(msg+"\r\n");
+        out.print(msg + "\r\n");
+    }
+
+    private String getNickname(Socket socket) throws ArrayIndexOutOfBoundsException {
+        Scanner input = null;
+        try {
+            input = new Scanner(socket.getInputStream());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        String line = input.nextLine();
+        System.out.println(line);
+        String[] commandParts = Utils.splitCommandLine(line);
+        return commandParts[1];
+    }
+
+    private String getNickname(String command) throws RegisterSyntaxException {
+        String[] commandParts = Utils.splitCommandLine(command);
+        if (commandParts[0].equalsIgnoreCase(Commands.REGISTER.name())) {
+            return commandParts[1];
+        } else {
+            throw new RegisterSyntaxException(command);
+        }
+    }
+
+    private String getNicknameFromUICommand(String command) {
+        String[] commandParts = Utils.splitCommandLine(command);
+        return commandParts[1];
     }
 
     private void createIA() {
-        chatbots.add(Commands.IA.name().toLowerCase());
+        chatbots.add(new User(Commands.IA.name().toLowerCase(), ClientType.CHATBOT));
     }
+
     private void closeSocket(Socket socket) {
         try {
             socket.close();

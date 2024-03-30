@@ -72,7 +72,7 @@ public class ChatApp extends Application {
     }
 
     private void setCloseWindow(Stage stage) {
-        stage.setOnCloseRequest(event -> mediator.getChatController().onApplicationClose());
+        stage.setOnCloseRequest(event -> mediator.onApplicationClose(stage));
     }
 
     public Mediator getMediator() {

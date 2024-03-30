@@ -24,7 +24,8 @@ public class LoginController extends Controller {
         User user = new User();
         mediator.setUser(user);
         try {
-            mediator.getUser().connect();
+            user.connect();
+            user.sendUserType();
             return true;
         } catch (IOException e) {
             WarningWindow.instanceWarningWindow("ServidorCaido");
@@ -45,14 +46,14 @@ public class LoginController extends Controller {
     }
 
     public void ingresar() {
-        if (mediator.getLoginController().initUser()) {
-            // entra solo si pudo conectar con el servidor
-            if (!usernameField.getText().isBlank()) {
-                String nickname = usernameField.getText().replace(" ", "").toLowerCase();
-                if (invalidName(nickname)) {
-                    WarningWindow.instanceWarningWindow("ForbiddenSymbols");
-                    return;
-                }
+        if (!usernameField.getText().isBlank()) {
+            String nickname = usernameField.getText().replace(" ", "").toLowerCase();
+            if (invalidName(nickname)) {
+                WarningWindow.instanceWarningWindow("ForbiddenSymbols");
+                return;
+            }
+            if (mediator.getLoginController().initUser()) {
+                // entra si pudo conectar con el servidor
                 mediator.getUser().setNickname(nickname);
                 mediator.ingresar();
                 ThreadUtils.sleep(400);
@@ -62,10 +63,9 @@ public class LoginController extends Controller {
                 } else {
                     WarningWindow.instanceWarningWindow("UserExists");
                 }
-
-            } else {
-                WarningWindow.instanceWarningWindow("EmptyField");
             }
+        } else {
+            WarningWindow.instanceWarningWindow("EmptyField");
         }
     }
 

@@ -4,18 +4,18 @@ import java.util.*;
 
 public class Channel {
     private final String name;
-    private final Set<String> users;
+    private final Set<User> users;
 
     public Channel(String name) {
         this.name = name;
         this.users = new HashSet<>();
     }
 
-    public void addUser(String user) {
+    public void addUser(User user) {
         users.add(user);
     }
 
-    public Set<String> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 

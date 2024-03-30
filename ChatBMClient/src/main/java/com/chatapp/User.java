@@ -21,7 +21,6 @@ public class User extends Client {
     private ChatDAO chatDAO;
     private final String CHATS_FOLDER_NAME = "chats_messages";
     private boolean registered = false;
-    private boolean firstTime = true;
 
     public User(String nickname, String hostname, int port) {
         super(hostname, port);
@@ -56,9 +55,12 @@ public class User extends Client {
             setRegistered(true);
             this.start();
         } else {
-            firstTime = false;
             setRegistered(false);
         }
+    }
+
+    public void sendUserType() {
+        sendMessage("UI_CLIENT");
     }
 
     private boolean successfulRegister() {
@@ -68,17 +70,7 @@ public class User extends Client {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        String msg;
-        if (!firstTime) {
-            msg = in.nextLine();
-        } else {
-            for (int i = 0; i < 3; i++) {
-                String thrash = in.nextLine();
-            }
-            msg = in.nextLine();
-        }
-        return mediator.isActionApproved(msg);
-
+        return mediator.isActionApproved(in.nextLine());
     }
 
     public void addMessage(String chatroomName, Message message) {
