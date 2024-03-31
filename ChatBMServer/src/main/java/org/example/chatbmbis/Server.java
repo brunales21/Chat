@@ -368,7 +368,7 @@ public class Server {
         try {
             channel = getChannelByName(channelName);
         } catch (ChatNotFoundException e) {
-            sendErrorMsg(sender, "El canal " + channelName + " no existe. Consulta el comando " + Commands.LU + ".");
+            sendErrorMsg(sender, "El canal " + channelName + " no existe. Consulta el comando " + Commands.LC + ".");
             return;
         }
         if (isMemberOfChannel(channel, sender)) {
@@ -383,7 +383,7 @@ public class Server {
                         }
                     });
         } else {
-            sendErrorMsg(sender, "Para enviar un mensaje a " + channel + ", primero debes unirte.");
+            sendErrorMsg(sender, "Para enviar un mensaje a " + channel + " primero debes unirte.");
         }
 
     }
