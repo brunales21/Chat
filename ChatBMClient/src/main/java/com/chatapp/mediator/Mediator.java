@@ -159,7 +159,7 @@ public class Mediator {
                 chatController.addMessageToListView(messageObj);
             } else {
                 // si no, mostramos notificacion
-                chatController.getItemContactsMap().get(messageParts[1]).showNotificationImg(true);
+                chatController.getContactsMap().get(messageParts[1]).showNotificationImg(true);
             }
 
         }
@@ -176,7 +176,6 @@ public class Mediator {
     private boolean actionRefused(String message) {
         return message.equals(Commands.ERROR.name());
     }
-
 
     public User getUser() {
         return user;

@@ -11,6 +11,7 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.concurrent.RecursiveTask;
 
 public class Server {
 
@@ -18,8 +19,10 @@ public class Server {
     private final Set<PrivateChat> privateChats;
     private final Set<Channel> channels;
     private final Map<User, PrintStream> userOutMap;
+    //online users
     private final Map<Socket, User> socketUserMap;
     private final Map<User, Socket> userSocketMap;
+    // all users
     private final Set<User> historyUsers;
     private final Set<User> chatbots;
     private final String MSGS_FOLDER_NAME = "messages";
@@ -82,6 +85,7 @@ public class Server {
     }
 
     private void registerCLI(User user, Socket socket) throws NicknameInUseException {
+        socketUserMap.put(socket, user);
         try {
             if (userOutMap.containsKey(user)) {
                 throw new NicknameInUseException(user.getNickname());
@@ -90,7 +94,6 @@ public class Server {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        socketUserMap.put(socket, user);
         userSocketMap.put(user, socket);
         historyUsers.add(user);
     }
@@ -138,10 +141,13 @@ public class Server {
             do {
                 sendFileContent(socket, "instructions.txt");
                 try {
-                    user = new User(getNickname(BackspaceRemover.removeBackspaces(in.nextLine())), ClientType.CLI_CLIENT);
-                    registerCLI(user, socket);
-                    sendMessage(socket, "Listo para chatear. Puede usar el comando HELP como ayuda.");
-                    break;
+                    String [] commandParts = Utils.splitCommandLine(BackspaceRemover.removeBackspaces(in.nextLine()));
+                    if (successfulRegister(commandParts)) {
+                        user = new User(commandParts[1], ClientType.CLI_CLIENT);
+                        registerCLI(user, socket);
+                        sendMessage(socket, "Listo para chatear. Puede usar el comando HELP como ayuda.");
+                        break;
+                    }
                 } catch (RegisterException e) {
                     sendErrorMsg(socket, e.getMessage());
                 }
@@ -166,10 +172,14 @@ public class Server {
     private void processCommand(Socket senderSocket, String command) {
         System.out.println("Header que recibe servidor: " + command);
         String[] commandParts = Utils.splitCommandLine(command);
+        // estudiar si mover este bloque al handler de cli, ya que desde ui los comandos son los de siempre (de momento)
+        if (!isCorrectSyntax(commandParts)) {
+            sendErrorMsg(senderSocket, new SyntaxException(command).getMessage());
+        }
         User user = socketUserMap.get(senderSocket);
         String commandName = commandParts[0].toUpperCase();
         String arg = "";
-        if (commandParts.length > 1) {
+        if (commandParts.length >= 2) {
             arg = commandParts[1].toLowerCase();
         }
         switch (commandName) {
@@ -244,6 +254,7 @@ public class Server {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+                // pasa a estar offline
                 socketUserMap.remove(senderSocket);
                 userOutMap.remove(user);
                 break;
@@ -253,6 +264,42 @@ public class Server {
         }
 
     }
+
+    private boolean isCorrectSyntax(String[] commandParts) {
+        switch (commandParts[0].toUpperCase()) {
+            case "PRIVMSG":
+                return commandParts.length == 3 || commandParts.length == 4;
+            case "JOIN":
+            case "CREATE":
+            case "PART":
+            case "DELETE":
+                return commandParts.length == 2;
+            case "LU":
+            case "LC":
+            case "EXIT":
+                return commandParts.length == 1;
+            default:
+                return false;
+        }
+    }
+
+    private boolean successfulRegister(String[] commandParts) throws InvalidNicknameException {
+        switch (commandParts[0].toUpperCase()) {
+            case "REGISTER":
+                if (!invalidName(commandParts[1])) {
+                    return commandParts.length == 2;
+                } else {
+                    throw new InvalidNicknameException();
+                }
+            default:
+                return false;
+        }
+    }
+
+    private boolean invalidName(String nickname) {
+        return nickname.contains("/") || nickname.contains("\\") || nickname.contains("<") || nickname.contains(">");
+    }
+
 
     private void sendOk(User user) {
         sendMessage(user, Commands.OK.toString().toLowerCase());
@@ -267,7 +314,7 @@ public class Server {
     }
 
     private boolean existsUser(String nickname) {
-        return historyUsers.contains(getUserByNickname(nickname)) || chatbots.contains(getChatBotByName(nickname));
+        return getUserByNickname(nickname) != null || getChatBotByName(nickname) != null;
     }
 
     private void part(User sender, String channel) throws ChatNotFoundException {
@@ -286,12 +333,12 @@ public class Server {
         try {
             return privateChats.stream().filter(c -> c.getUser1().equals(user1.getNickname()) && c.getUser2().equals(user2)).toList().get(0);
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new UserNotExistsException(user2);
+            throw new UserNotExistsException();
         }
     }
 
     private void sendErrorMsg(User user, String errorMessage) {
-        send(userOutMap.get(user), Commands.ERROR + ":" + errorMessage);
+        send(userOutMap.get(user), Commands.ERROR + ": " + errorMessage);
     }
 
     private User getClientByName(String nickname) {
@@ -310,7 +357,7 @@ public class Server {
             send(out, Commands.ERROR + ":" + errorMessage);
         } else {
             // hacer que el user cli reciba un mensaje intuitivo
-            send(out, Commands.ERROR + ":" + errorMessage);
+            send(out, Commands.ERROR + ": " + errorMessage);
         }
     }
 
@@ -367,7 +414,7 @@ public class Server {
         } else if (getOfflineUsers().contains(receptor)) {
             persistMsg(sender, receptor.getNickname(), text, null);
         } else {
-            throw new UserNotExistsException(receptor.getNickname());
+            throw new UserNotExistsException();
         }
     }
 
@@ -387,10 +434,9 @@ public class Server {
 
     private void createPrivChat(String user1, String user2) throws UserNotExistsException {
         if (existsUser(user2)) {
-            PrivateChat privateChat = new PrivateChat(user1, user2);
-            privateChats.add(privateChat);
+            privateChats.add(new PrivateChat(user1, user2));
         } else {
-            throw new UserNotExistsException(user2);
+            throw new UserNotExistsException();
         }
     }
 
@@ -511,7 +557,11 @@ public class Server {
     }
 
     private User getChatBotByName(String nickname) {
-        return chatbots.stream().filter(c -> c.getNickname().equalsIgnoreCase(nickname)).toList().get(0);
+        try {
+            return chatbots.stream().filter(c -> c.getNickname().equalsIgnoreCase(nickname)).toList().get(0);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
     private void sendFileContent(Socket socket, String fileName) {
@@ -525,14 +575,18 @@ public class Server {
                 sendMessage(socket, line);
             }
 
-            in.close(); // Cierra el BufferedReader cuando termines de leer.
+            in.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     private User getUserByNickname(String nickname) {
-        return userSocketMap.keySet().stream().filter(u -> u.getNickname().equalsIgnoreCase(nickname)).toList().get(0);
+        try {
+            return historyUsers.stream().filter(u -> u.getNickname().equalsIgnoreCase(nickname)).toList().get(0);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
     private void send(PrintStream out, String msg) {
@@ -554,11 +608,7 @@ public class Server {
 
     private String getNickname(String command) throws RegisterSyntaxException {
         String[] commandParts = Utils.splitCommandLine(command);
-        if (commandParts[0].equalsIgnoreCase(Commands.REGISTER.name())) {
-            return commandParts[1];
-        } else {
-            throw new RegisterSyntaxException(command);
-        }
+        return commandParts[1];
     }
 
     private String getNicknameFromUICommand(String command) {

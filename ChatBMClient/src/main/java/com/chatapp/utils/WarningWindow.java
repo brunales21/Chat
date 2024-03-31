@@ -10,7 +10,7 @@ public class WarningWindow {
     private static ResourceBundle bundle = ResourceBundle.getBundle("bundle.messages", Locale.getDefault());
 
     public static void instanceWarningWindow(String message) {
-        String messageTransaleted = bundle.getString(message);
+        String messageTransaleted = bundle.getString(message.replaceAll(" ", ""));
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("");

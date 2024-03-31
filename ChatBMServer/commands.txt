@@ -8,20 +8,20 @@
             JOIN #2dam
 
         **comandos de mensaje de texto
-            PRIVMSG #2dam :hola que tal grupo
-            PRIVMSG pepe :hola pepe
+            PRIVMSG #2dam:hola que tal grupo
+            PRIVMSG pepe:hola pepe
 
         **comando para hacer login
             REGISTER pepe
 
         **comando para listar contactos
-            LIST USERS
+            LU
 
         **comando para listar canales
-            LIST CHANNELS
+            LC
 
     Comando enviado por servidor hacia receptor
         en canal:
-            #2dam monica :hola que tal grupo
+            #2dam monica:hola que tal grupo
         en privado:
-            monica :hola pepe
+            monica:hola pepe

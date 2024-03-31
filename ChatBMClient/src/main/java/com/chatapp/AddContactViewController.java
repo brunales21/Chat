@@ -38,12 +38,12 @@ public class AddContactViewController extends Controller {
     private void onClickButtonLeft() {
         String name = nicknameTextField.getText().toLowerCase();
         if (!name.isEmpty()) {
-            StringBuilder channelName = new StringBuilder("#").append(name);
-            if (mediator.getUser().containsContact(String.valueOf(channelName))) {
-                WarningWindow.instanceWarningWindow("ChatRepeatedException");
-                return;
-            }
             if (isCreateChannelBtn()) {
+                StringBuilder channelName = new StringBuilder("#").append(name);
+                if (mediator.getUser().containsContact(channelName.toString())) {
+                    WarningWindow.instanceWarningWindow("ChatRepeatedException");
+                    return;
+                }
                 mediator.sendMessage(Commands.CREATE.name() + " " + channelName);
                 ThreadUtils.sleep(100);
                 if (mediator.successfulAction()) {

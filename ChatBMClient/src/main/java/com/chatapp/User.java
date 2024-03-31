@@ -172,6 +172,7 @@ public class User extends Client {
 
     public void addContact(String name) {
         contacts.add(name);
+        contacts.forEach(c -> System.out.println(c));
     }
 
     public void removeContact(String nickname) {

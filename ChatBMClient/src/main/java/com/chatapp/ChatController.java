@@ -1,8 +1,6 @@
 package com.chatapp;
 
-import com.chatapp.constants.Commands;
 import com.chatapp.conversation.Message;
-import com.chatapp.dao.FileChatDAO;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -35,7 +33,7 @@ public class ChatController extends Controller {
     private Label receptorChatLabel, userNameLabel;
     @FXML
     private TextField textMessageField;
-    private Map<String, ContactItemController> itemContactsMap = new HashMap<>();
+    private Map<String, ContactItemController> contactsMap = new HashMap<>();
     private Locale locale = Locale.getDefault();
     private ResourceBundle bundle = ResourceBundle.getBundle("bundle.messages", locale);
 
@@ -82,7 +80,7 @@ public class ChatController extends Controller {
 
     public void overlayChat(String nickname) {
         // Obtener el controlador del item utilizando el nickname proporcionado
-        ContactItemController itemContactController = itemContactsMap.get(nickname);
+        ContactItemController itemContactController = contactsMap.get(nickname);
 
         if (itemContactController != null) {
             // Obtener el nodo (vista) correspondiente al controlador
@@ -186,7 +184,7 @@ public class ChatController extends Controller {
 
         itemContactController.setNicknameLabelText(nickname);
 
-        itemContactsMap.put(nickname, itemContactController);
+        contactsMap.put(nickname, itemContactController);
         mediator.getUser().getChatMessagesMap().put(nickname, mediator.getUser().getMessages(nickname));
         mediator.getUser().addContact(nickname);
         itemContactController.setView(parent);
@@ -212,7 +210,7 @@ public class ChatController extends Controller {
                 ContactItemController itemContactController = ((FXMLLoader) child.getUserData()).getController();
                 if (itemContactController.getNicknameLabelText().equals(nickname)) {
                     children.remove(child);
-                    itemContactsMap.remove(nickname);
+                    contactsMap.remove(nickname);
                     mediator.getUser().removeContact(nickname);
                     break;
                 }
@@ -221,7 +219,7 @@ public class ChatController extends Controller {
     }
 
     public boolean hasContact(String nickname) {
-        return itemContactsMap.get(nickname) != null;
+        return contactsMap.get(nickname) != null;
     }
 
 
@@ -281,8 +279,8 @@ public class ChatController extends Controller {
         this.textMessageField = textMessageField;
     }
 
-    public Map<String, ContactItemController> getItemContactsMap() {
-        return itemContactsMap;
+    public Map<String, ContactItemController> getContactsMap() {
+        return contactsMap;
     }
 
     public ListView getMessagesListView() {
