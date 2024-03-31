@@ -141,7 +141,7 @@ public class Server {
             do {
                 sendFileContent(socket, "instructions.txt");
                 try {
-                    String [] commandParts = Utils.splitCommandLine(BackspaceRemover.removeBackspaces(in.nextLine()));
+                    String[] commandParts = Utils.splitCommandLine(BackspaceRemover.removeBackspaces(in.nextLine()));
                     if (successfulRegister(commandParts)) {
                         user = new User(commandParts[1], ClientType.CLI_CLIENT);
                         registerCLI(user, socket);
@@ -259,28 +259,18 @@ public class Server {
                 userOutMap.remove(user);
                 break;
             default:
-                sendErrorMsg(user, "El comando " + commandName + " no existe.");
                 break;
         }
 
     }
 
     private boolean isCorrectSyntax(String[] commandParts) {
-        switch (commandParts[0].toUpperCase()) {
-            case "PRIVMSG":
-                return commandParts.length == 3 || commandParts.length == 4;
-            case "JOIN":
-            case "CREATE":
-            case "PART":
-            case "DELETE":
-                return commandParts.length == 2;
-            case "LU":
-            case "LC":
-            case "EXIT":
-                return commandParts.length == 1;
-            default:
-                return false;
-        }
+        return switch (commandParts[0].toUpperCase()) {
+            case "PRIVMSG" -> commandParts.length == 3 || commandParts.length == 4;
+            case "JOIN", "CREATE", "PART", "DELETE" -> commandParts.length == 2;
+            case "LU", "LC", "EXIT" -> commandParts.length == 1;
+            default -> false;
+        };
     }
 
     private boolean successfulRegister(String[] commandParts) throws InvalidNicknameException {
@@ -378,7 +368,7 @@ public class Server {
         try {
             channel = getChannelByName(channelName);
         } catch (ChatNotFoundException e) {
-            sendErrorMsg(sender, "El canal " + channelName + " no existe. Consulta el comando LU.");
+            sendErrorMsg(sender, "El canal " + channelName + " no existe. Consulta el comando " + Commands.LU + ".");
             return;
         }
         if (isMemberOfChannel(channel, sender)) {
