@@ -115,12 +115,18 @@ public class Server {
             Scanner in = new Scanner(socket.getInputStream());
             User user = new User(ClientType.UI_CLIENT);
             do {
-                user.setNickname(getNicknameFromUICommand(in.nextLine()));
+                String command = in.nextLine();
+                // si el usuario decide irse antes de iniciar sesion
+                if (command.equals(Commands.EXIT.name())) {
+                    socket.close();
+                    return;
+                }
+                user.setNickname(getNicknameFromUICommand(command));
                 try {
                     registerUI(user, socket);
                     break;
                 } catch (NicknameInUseException e) {
-                    sendErrorMsg(socket, e.getMessage());
+                    sendErrorMsg(user, socket, e.getMessage());
                 }
             } while (!socket.isClosed());
             sendOk(socket);
@@ -351,8 +357,30 @@ public class Server {
         }
     }
 
+
+    // En caso de no tener asociado el user al socket
+    private void sendErrorMsg(User user, Socket socket, String errorMessage) {
+        PrintStream out;
+        try {
+            out = new PrintStream(socket.getOutputStream());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        if (isUIClient(user)) {
+            // gestionar envio de codigo de error
+            send(out, Commands.ERROR + ":" + errorMessage);
+        } else {
+            // hacer que el user cli reciba un mensaje intuitivo
+            send(out, Commands.ERROR + ": " + errorMessage);
+        }
+    }
+
     private boolean isUIClient(Socket socket) {
         return socketUserMap.get(socket).getClientType().equals(ClientType.UI_CLIENT);
+    }
+
+    private boolean isUIClient(User user) {
+        return user.getClientType().equals(ClientType.UI_CLIENT);
     }
 
     private Set<User> getUsersInChannel(Channel channel) {

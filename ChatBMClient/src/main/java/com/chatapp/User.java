@@ -40,6 +40,15 @@ public class User extends Client {
         chatDAO = new FileChatDAO();
     }
 
+    public User(String hostname, int port) {
+        super(hostname, port);
+        this.nickname = "";
+        this.contacts = new ArrayList<>();
+        chatMessagesMap = new HashMap<>();
+        mediator = Mediator.getInstance();
+        chatDAO = new FileChatDAO();
+    }
+
     public User(String nickname) {
         this(nickname, DEFAULT_HOSTNAME, DEFAULT_PORT);
     }
@@ -67,10 +76,14 @@ public class User extends Client {
         Scanner in = null;
         try {
             in = new Scanner(getSocket().getInputStream());
+            return mediator.isActionApproved(in.nextLine());
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } catch (NoSuchElementException e) {
+            // En caso de que se caiga el servidor en el inicio de sesion
+            WarningWindow.instanceWarningWindow("ServidorCaido");
+            return false;
         }
-        return mediator.isActionApproved(in.nextLine());
     }
 
     public void addMessage(String chatroomName, Message message) {

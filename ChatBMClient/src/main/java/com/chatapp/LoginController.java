@@ -21,16 +21,18 @@ public class LoginController extends Controller {
     public LoginController() {}
 
     public boolean initUser() {
-        User user = new User();
-        mediator.setUser(user);
-        try {
-            user.connect();
-            user.sendUserType();
-            return true;
-        } catch (IOException e) {
-            WarningWindow.instanceWarningWindow("ServidorCaido");
-            return false;
+        if (mediator.getUser() == null) {
+            User user = new User();
+            mediator.setUser(user);
+            try {
+                user.connect();
+                user.sendUserType();
+                return true;
+            } catch (IOException e) {
+                return false;
+            }
         }
+        return true;
     }
 
     @FXML
@@ -63,6 +65,8 @@ public class LoginController extends Controller {
                 } else {
                     WarningWindow.instanceWarningWindow("UserExists");
                 }
+            } else {
+                WarningWindow.instanceWarningWindow("ServidorCaido");
             }
         } else {
             WarningWindow.instanceWarningWindow("EmptyField");
