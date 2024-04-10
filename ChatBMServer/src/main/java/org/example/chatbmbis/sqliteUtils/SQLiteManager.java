@@ -56,13 +56,13 @@ public class SQLiteManager {
             if (rs.next()) {
                 String storedPassword = rs.getString("contraseña");
                 if (!verifyPassword(contraseña, storedPassword)) {
-                    throw new InvalidCredentialsException("Credenciales incorrectas.");
+                    throw new InvalidCredentialsException();
                 } else {
                     System.out.println("Inicio de sesión exitoso.");
                     return true;
                 }
             } else {
-                throw new InvalidCredentialsException("Credenciales incorrectas."); // No se encontró el usuario
+                throw new InvalidCredentialsException(); // No se encontró el usuario
             }
         } catch (SQLException | NoSuchAlgorithmException e) {
             System.out.println("Error al iniciar sesión: " + e.getMessage());

@@ -31,8 +31,8 @@ public class User {
         this.clientType = clientType;
     }
 
-    public boolean isUIUser() {
-        return clientType.name().equalsIgnoreCase(ClientType.UI_CLIENT.name());
+    public boolean isGUIClient() {
+        return clientType.name().equalsIgnoreCase(ClientType.GUI_CLIENT.name());
     }
 
     public boolean isCLIUser() {

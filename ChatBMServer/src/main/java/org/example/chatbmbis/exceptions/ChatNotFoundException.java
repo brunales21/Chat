@@ -1,16 +1,8 @@
 package org.example.chatbmbis.exceptions;
 
 public class ChatNotFoundException extends ChatException {
-    private String nickname;
     public ChatNotFoundException(String nickname) {
-        super("ChatNotFoundException");
+        super("No existe el chat " + nickname + ".", "ChatNotFoundException");
     }
 
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
 }

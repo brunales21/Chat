@@ -105,10 +105,10 @@ public class Server {
         return in.nextLine();
     }
 
-    private void handleUIClient(Socket socket) {
+    private void handleGUIClient(Socket socket) {
         try {
             Scanner in = new Scanner(socket.getInputStream());
-            User user = new User(ClientType.UI_CLIENT);
+            User user = new User(ClientType.GUI_CLIENT);
             do {
                 String command = in.nextLine();
                 // si el usuario decide irse antes de iniciar sesion
@@ -124,7 +124,7 @@ public class Server {
                     }
                 } catch (InvalidNicknameException | NicknameInUseException | InvalidCredentialsException |
                          SyntaxException | SessionAlreadyOpenException e) {
-                    sendErrorMsg(user, socket, e.getMessage());
+                    sendErrorMessage(socket, e.getGuiMsg());
                 }
             } while (!socket.isClosed());
             sendOk(socket);
@@ -154,7 +154,7 @@ public class Server {
                     }
                 } catch (SyntaxException | InvalidCredentialsException | InvalidNicknameException |
                          NicknameInUseException | SessionAlreadyOpenException e) {
-                    sendErrorMsgCLI(socket, e.getMessage());
+                    sendErrorMessage(socket, e.getCliMsg());
                 }
             } while (true);
             sendSavedMessages(user);
@@ -176,7 +176,7 @@ public class Server {
 
     private void clientHandler(String clientType, Socket socket) {
         if (clientType.equalsIgnoreCase("UI_CLIENT")) {
-            handleUIClient(socket);
+            handleGUIClient(socket);
         } else {
             handleCliClient(socket);
         }
@@ -187,7 +187,7 @@ public class Server {
         String[] commandParts = Utils.splitCommandLine(command);
         // estudiar si mover este bloque al handler de cli, ya que desde ui los comandos son los de siempre (de momento)
         if (!isCorrectSyntax(commandParts)) {
-            sendErrorMsg(senderSocket, new SyntaxException(command).getMessage());
+            sendErrorMsgCLI(senderSocket, new SyntaxException(command).getCliMsg());
         }
         User user = socketUserMap.get(senderSocket);
         String commandName = commandParts[0].toUpperCase();
@@ -205,7 +205,7 @@ public class Server {
                     }
                     sendOk(user);
                 } catch (ChatException e) {
-                    sendErrorMsg(user, e.getMessage());
+                    sendErrorMsgCLI(user, e);
                 }
                 break;
             case "PRIVMSG":
@@ -222,7 +222,7 @@ public class Server {
                         }
                     }
                 } catch (UserNotExistsException e) {
-                    sendErrorMsg(user, e.getMessage());
+                    sendErrorMsgCLI(user, e);
                 }
                 break;
             case "JOIN":
@@ -230,7 +230,7 @@ public class Server {
                     join(user, getChannelByName(arg));
                     sendOk(user);
                 } catch (ChatNotFoundException e) {
-                    sendErrorMsg(user, e.getMessage());
+                    sendErrorMsgCLI(user, e);
                 }
                 break;
             case "DELETE":
@@ -238,7 +238,7 @@ public class Server {
                     deletePrivChat(user, arg);
                     sendOk(user);
                 } catch (UserNotExistsException e) {
-                    sendErrorMsg(user, e.getMessage());
+                    sendErrorMsgCLI(user, e);
                 }
                 break;
 
@@ -246,7 +246,7 @@ public class Server {
                 try {
                     part(user, arg);
                 } catch (ChatNotFoundException e) {
-                    sendErrorMsg(user, e.getMessage());
+                    sendErrorMsgCLI(user, e);
                 }
                 break;
             case "LU":
@@ -342,10 +342,6 @@ public class Server {
         return nickname.contains("/") || nickname.contains("\\") || nickname.contains("<") || nickname.contains(">");
     }
 
-    private boolean passwordsMatch(String p1, String p2) {
-        return p1.equals(p2);
-    }
-
     private void sendOk(User user) {
         sendMessage(user, Commands.OK.toString().toLowerCase());
     }
@@ -378,30 +374,19 @@ public class Server {
         try {
             return privateChats.stream().filter(c -> c.getUser1().equals(user1.getNickname()) && c.getUser2().equals(user2)).toList().get(0);
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new UserNotExistsException();
+            throw new UserNotExistsException(user2);
         }
     }
 
-    private void sendErrorMsg(User user, String errorMessage) {
-        send(userOutMap.get(user), Commands.ERROR + ": " + errorMessage);
-    }
-
-
-    private void sendErrorMsg(Socket socket, String errorMessage) {
-        PrintStream out;
-        try {
-            out = new PrintStream(socket.getOutputStream());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        if (isUIClient(socket)) {
-            // gestionar envio de codigo de error
-            send(out, Commands.ERROR + ":" + errorMessage);
+    private void sendErrorMsgCLI(User user, ChatException chatExc) {
+        if (user.isCLIUser()) {
+            send(userOutMap.get(user), Commands.ERROR + ": " + chatExc.getCliMsg());
         } else {
-            // hacer que el user cli reciba un mensaje intuitivo
-            send(out, Commands.ERROR + ":" + errorMessage);
+            send(userOutMap.get(user), Commands.ERROR + ": " + chatExc.getGuiMsg());
+
         }
     }
+
 
     private void sendErrorMsgCLI(Socket socket, String errorMessage) {
         PrintStream out;
@@ -413,36 +398,31 @@ public class Server {
         send(out, Commands.ERROR + ":" + errorMessage);
     }
 
+    private void sendErrorMsgCLI(User user, String errorMessage) {
+        sendErrorMsgCLI(userSocketMap.get(user), errorMessage);
+    }
 
-    // En caso de no tener asociado el user al socket
-    private void sendErrorMsg(User user, Socket socket, String errorMessage) {
+    private void sendErrorMessage(Socket socket, String errorMessage) {
         PrintStream out;
         try {
             out = new PrintStream(socket.getOutputStream());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        if (isUIClient(user)) {
-            // gestionar envio de codigo de error
-            send(out, Commands.ERROR + ":" + errorMessage);
-        } else {
-            // hacer que el user cli reciba un mensaje intuitivo
-            send(out, Commands.ERROR + ": " + errorMessage);
-        }
+        send(out, Commands.ERROR + ": " + errorMessage);
     }
 
-    private boolean isUIClient(Socket socket) {
-        return socketUserMap.get(socket).getClientType().equals(ClientType.UI_CLIENT);
+    private boolean isGUIClient(Socket socket) {
+        return socketUserMap.get(socket).getClientType().equals(ClientType.GUI_CLIENT);
     }
 
-    private boolean isUIClient(String nickname) {
-        return Objects.requireNonNull(getUserByNickname(nickname)).getClientType().equals(ClientType.UI_CLIENT);
+    private boolean isGUIClient(String nickname) {
+        return Objects.requireNonNull(getUserByNickname(nickname)).getClientType().equals(ClientType.GUI_CLIENT);
     }
 
 
-
-    private boolean isUIClient(User user) {
-        return user.getClientType().equals(ClientType.UI_CLIENT);
+    private boolean isGUIClient(User user) {
+        return user.getClientType().equals(ClientType.GUI_CLIENT);
     }
 
     private Set<User> getUsersInChannel(Channel channel) {
@@ -458,7 +438,7 @@ public class Server {
         try {
             channel = getChannelByName(channelName);
         } catch (ChatNotFoundException e) {
-            sendErrorMsg(sender, "El canal " + channelName + " no existe. Consulta el comando " + Commands.LC + ".");
+            sendErrorMsgCLI(sender, e);
             return;
         }
         if (isMemberOfChannel(channel, sender)) {
@@ -473,7 +453,7 @@ public class Server {
                         }
                     });
         } else {
-            sendErrorMsg(sender, "Para enviar un mensaje a " + channel + " primero debes unirte.");
+            sendErrorMsgCLI(sender, "Para enviar un mensaje a " + channel + " primero debes unirte.");
         }
 
     }
@@ -484,7 +464,7 @@ public class Server {
             //MESSAGE #2dam bruno :hola
             send(userOutMap.get(receptor), Commands.MESSAGE + " " + channel.getName() + " " + sender + ":" + text);
         } catch (NullPointerException e) {
-            throw new UserNotConnectedException(receptor.getNickname());
+            throw new UserNotConnectedException();
         }
     }
 
@@ -494,7 +474,7 @@ public class Server {
         } else if (getOfflineUsers().contains(receptor)) {
             persistMsg(sender, receptor.getNickname(), text, null);
         } else {
-            throw new UserNotExistsException();
+            throw new UserNotExistsException(receptor.getNickname());
         }
     }
 
@@ -516,7 +496,7 @@ public class Server {
         if (existsUser(user2)) {
             privateChats.add(new PrivateChat(user1, user2));
         } else {
-            throw new UserNotExistsException();
+            throw new UserNotExistsException(user2);
         }
     }
 

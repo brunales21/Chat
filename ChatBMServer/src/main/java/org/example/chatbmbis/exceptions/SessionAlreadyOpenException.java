@@ -1,7 +1,7 @@
 package org.example.chatbmbis.exceptions;
 
-public class SessionAlreadyOpenException extends Exception {
+public class SessionAlreadyOpenException extends ChatException {
     public SessionAlreadyOpenException(String nickname) {
-        super("Ya hay una sesion abierta para el usuario " + nickname + ".");
+        super("Ya hay una sesion abierta para el usuario " + nickname + ".", "SessionAlreadyOpenException");
     }
 }
