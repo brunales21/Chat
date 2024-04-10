@@ -4,17 +4,19 @@ import org.example.chatbmbis.IAs.AIConnector;
 import org.example.chatbmbis.Utils.Utils;
 import org.example.chatbmbis.constants.Commands;
 import org.example.chatbmbis.exceptions.*;
+import org.example.chatbmbis.sqliteUtils.SQLiteManager;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.SQLException;
 import java.util.*;
-import java.util.concurrent.RecursiveTask;
 
 public class Server {
 
+    private final SQLiteManager sqLiteManager;
     private final int port;
     private final Set<PrivateChat> privateChats;
     private final Set<Channel> channels;
@@ -28,6 +30,7 @@ public class Server {
     private final String MSGS_FOLDER_NAME = "messages";
 
     public Server(int port) {
+        this.sqLiteManager = new SQLiteManager();
         this.port = port;
         channels = new HashSet<>();
         privateChats = new HashSet<>();
@@ -53,7 +56,6 @@ public class Server {
             serverSocket = new ServerSocket(port);
             System.out.println("El servidor se ha iniciado correctamente.");
             System.out.println("Está escuchando en el puerto " + port + ".");
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -69,33 +71,27 @@ public class Server {
         }
     }
 
-    private void registerUI(User user, Socket socket) throws NicknameInUseException {
-        if (userOutMap.containsKey(user)) {
-            throw new NicknameInUseException(user.getNickname());
-        }
-        try {
-            userOutMap.put(user, new PrintStream(socket.getOutputStream()));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    private void registerUI(User user, Socket socket) {
         historyUsers.add(user);
         socketUserMap.put(socket, user);
         userSocketMap.put(user, socket);
         sendOk(socket);
-    }
-
-    private void registerCLI(User user, Socket socket) throws NicknameInUseException {
-        socketUserMap.put(socket, user);
         try {
-            if (userOutMap.containsKey(user)) {
-                throw new NicknameInUseException(user.getNickname());
-            }
             userOutMap.put(user, new PrintStream(socket.getOutputStream()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void registerCLI(User user, Socket socket) {
+        socketUserMap.put(socket, user);
         userSocketMap.put(user, socket);
         historyUsers.add(user);
+        try {
+            userOutMap.put(user, new PrintStream(socket.getOutputStream()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -107,7 +103,6 @@ public class Server {
             throw new RuntimeException(e);
         }
         return in.nextLine();
-
     }
 
     private void handleUIClient(Socket socket) {
@@ -121,11 +116,14 @@ public class Server {
                     socket.close();
                     return;
                 }
-                user.setNickname(getNicknameFromUICommand(command));
                 try {
-                    registerUI(user, socket);
-                    break;
-                } catch (NicknameInUseException e) {
+                    if (successfulAccessCLI(Utils.splitCommandLine(command))) {
+                        user.setNickname(getNicknameFromUICommand(command));
+                        registerUI(user, socket);
+                        break;
+                    }
+                } catch (InvalidNicknameException | NicknameInUseException | InvalidCredentialsException |
+                         SyntaxException | SessionAlreadyOpenException e) {
                     sendErrorMsg(user, socket, e.getMessage());
                 }
             } while (!socket.isClosed());
@@ -148,14 +146,15 @@ public class Server {
                 sendFileContent(socket, "instructions.txt");
                 try {
                     String[] commandParts = Utils.splitCommandLine(BackspaceRemover.removeBackspaces(in.nextLine()));
-                    if (successfulRegister(commandParts)) {
+                    if (successfulAccessCLI(commandParts)) {
                         user = new User(commandParts[1], ClientType.CLI_CLIENT);
                         registerCLI(user, socket);
                         sendMessage(socket, "Listo para chatear. Puede usar el comando HELP como ayuda.");
                         break;
                     }
-                } catch (RegisterException e) {
-                    sendErrorMsg(socket, e.getMessage());
+                } catch (SyntaxException | InvalidCredentialsException | InvalidNicknameException |
+                         NicknameInUseException | SessionAlreadyOpenException e) {
+                    sendErrorMsgCLI(socket, e.getMessage());
                 }
             } while (true);
             sendSavedMessages(user);
@@ -165,6 +164,14 @@ public class Server {
         } catch (IOException | NoSuchElementException ignore) {
 
         }
+    }
+
+    private void signUp() {
+
+    }
+
+    private void logIn() {
+
     }
 
     private void clientHandler(String clientType, Socket socket) {
@@ -279,23 +286,65 @@ public class Server {
         };
     }
 
-    private boolean successfulRegister(String[] commandParts) throws InvalidNicknameException {
-        switch (commandParts[0].toUpperCase()) {
-            case "REGISTER":
-                if (!invalidName(commandParts[1])) {
-                    return commandParts.length == 2;
+    private boolean successfulAccessCLI(String[] commandParts) throws InvalidNicknameException, SyntaxException, NicknameInUseException, InvalidCredentialsException, SessionAlreadyOpenException {
+        if (matchesSyntax(commandParts)) {
+            String nickname = commandParts[1];
+            String password = commandParts[2];
+            if (!invalidNickname(nickname)) {
+                if (!getOnlineUsers().contains(getUserByNickname(nickname))) {
+                    switch (commandParts[0].toUpperCase()) {
+                        case "LOGIN":
+                            return sqLiteManager.login(nickname, password);
+                        case "SIGNUP":
+                            if (!historyUsers.contains(getUserByNickname(nickname))) {
+                                return sqLiteManager.registerUser(nickname, password);
+                            }
+                        default:
+                            return false;
+                    }
                 } else {
-                    throw new InvalidNicknameException();
+                    throw new SessionAlreadyOpenException(nickname);
                 }
-            default:
-                return false;
+            } else {
+                throw new InvalidNicknameException();
+            }
+        } else {
+            throw new SyntaxException("");
         }
     }
 
-    private boolean invalidName(String nickname) {
+    private boolean successfulAccessGUI(String[] commandParts) throws NicknameInUseException, InvalidCredentialsException, SessionAlreadyOpenException {
+        String nickname = commandParts[1];
+        String password = commandParts[2];
+        if (!getOnlineUsers().contains(getUserByNickname(nickname))) {
+            switch (commandParts[0].toUpperCase()) {
+                case "LOGIN":
+                    return sqLiteManager.login(nickname, password);
+                case "SIGNUP":
+                    if (!historyUsers.contains(getUserByNickname(nickname))) {
+                        return sqLiteManager.registerUser(nickname, password);
+                    }
+                default:
+                    return false;
+            }
+        } else {
+            throw new SessionAlreadyOpenException(nickname);
+        }
+
+    }
+
+    private boolean matchesSyntax(String[] arr) {
+        // si el len coincide, significa que la sintaxis es correcta
+        return arr.length == 4 || arr.length == 3;
+    }
+
+    private boolean invalidNickname(String nickname) {
         return nickname.contains("/") || nickname.contains("\\") || nickname.contains("<") || nickname.contains(">");
     }
 
+    private boolean passwordsMatch(String p1, String p2) {
+        return p1.equals(p2);
+    }
 
     private void sendOk(User user) {
         sendMessage(user, Commands.OK.toString().toLowerCase());
@@ -337,9 +386,6 @@ public class Server {
         send(userOutMap.get(user), Commands.ERROR + ": " + errorMessage);
     }
 
-    private User getClientByName(String nickname) {
-        return socketUserMap.values().stream().filter(c -> c.getNickname().equalsIgnoreCase(nickname)).toList().get(0);
-    }
 
     private void sendErrorMsg(Socket socket, String errorMessage) {
         PrintStream out;
@@ -353,8 +399,18 @@ public class Server {
             send(out, Commands.ERROR + ":" + errorMessage);
         } else {
             // hacer que el user cli reciba un mensaje intuitivo
-            send(out, Commands.ERROR + ": " + errorMessage);
+            send(out, Commands.ERROR + ":" + errorMessage);
         }
+    }
+
+    private void sendErrorMsgCLI(Socket socket, String errorMessage) {
+        PrintStream out;
+        try {
+            out = new PrintStream(socket.getOutputStream());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        send(out, Commands.ERROR + ":" + errorMessage);
     }
 
 
@@ -378,6 +434,12 @@ public class Server {
     private boolean isUIClient(Socket socket) {
         return socketUserMap.get(socket).getClientType().equals(ClientType.UI_CLIENT);
     }
+
+    private boolean isUIClient(String nickname) {
+        return Objects.requireNonNull(getUserByNickname(nickname)).getClientType().equals(ClientType.UI_CLIENT);
+    }
+
+
 
     private boolean isUIClient(User user) {
         return user.getClientType().equals(ClientType.UI_CLIENT);
@@ -652,6 +714,11 @@ public class Server {
             server = new Server(args[0]);
         } else {
             server = new Server();
+        }
+        try {
+            server.sqLiteManager.truncateTable("usuario");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         server.start();
     }

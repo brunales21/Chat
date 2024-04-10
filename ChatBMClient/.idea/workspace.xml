@@ -9,7 +9,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46d45c23-4adf-40e0-a91c-a5d6e7259c3c" name="Changes" comment="" />
+    <list default="true" id="46d45c23-4adf-40e0-a91c-a5d6e7259c3c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/exceptions/InvalidCredentialsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/sqliteUtils/PasswordManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/sqliteUtils/SQLiteManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ChatBMClient.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ChatBMClient.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/resources/help.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/resources/help.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/resources/instructions.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/resources/instructions.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/resources/welcome.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/resources/welcome.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/example/chatbmbis/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/example/chatbmbis/Server.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,40 +78,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.ChatApp.executor": "Run",
-    "Application.Main (1).executor": "Run",
-    "Application.Main (2).executor": "Run",
-    "Application.Main (3).executor": "Run",
-    "Application.Main (4).executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.Unnamed.executor": "Run",
-    "Application.Utils.executor": "Run",
-    "Maven.ChatApp [clean].executor": "Run",
-    "Maven.ChatApp [install].executor": "Run",
-    "Maven.ChatApp [package].executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "jdk.selected.JAVA_MODULE": "openjdk-21",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/aspa56/Workspace/IdeaProjects/Chat/ChatBMClient",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.27931035",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.ChatApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main (1).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main (2).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main (3).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main (4).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Utils.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ChatApp [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ChatApp [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ChatApp [package].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Aspa56/workspace/IdeaProjects/Chat/ChatBMClient&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.27931035&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="org.example.chatbmbis" />
@@ -212,7 +228,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-22-openjdk-22-4caba194b151-6fbd92ee" />
+        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
       </set>
     </attachedChunks>
   </component>
@@ -274,6 +291,9 @@
       <workItem from="1711740609204" duration="12972000" />
       <workItem from="1711897500580" duration="8077000" />
       <workItem from="1712235120179" duration="8168000" />
+      <workItem from="1712673429737" duration="591000" />
+      <workItem from="1712756287756" duration="598000" />
+      <workItem from="1712762060371" duration="639000" />
     </task>
     <servers />
   </component>
