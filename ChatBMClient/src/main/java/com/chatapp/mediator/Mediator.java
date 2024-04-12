@@ -35,7 +35,7 @@ public class Mediator {
 
     public boolean initUser() {
         if (user == null) {
-            User user = new User();
+            User user = new User("localhost", 8080);
             setUser(user);
             try {
                 user.connect();

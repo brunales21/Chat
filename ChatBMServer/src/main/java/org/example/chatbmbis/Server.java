@@ -100,6 +100,8 @@ public class Server {
             User user = new User(ClientType.GUI_CLIENT);
             do {
                 String command = in.nextLine();
+                //System.out.println("Comando de acceso que recibe servidor: ");
+                //System.out.println(command);
                 // si el usuario decide irse antes de iniciar sesion
                 if (command.equals(Commands.EXIT.name())) {
                     socket.close();
@@ -109,12 +111,13 @@ public class Server {
                     if (successfulAccess(Utils.splitCommandLine(command))) {
                         user.setNickname(getNicknameFromUICommand(command));
                         register(user, socket);
-                        sendOk(socket);
                         break;
                     }
                 } catch (InvalidNicknameException | NicknameInUseException | InvalidCredentialsException
                          | SessionAlreadyOpenException | SyntaxException e) {
-                    sendErrorMessage(socket, e.getGuiMsg());
+                    if (!(e instanceof SyntaxException)) {
+                        sendErrorMessage(socket, e.getGuiMsg());
+                    }
                 }
             } while (!socket.isClosed());
             sendOk(socket);
@@ -156,7 +159,7 @@ public class Server {
         }
     }
     private void clientHandler(String clientType, Socket socket) {
-        if (clientType.equalsIgnoreCase("UI_CLIENT")) {
+        if (clientType.equalsIgnoreCase("GUI_CLIENT")) {
             handleGUIClient(socket);
         } else {
             handleCliClient(socket);
@@ -166,7 +169,6 @@ public class Server {
     private void processCommand(Socket senderSocket, String command) {
         System.out.println("Header que recibe servidor: " + command);
         String[] commandParts = Utils.splitCommandLine(command);
-        // estudiar si mover este bloque al handler de cli, ya que desde ui los comandos son los de siempre (de momento)
         if (!isCorrectSyntax(commandParts)) {
             sendErrorMsgCLI(senderSocket, new SyntaxException(command).getCliMsg());
         }
@@ -276,9 +278,8 @@ public class Server {
                 switch (commandParts[0].toUpperCase()) {
                     case "LOGIN":
                         if (isOnline(nickname)) {
-                            throw new SessionAlreadyOpenException(nickname);
                         }
-                        return sqLiteManager.login(nickname, password);
+                        return sqLiteManager.login(nickname, password, isOnline(nickname));
                     case "SIGNUP":
                         if (repeatedNickname) {
                             throw new NicknameInUseException(nickname);

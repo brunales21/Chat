@@ -10,6 +10,7 @@ import com.chatapp.dao.FileChatDAO;
 import com.chatapp.utils.Utils;
 
 import java.io.*;
+import java.lang.constant.Constable;
 import java.nio.file.Path;
 import java.util.*;
 
@@ -58,7 +59,7 @@ public class User extends Client {
     }
 
     public void sendSignupCommand() {
-        sendMessage(Commands.SIGNUP.name() + " " + nickname + " " + mediator.getLoginController().getPasswordField().getText());
+        sendMessage(Commands.SIGNUP.name() + " " + nickname + " " + mediator.getSignupController().getPasswordField().getText());
     }
 
 
@@ -83,7 +84,7 @@ public class User extends Client {
     }
 
     public void sendUserType() {
-        sendMessage("UI_CLIENT");
+        sendMessage("GUI_CLIENT");
     }
 
     private boolean successfulAuthentication() {
@@ -92,8 +93,12 @@ public class User extends Client {
             in = new Scanner(getSocket().getInputStream());
             String serverResponse = in.nextLine();
             String [] serverResponseParts = serverResponse.split(" ");
+            //System.out.println("Server Response: ");
+            //Arrays.stream(serverResponseParts).forEach(a -> System.out.print(a+"-"));
             if (serverResponseParts.length > 1) {
                 setServerResponse(serverResponseParts[1]);
+            } else {
+                setServerResponse(serverResponseParts[0]);
             }
             return mediator.isActionApproved(serverResponse);
         } catch (IOException e) {

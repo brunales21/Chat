@@ -10,46 +10,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46d45c23-4adf-40e0-a91c-a5d6e7259c3c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/SignupController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/chatapp/signupView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/ChatApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/ChatApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/constants/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/constants/Commands.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/mediator/Mediator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/mediator/Mediator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/bundle/messages_es_ES.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bundle/messages_es_ES.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/chatapp/loginView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/chatapp/loginView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/ChatClient.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/ChatClient.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bundle/messages_es_ES.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bundle/messages_es_ES.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/AddContactViewController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/AddContactViewController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/ChatApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/ChatApp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/Client.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/LoginController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/ChatController$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/ChatController$1$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/ChatController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/ChatController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/ChatController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/ChatController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/ContactItemController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/ContactItemController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/User.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/constants/Commands.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/constants/Commands.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/loginView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/loginView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/conversation/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/conversation/Message.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/mediator/Mediator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/mediator/Mediator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/original-ChatClient.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-ChatClient.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/utils/WarningWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/utils/WarningWindow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/module-info.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMServer/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/exceptions/NicknameInUseException.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/exceptions/NicknameInUseException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/sqliteUtils/SQLiteManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/example/chatbmbis/sqliteUtils/SQLiteManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/resources/instructions.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/resources/instructions.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/resources/welcome.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/resources/welcome.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/ServerChat.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/ServerChat.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/instructions.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/instructions.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/module-info.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/example/chatbmbis/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/example/chatbmbis/Server.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/example/chatbmbis/exceptions/NicknameInUseException.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/example/chatbmbis/exceptions/NicknameInUseException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/example/chatbmbis/sqliteUtils/SQLiteManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/example/chatbmbis/sqliteUtils/SQLiteManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/welcome.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/welcome.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/original-ServerChat.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/original-ServerChat.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMServer/usuarios.db" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/usuarios.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -161,14 +140,8 @@
   </component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main (1)" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="org.example.chatbmbis.ChatApp" />
-      <module name="ChatBMBis" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.chatbmbis.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
+      <option name="MAIN_CLASS_NAME" value="com.chatapp.Main" />
+      <module name="ChatApp" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -187,14 +160,8 @@
       </method>
     </configuration>
     <configuration name="Main (2)" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="org.example.chatbmbis.ChatApp" />
-      <module name="ChatBMBis" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.chatbmbis.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
+      <option name="MAIN_CLASS_NAME" value="com.chatapp.Main" />
+      <module name="ChatApp" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -213,32 +180,31 @@
       </method>
     </configuration>
     <configuration name="Main (3)" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="org.example.chatbmbis.ChatApp" />
-      <module name="ChatBMBis" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.chatbmbis.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
+      <option name="MAIN_CLASS_NAME" value="com.chatapp.Main" />
+      <module name="ChatApp" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration name="Main" type="Application" factoryName="Application">
-      <option name="ALTERNATIVE_JRE_PATH" value="openjdk-22" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="com.chatapp.Main" />
-      <module name="ChatBMBis" />
+      <module name="ChatApp" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Application.Main (1)" />
+      <item itemvalue="Application.Main (2)" />
+      <item itemvalue="Application.Main (3)" />
+    </list>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-22-openjdk-22-f644763e9732-8c5c9ae5" />
+        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
       </set>
     </attachedChunks>
   </component>
@@ -306,6 +272,7 @@
       <workItem from="1712849163253" duration="347000" />
       <workItem from="1712849547373" duration="2434000" />
       <workItem from="1712867524792" duration="3613000" />
+      <workItem from="1712932577031" duration="1942000" />
     </task>
     <servers />
   </component>

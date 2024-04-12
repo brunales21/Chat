@@ -48,7 +48,7 @@ public class SQLiteManager {
     }
 
     // Método para verificar credenciales
-    public boolean login(String nickname, String password) throws InvalidCredentialsException {
+    public boolean login(String nickname, String password, boolean sessionOpened) throws InvalidCredentialsException, SessionAlreadyOpenException {
         String sql = "SELECT contraseña FROM usuario WHERE nickname = ?";
         try {
             PreparedStatement pstmt = connection.prepareStatement(sql);
@@ -60,6 +60,9 @@ public class SQLiteManager {
                     throw new InvalidCredentialsException();
                 } else {
                     System.out.println("Inicio de sesión exitoso.");
+                    if (sessionOpened) {
+                        throw new SessionAlreadyOpenException(nickname);
+                    }
                     return true;
                 }
             } else {

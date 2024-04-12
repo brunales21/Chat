@@ -37,7 +37,6 @@ public class LoginController extends Controller {
     public void login() {
         if (!usernameField.getText().isBlank()) {
             String nickname = usernameField.getText().replace(" ", "").toLowerCase();
-
             if (mediator.initUser()) {
                 // entra si pudo conectar con el servidor
                 mediator.getUser().setNickname(nickname);
