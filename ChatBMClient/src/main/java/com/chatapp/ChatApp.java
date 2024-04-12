@@ -44,6 +44,21 @@ public class ChatApp extends Application {
         mediator.setAddViewController(addViewController);
         mediator.getView().put(stageAddChat, addViewController);
 
+
+        FXMLLoader fxmlLoader1 = new FXMLLoader(ChatApp.class.getResource("signupView.fxml"));
+        Scene scene1 = new Scene(fxmlLoader1.load(), 328, 498);
+        Stage signupStage = new Stage();
+        SignupController signupController = fxmlLoader1.getController();
+        signupController.setMediator(mediator);
+        mediator.setSignupController(signupController);
+        signupStage.setScene(scene1);
+        signupStage.setResizable(false);
+        signupStage.setTitle("Registro");
+        signupStage.getIcons().add(icon);
+        mediator.getView().put(signupStage, signupController);
+
+
+
         FXMLLoader fxmlLoader2 = new FXMLLoader(ChatApp.class.getResource("loginView.fxml"));
         Scene scene = new Scene(fxmlLoader2.load(), 328, 498);
         LoginController loginController = fxmlLoader2.getController();
@@ -56,6 +71,7 @@ public class ChatApp extends Application {
         stage.show();
         setCloseWindow(stage);
         setCloseWindow(stageChat);
+        setCloseWindow(signupStage);
 
         chatController.getTextMessageField().setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ENTER) {
@@ -65,7 +81,25 @@ public class ChatApp extends Application {
 
         loginController.getUsernameField().setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ENTER) {
-                loginController.ingresar();
+                loginController.login();
+            }
+        });
+
+        loginController.getPasswordField().setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+                loginController.login();
+            }
+        });
+
+        signupController.getUsernameField().setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+                signupController.signup();
+            }
+        });
+
+        signupController.getPasswordField().setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+                signupController.signup();
             }
         });
 

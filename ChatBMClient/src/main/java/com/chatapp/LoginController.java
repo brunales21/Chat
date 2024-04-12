@@ -6,64 +6,48 @@ import com.chatapp.utils.WarningWindow;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import com.chatapp.mediator.Mediator;
-
-import java.io.IOException;
 
 public class LoginController extends Controller {
     private Mediator mediator;
     @FXML
-    Button enterButton;
+    Button loginButton;
     @FXML
     TextField usernameField, passwordField;
 
+
     public LoginController() {}
 
-    public boolean initUser() {
-        if (mediator.getUser() == null) {
-            User user = new User();
-            mediator.setUser(user);
-            try {
-                user.connect();
-                user.sendUserType();
-                return true;
-            } catch (IOException e) {
-                return false;
-            }
-        }
-        return true;
-    }
+
 
     @FXML
     private void initialize() {
         // Aquí se llama al método para internacionalizar el texto del botón
-        Internacionalizacion.convertIntoOtherLanguage("addButton", enterButton);
+        Internacionalizacion.convertIntoOtherLanguage("addButton", loginButton);
         Internacionalizacion.convertIntoOtherLanguage("username", usernameField);
         Internacionalizacion.convertIntoOtherLanguage("password", passwordField);
     }
     @FXML
-    private void onClickIngresar() {
-        ingresar();
+    private void onClickLogin() {
+        login();
     }
 
-    public void ingresar() {
+    public void login() {
         if (!usernameField.getText().isBlank()) {
             String nickname = usernameField.getText().replace(" ", "").toLowerCase();
-            if (invalidName(nickname)) {
-                WarningWindow.instanceWarningWindow("ForbiddenSymbols");
-                return;
-            }
-            if (mediator.getLoginController().initUser()) {
+
+            if (mediator.initUser()) {
                 // entra si pudo conectar con el servidor
                 mediator.getUser().setNickname(nickname);
-                mediator.ingresar();
+                mediator.login();
                 ThreadUtils.sleep(400);
-                if (mediator.getUser().isRegistered()) {
+                if (mediator.getUser().isAuthenticated()) {
                     closeLoginView();
                     mediator.createChatView();
                 } else {
-                    WarningWindow.instanceWarningWindow("UserExists");
+                    WarningWindow.instanceWarningWindow(mediator.getUser().getServerResponse());
                 }
             } else {
                 WarningWindow.instanceWarningWindow("ServidorCaido");
@@ -74,8 +58,13 @@ public class LoginController extends Controller {
     }
 
     public void closeLoginView() {
-        Stage stage = (Stage) this.enterButton.getScene().getWindow();
+        Stage stage = (Stage) this.loginButton.getScene().getWindow();
         stage.close();
+    }
+
+    public void showWindow() {
+        Stage stage = (Stage) this.passwordField.getScene().getWindow();
+        stage.show();
     }
 
     public Mediator getMediator() {
@@ -90,7 +79,16 @@ public class LoginController extends Controller {
         return usernameField;
     }
 
-    private boolean invalidName(String nickname) {
-        return nickname.contains("/") || nickname.contains("\\") || nickname.contains("<") || nickname.contains(">");
+    public Button getEnterButton() {
+        return loginButton;
+    }
+
+    public TextField getPasswordField() {
+        return passwordField;
+    }
+
+    public void swapWindow(MouseEvent mouseEvent) {
+        closeLoginView();
+        mediator.getSignupController().showWindow();
     }
 }

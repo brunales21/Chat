@@ -1,9 +1,10 @@
 org\example\chatbmbis\exceptions\ChatNotFoundException.class
 org\example\chatbmbis\Server.class
+org\example\chatbmbis\exceptions\SessionAlreadyOpenException.class
 org\example\chatbmbis\PrivateChat.class
 org\example\chatbmbis\exceptions\UserNotConnectedException.class
 module-info.class
-org\example\chatbmbis\exceptions\RegisterException.class
+org\example\chatbmbis\sqliteUtils\PasswordManager.class
 org\example\chatbmbis\exceptions\ChatRepeatedException.class
 org\example\chatbmbis\Utils\Utils.class
 org\example\chatbmbis\User.class
@@ -12,7 +13,9 @@ org\example\chatbmbis\IAs\AIConnector.class
 org\example\chatbmbis\ClientType.class
 org\example\chatbmbis\exceptions\RegisterSyntaxException.class
 org\example\chatbmbis\BackspaceRemover.class
+org\example\chatbmbis\exceptions\InvalidCredentialsException.class
 org\example\chatbmbis\exceptions\ChatException.class
+org\example\chatbmbis\sqliteUtils\SQLiteManager.class
 org\example\chatbmbis\Channel.class
 org\example\chatbmbis\exceptions\SyntaxException.class
 org\example\chatbmbis\exceptions\NicknameInUseException.class

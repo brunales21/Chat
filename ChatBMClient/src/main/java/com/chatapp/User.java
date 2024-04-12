@@ -20,7 +20,7 @@ public class User extends Client {
     private final Mediator mediator;
     private ChatDAO chatDAO;
     private final String CHATS_FOLDER_NAME = "chats_messages";
-    private boolean registered = false;
+    private boolean authenticated = false;
 
     public User(String nickname, String hostname, int port) {
         super(hostname, port);
@@ -53,18 +53,32 @@ public class User extends Client {
         this(nickname, DEFAULT_HOSTNAME, DEFAULT_PORT);
     }
 
-    public void register() {
-        sendMessage(Commands.REGISTER.name() + " " + nickname);
+    public void sendLoginCommand() {
+        sendMessage(Commands.LOGIN.name() + " " + nickname + " " + mediator.getLoginController().getPasswordField().getText());
+    }
+
+    public void sendSignupCommand() {
+        sendMessage(Commands.SIGNUP.name() + " " + nickname + " " + mediator.getLoginController().getPasswordField().getText());
     }
 
 
-    public void ingresar() {
-        register();
-        if (successfulRegister()) {
-            setRegistered(true);
+    public void login() {
+        sendLoginCommand();
+        if (successfulAuthentication()) {
+            setAuthenticated(true);
             this.start();
         } else {
-            setRegistered(false);
+            setAuthenticated(false);
+        }
+    }
+
+    public void signup() {
+        sendSignupCommand();
+        if (successfulAuthentication()) {
+            setAuthenticated(true);
+            this.start();
+        } else {
+            setAuthenticated(false);
         }
     }
 
@@ -72,11 +86,16 @@ public class User extends Client {
         sendMessage("UI_CLIENT");
     }
 
-    private boolean successfulRegister() {
+    private boolean successfulAuthentication() {
         Scanner in = null;
         try {
             in = new Scanner(getSocket().getInputStream());
-            return mediator.isActionApproved(in.nextLine());
+            String serverResponse = in.nextLine();
+            String [] serverResponseParts = serverResponse.split(" ");
+            if (serverResponseParts.length > 1) {
+                setServerResponse(serverResponseParts[1]);
+            }
+            return mediator.isActionApproved(serverResponse);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (NoSuchElementException e) {
@@ -192,12 +211,12 @@ public class User extends Client {
         contacts.remove(nickname);
     }
 
-    public boolean isRegistered() {
-        return registered;
+    public boolean isAuthenticated() {
+        return authenticated;
     }
 
-    public void setRegistered(boolean registered) {
-        this.registered = registered;
+    public void setAuthenticated(boolean authenticated) {
+        this.authenticated = authenticated;
     }
 
     @Override

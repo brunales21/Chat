@@ -2,6 +2,7 @@ package org.example.chatbmbis.sqliteUtils;
 
 import org.example.chatbmbis.exceptions.InvalidCredentialsException;
 import org.example.chatbmbis.exceptions.NicknameInUseException;
+import org.example.chatbmbis.exceptions.SessionAlreadyOpenException;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -47,7 +48,7 @@ public class SQLiteManager {
     }
 
     // Método para verificar credenciales
-    public boolean login(String nickname, String contraseña) throws InvalidCredentialsException {
+    public boolean login(String nickname, String password) throws InvalidCredentialsException {
         String sql = "SELECT contraseña FROM usuario WHERE nickname = ?";
         try {
             PreparedStatement pstmt = connection.prepareStatement(sql);
@@ -55,7 +56,7 @@ public class SQLiteManager {
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 String storedPassword = rs.getString("contraseña");
-                if (!verifyPassword(contraseña, storedPassword)) {
+                if (!verifyPassword(password, storedPassword)) {
                     throw new InvalidCredentialsException();
                 } else {
                     System.out.println("Inicio de sesión exitoso.");
@@ -88,7 +89,7 @@ public class SQLiteManager {
             if (e instanceof SQLException) {
                 SQLException sqlException = (SQLException) e;
                 if (sqlException.getSQLState().equals("23000") && sqlException.getErrorCode() == 19) {
-                    throw new NicknameInUseException("El nickname ya está en uso.");
+                    throw new NicknameInUseException(nickname);
                 } else {
                     System.out.println("Error al registrar usuario: " + e.getMessage());
                     return false;

@@ -1,6 +1,7 @@
 com\chatapp\Controller.class
 com\chatapp\utils\WarningWindow.class
 com\chatapp\ContactItemController.class
+com\chatapp\SignupController.class
 com\chatapp\ChatController$1.class
 com\chatapp\Client.class
 com\chatapp\utils\Utils.class

@@ -71,19 +71,8 @@ public class Server {
         }
     }
 
-    private void registerUI(User user, Socket socket) {
-        historyUsers.add(user);
-        socketUserMap.put(socket, user);
-        userSocketMap.put(user, socket);
-        sendOk(socket);
-        try {
-            userOutMap.put(user, new PrintStream(socket.getOutputStream()));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
-    private void registerCLI(User user, Socket socket) {
+    private void register(User user, Socket socket) {
         socketUserMap.put(socket, user);
         userSocketMap.put(user, socket);
         historyUsers.add(user);
@@ -117,13 +106,14 @@ public class Server {
                     return;
                 }
                 try {
-                    if (successfulAccessCLI(Utils.splitCommandLine(command))) {
+                    if (successfulAccess(Utils.splitCommandLine(command))) {
                         user.setNickname(getNicknameFromUICommand(command));
-                        registerUI(user, socket);
+                        register(user, socket);
+                        sendOk(socket);
                         break;
                     }
-                } catch (InvalidNicknameException | NicknameInUseException | InvalidCredentialsException |
-                         SyntaxException | SessionAlreadyOpenException e) {
+                } catch (InvalidNicknameException | NicknameInUseException | InvalidCredentialsException
+                         | SessionAlreadyOpenException | SyntaxException e) {
                     sendErrorMessage(socket, e.getGuiMsg());
                 }
             } while (!socket.isClosed());
@@ -146,9 +136,9 @@ public class Server {
                 sendFileContent(socket, "instructions.txt");
                 try {
                     String[] commandParts = Utils.splitCommandLine(BackspaceRemover.removeBackspaces(in.nextLine()));
-                    if (successfulAccessCLI(commandParts)) {
+                    if (successfulAccess(commandParts)) {
                         user = new User(commandParts[1], ClientType.CLI_CLIENT);
-                        registerCLI(user, socket);
+                        register(user, socket);
                         sendMessage(socket, "Listo para chatear. Puede usar el comando HELP como ayuda.");
                         break;
                     }
@@ -165,15 +155,6 @@ public class Server {
 
         }
     }
-
-    private void signUp() {
-
-    }
-
-    private void logIn() {
-
-    }
-
     private void clientHandler(String clientType, Socket socket) {
         if (clientType.equalsIgnoreCase("UI_CLIENT")) {
             handleGUIClient(socket);
@@ -286,24 +267,25 @@ public class Server {
         };
     }
 
-    private boolean successfulAccessCLI(String[] commandParts) throws InvalidNicknameException, SyntaxException, NicknameInUseException, InvalidCredentialsException, SessionAlreadyOpenException {
+    private boolean successfulAccess(String[] commandParts) throws InvalidNicknameException, SyntaxException, NicknameInUseException, InvalidCredentialsException, SessionAlreadyOpenException {
         if (matchesSyntax(commandParts)) {
             String nickname = commandParts[1];
             String password = commandParts[2];
             if (!invalidNickname(nickname)) {
-                if (!getOnlineUsers().contains(getUserByNickname(nickname))) {
-                    switch (commandParts[0].toUpperCase()) {
-                        case "LOGIN":
-                            return sqLiteManager.login(nickname, password);
-                        case "SIGNUP":
-                            if (!historyUsers.contains(getUserByNickname(nickname))) {
-                                return sqLiteManager.registerUser(nickname, password);
-                            }
-                        default:
-                            return false;
-                    }
-                } else {
-                    throw new SessionAlreadyOpenException(nickname);
+                boolean repeatedNickname = historyUsers.stream().anyMatch(u -> u.getNickname().equals(nickname));
+                switch (commandParts[0].toUpperCase()) {
+                    case "LOGIN":
+                        if (isOnline(nickname)) {
+                            throw new SessionAlreadyOpenException(nickname);
+                        }
+                        return sqLiteManager.login(nickname, password);
+                    case "SIGNUP":
+                        if (repeatedNickname) {
+                            throw new NicknameInUseException(nickname);
+                        }
+                        return sqLiteManager.registerUser(nickname, password);
+                    default:
+                        return false;
                 }
             } else {
                 throw new InvalidNicknameException();
@@ -313,24 +295,8 @@ public class Server {
         }
     }
 
-    private boolean successfulAccessGUI(String[] commandParts) throws NicknameInUseException, InvalidCredentialsException, SessionAlreadyOpenException {
-        String nickname = commandParts[1];
-        String password = commandParts[2];
-        if (!getOnlineUsers().contains(getUserByNickname(nickname))) {
-            switch (commandParts[0].toUpperCase()) {
-                case "LOGIN":
-                    return sqLiteManager.login(nickname, password);
-                case "SIGNUP":
-                    if (!historyUsers.contains(getUserByNickname(nickname))) {
-                        return sqLiteManager.registerUser(nickname, password);
-                    }
-                default:
-                    return false;
-            }
-        } else {
-            throw new SessionAlreadyOpenException(nickname);
-        }
-
+    private boolean isOnline(String nickname) {
+        return socketUserMap.containsValue(getUserByNickname(nickname));
     }
 
     private boolean matchesSyntax(String[] arr) {

@@ -1,15 +1,11 @@
 package com.chatapp.mediator;
 
-import com.chatapp.User;
+import com.chatapp.*;
 import com.chatapp.constants.Commands;
-import com.chatapp.ChatController;
-import com.chatapp.Controller;
-import com.chatapp.LoginController;
 import com.chatapp.conversation.Message;
 import com.chatapp.dao.FileChatDAO;
 import com.chatapp.utils.Utils;
 import com.chatapp.utils.WarningWindow;
-import com.chatapp.AddContactViewController;
 import javafx.application.Platform;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -22,6 +18,7 @@ public class Mediator {
     private ChatController chatController;
     private AddContactViewController addViewController;
     private LoginController loginController;
+    private SignupController signupController;
     private Map<Stage, Controller> view = new HashMap<>();
     private User user;
     private boolean successfulAction = true;
@@ -36,9 +33,32 @@ public class Mediator {
         return instance;
     }
 
-    public void ingresar() {
+    public boolean initUser() {
+        if (user == null) {
+            User user = new User();
+            setUser(user);
+            try {
+                user.connect();
+                user.sendUserType();
+                return true;
+            } catch (IOException e) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void signup() {
         if (getUser().getSocket() != null) {
-            user.ingresar();
+            user.signup();
+        } else {
+            WarningWindow.instanceWarningWindow("ServidorCaido");
+        }
+    }
+
+    public void login() {
+        if (getUser().getSocket() != null) {
+            user.login();
         } else {
             WarningWindow.instanceWarningWindow("ServidorCaido");
         }
@@ -215,5 +235,13 @@ public class Mediator {
 
     public LoginController getLoginController() {
         return loginController;
+    }
+
+    public SignupController getSignupController() {
+        return signupController;
+    }
+
+    public void setSignupController(SignupController signupController) {
+        this.signupController = signupController;
     }
 }
