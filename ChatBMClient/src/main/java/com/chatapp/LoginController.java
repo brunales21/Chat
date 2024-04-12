@@ -25,7 +25,7 @@ public class LoginController extends Controller {
     @FXML
     private void initialize() {
         // Aquí se llama al método para internacionalizar el texto del botón
-        Internacionalizacion.convertIntoOtherLanguage("addButton", loginButton);
+        Internacionalizacion.convertIntoOtherLanguage("loginText", loginButton);
         Internacionalizacion.convertIntoOtherLanguage("username", usernameField);
         Internacionalizacion.convertIntoOtherLanguage("password", passwordField);
     }
@@ -35,7 +35,7 @@ public class LoginController extends Controller {
     }
 
     public void login() {
-        if (!usernameField.getText().isBlank()) {
+        if (!usernameField.getText().isBlank() && !passwordField.getText().isBlank()) {
             String nickname = usernameField.getText().replace(" ", "").toLowerCase();
             if (mediator.initUser()) {
                 // entra si pudo conectar con el servidor
@@ -52,6 +52,8 @@ public class LoginController extends Controller {
                 WarningWindow.instanceWarningWindow("ServidorCaido");
             }
         } else {
+            usernameField.setText("");
+            passwordField.setText("");
             WarningWindow.instanceWarningWindow("EmptyField");
         }
     }

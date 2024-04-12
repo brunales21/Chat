@@ -6,8 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="6ffc28d6-f167-4c5e-a0a7-d252a53a42e3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../ChatBMClient/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/SignupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/SignupController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/mediator/Mediator.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/mediator/Mediator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/resources/bundle/messages_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/resources/bundle/messages_en.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/resources/bundle/messages_es_ES.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/resources/bundle/messages_es_ES.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/ChatClient.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/ChatClient.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/AddContactViewController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/AddContactViewController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/ChatApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/ChatApp.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/ChatController$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/ChatController$1$1.class" afterDir="false" />
@@ -20,11 +25,10 @@
       <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/mediator/Mediator.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/mediator/Mediator.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/utils/WarningWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/utils/WarningWindow.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/classes/module-info.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/original-ChatClient.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/original-ChatClient.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/sqliteUtils/SQLiteManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/chatbmbis/sqliteUtils/SQLiteManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usuarios.db" beforeDir="false" afterPath="$PROJECT_DIR$/usuarios.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/ServerChat.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/ServerChat.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/original-ServerChat.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-ServerChat.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -183,6 +187,7 @@
       <workItem from="1712762073070" duration="17843000" />
       <workItem from="1712845927006" duration="4317000" />
       <workItem from="1712867517201" duration="1344000" />
+      <workItem from="1712936554573" duration="725000" />
     </task>
     <servers />
   </component>

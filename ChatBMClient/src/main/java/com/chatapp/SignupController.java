@@ -30,7 +30,7 @@ public class SignupController extends Controller {
 
 
     public void signup() {
-        if (!usernameField.getText().isBlank()) {
+        if (!usernameField.getText().isBlank() && !passwordField.getText().isBlank()) {
             String nickname = usernameField.getText().replace(" ", "").toLowerCase();
             if (invalidName(nickname)) {
                 WarningWindow.instanceWarningWindow("ForbiddenSymbols");
@@ -51,6 +51,8 @@ public class SignupController extends Controller {
                 WarningWindow.instanceWarningWindow("ServidorCaido");
             }
         } else {
+            usernameField.setText("");
+            passwordField.setText("");
             WarningWindow.instanceWarningWindow("EmptyField");
         }
     }

@@ -128,7 +128,6 @@ public class User extends Client {
             try {
                 String message = in.nextLine();
                 if (message != null) {
-                    System.out.println(message);
                     mediator.processServerMsg(message);
                 }
             } catch (NoSuchElementException ignored) {
@@ -209,7 +208,6 @@ public class User extends Client {
 
     public void addContact(String name) {
         contacts.add(name);
-        contacts.forEach(c -> System.out.println(c));
     }
 
     public void removeContact(String nickname) {
