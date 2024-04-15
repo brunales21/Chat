@@ -10,30 +10,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46d45c23-4adf-40e0-a91c-a5d6e7259c3c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/imgs/backgroundLogin.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/SignupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/SignupController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/mediator/Mediator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/mediator/Mediator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/bundle/messages_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bundle/messages_en.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/bundle/messages_es_ES.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bundle/messages_es_ES.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/ChatClient.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/ChatClient.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/ChatApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/ChatApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/chatapp/loginView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/chatapp/loginView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/css/styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/AddContactViewController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/AddContactViewController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/ChatApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/ChatApp.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/ChatController$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/ChatController$1$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/ChatController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/ChatController$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/ChatController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/ChatController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/ContactItemController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/ContactItemController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/User.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/constants/Commands.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/constants/Commands.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/conversation/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/conversation/Message.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/loginView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/loginView.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/mediator/Mediator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/mediator/Mediator.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/utils/WarningWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/utils/WarningWindow.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/module-info.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/original-ChatClient.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-ChatClient.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/ServerChat.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/ServerChat.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/original-ServerChat.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/original-ServerChat.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,45 +81,46 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.ChatApp.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main (1).executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main (2).executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main (3).executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main (4).executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Utils.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.ChatApp [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.ChatApp [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.ChatApp [package].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/bemim/Workspace/DAM/TrabajoFinalGrado/Chat/ChatBMClient&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.27931035&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.ChatApp.executor": "Run",
+    "Application.Main (1).executor": "Run",
+    "Application.Main (2).executor": "Run",
+    "Application.Main (3).executor": "Run",
+    "Application.Main (4).executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.Unnamed.executor": "Run",
+    "Application.Utils.executor": "Run",
+    "Maven.ChatApp [clean].executor": "Run",
+    "Maven.ChatApp [install].executor": "Run",
+    "Maven.ChatApp [package].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "jdk.selected.JAVA_MODULE": "openjdk-21",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Aspa75/Documents/Chat/ChatBMClient/src/main/resources/imgs",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.27931035",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="org.example.chatbmbis" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Aspa75\Documents\Chat\ChatBMClient\src\main\resources\imgs" />
       <recent name="C:\Users\Monica\Documents\2DAM\PSP\Chat\ChatBMClient\src\main\resources" />
       <recent name="C:\Users\bemim\Workspace\brunales-code\Chat\ChatBMClient\src\main\resources\img" />
     </key>
@@ -165,7 +159,7 @@
     </configuration>
     <configuration name="Main (2)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.chatapp.Main" />
-      <module name="ChatBMBis" />
+      <module name="ChatApp" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -277,6 +271,9 @@
       <workItem from="1712849547373" duration="2434000" />
       <workItem from="1712867524792" duration="3613000" />
       <workItem from="1712932577031" duration="1942000" />
+      <workItem from="1713162970032" duration="98000" />
+      <workItem from="1713163079426" duration="540000" />
+      <workItem from="1713163631188" duration="7616000" />
     </task>
     <servers />
   </component>

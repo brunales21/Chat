@@ -6,6 +6,9 @@
 .texto{
     -fx-font-size:24;
 }
+.anchorPane{
+    -fx-background-image: url('../imgs/backgroundLogin.jpg');
+}
 
 /* Chat View */
 .barra {
@@ -14,6 +17,7 @@
 .fondo{
     -fx-background-color: #eff6fc ;
 }
+
 
 
 

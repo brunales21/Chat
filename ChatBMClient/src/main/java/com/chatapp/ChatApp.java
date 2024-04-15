@@ -46,7 +46,7 @@ public class ChatApp extends Application {
 
 
         FXMLLoader fxmlLoader1 = new FXMLLoader(ChatApp.class.getResource("signupView.fxml"));
-        Scene scene1 = new Scene(fxmlLoader1.load(), 328, 498);
+        Scene scene1 = new Scene(fxmlLoader1.load(), 993, 578);
         Stage signupStage = new Stage();
         SignupController signupController = fxmlLoader1.getController();
         signupController.setMediator(mediator);
@@ -60,7 +60,7 @@ public class ChatApp extends Application {
 
 
         FXMLLoader fxmlLoader2 = new FXMLLoader(ChatApp.class.getResource("loginView.fxml"));
-        Scene scene = new Scene(fxmlLoader2.load(), 328, 498);
+        Scene scene = new Scene(fxmlLoader2.load(), 993, 578);
         LoginController loginController = fxmlLoader2.getController();
         loginController.setMediator(mediator);
         mediator.setLoginController(loginController);
