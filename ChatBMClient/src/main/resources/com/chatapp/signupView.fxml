@@ -2,50 +2,52 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="496.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chatapp.SignupController">
+<AnchorPane prefHeight="578.0" prefWidth="993.0" styleClass="anchorPane" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chatapp.SignupController">
     <children>
-        <VBox alignment="TOP_CENTER" prefHeight="498.0" prefWidth="328.0" styleClass="signup" stylesheets="@../../css/styles.css">
+        <VBox alignment="TOP_CENTER" layoutX="131.0" layoutY="65.0" prefHeight="447.0" prefWidth="731.0" style="-fx-background-color: #eff6fc;" styleClass="vbox" stylesheets="@../../css/styles.css">
             <children>
-                <ImageView fitHeight="133.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
-                    <VBox.margin>
-                        <Insets top="80.0" />
-                    </VBox.margin>
-                    <image>
-                        <Image url="@../../imgs/usuario.png" />
-                    </image>
-                </ImageView>
-                <Label alignment="CENTER" prefHeight="114.0" prefWidth="346.0" stylesheets="@../../css/styles.css" text="BM chat - Registro">
+                <Label alignment="CENTER" prefHeight="68.0" prefWidth="347.0" stylesheets="@../../css/styles.css" text="REGISTRO" textFill="#02abcd">
                     <font>
-                        <Font name="System Bold" size="24.0" />
+                        <Font name="72 Black" size="36.0" />
                     </font>
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
                 </Label>
-                <TextField fx:id="usernameField" prefHeight="29.0" prefWidth="321.0" promptText="Usuario">
+                <TextField fx:id="usernameField" prefHeight="30.0" prefWidth="558.0" promptText="Usuario">
                     <VBox.margin>
-                        <Insets left="30.0" right="30.0" top="20.0" />
+                        <Insets left="250.0" right="250.0" top="40.0" />
                     </VBox.margin>
                 </TextField>
                 <PasswordField fx:id="passwordField" prefHeight="29.0" prefWidth="321.0" promptText="Contraseña">
                     <VBox.margin>
-                        <Insets left="30.0" right="30.0" top="20.0" />
+                        <Insets left="250.0" right="250.0" top="20.0" />
                     </VBox.margin>
                 </PasswordField>
-                <Text fx:id="backToLogin" onMouseClicked="#swapWindow" text="Ya tengo una cuenta" style="-fx-underline: true;">
+            <PasswordField prefHeight="29.0" prefWidth="321.0">
+               <VBox.margin>
+                  <Insets left="250.0" right="250.0" top="20.0" />
+               </VBox.margin>
+            </PasswordField>
+                <Text fx:id="backToLogin" fill="#02abcd" fontSmoothingType="LCD" onMouseClicked="#swapWindow" style="-fx-underline: true;" text="Ya tengo una cuenta" textAlignment="CENTER" wrappingWidth="111.08984375">
                     <VBox.margin>
-                        <Insets top="10.0" />
+                        <Insets top="20.0" />
                     </VBox.margin>
                 </Text>
-                <HBox alignment="CENTER" prefHeight="193.0" prefWidth="328.0" spacing="50.0">
+                <HBox alignment="CENTER" prefHeight="122.0" prefWidth="731.0" spacing="50.0">
                     <children>
-                        <Button fx:id="signupButton" mnemonicParsing="false" onMouseClicked="#onClickSignup" prefHeight="54.0" prefWidth="105.0" text="Registrarse">
+                        <Button fx:id="signupButton" mnemonicParsing="false" onMouseClicked="#onClickSignup" opacity="0.78" prefHeight="54.0" prefWidth="105.0" style="-fx-background-color: #02abcd;" text="Registrarse">
                             <HBox.margin>
-                                <Insets top="50.0" />
+                                <Insets top="10.0" />
                             </HBox.margin>
                         </Button>
                     </children>
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
                 </HBox>
             </children>
         </VBox>

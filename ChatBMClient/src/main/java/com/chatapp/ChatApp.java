@@ -52,7 +52,7 @@ public class ChatApp extends Application {
         signupController.setMediator(mediator);
         mediator.setSignupController(signupController);
         signupStage.setScene(scene1);
-        signupStage.setResizable(false);
+        signupStage.setResizable(true);
         signupStage.setTitle("Registro");
         signupStage.getIcons().add(icon);
         mediator.getView().put(signupStage, signupController);
@@ -65,7 +65,7 @@ public class ChatApp extends Application {
         loginController.setMediator(mediator);
         mediator.setLoginController(loginController);
         stage.setScene(scene);
-        stage.setResizable(false);
+        stage.setResizable(true);
         stage.setTitle("Inicio de Sesion");
         stage.getIcons().add(icon);
         stage.show();

@@ -9,6 +9,10 @@
 .anchorPane{
     -fx-background-image: url('../imgs/backgroundLogin.jpg');
 }
+.interior{
+    -fx-border-color: grey;
+    -fx-background-color: #eff6fc ;
+}
 
 /* Chat View */
 .barra {
