@@ -10,12 +10,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46d45c23-4adf-40e0-a91c-a5d6e7259c3c" name="Changes" comment="Interfaz en progreso">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/imgs/burbuja-de-chat.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/imgs/campana-de-notificacion.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/imgs/charla.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/imgs/chat-privado.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/imgs/chat.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/imgs/globos-de-texto.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/imgs/mensajero.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/imgs/notificacion.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/imgs/ventana-de-chat.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/ChatApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/ChatApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chats_messages/brunales-messages.bin" beforeDir="false" afterPath="$PROJECT_DIR$/chats_messages/brunales-messages.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/chatapp/chatView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/chatapp/chatView.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/chatapp/loginView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/chatapp/loginView.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/chatapp/signupView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/chatapp/signupView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/css/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/css/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/ChatApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/ChatApp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/loginView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/loginView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/signupView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/signupView.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +113,7 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Aspa75/Documents/Chat/ChatBMClient/src/main/resources/imgs&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Monica/Documents/2DAM/PSP/Chat/ChatBMClient/src/main/resources/com/chatapp&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -121,6 +132,8 @@
       <recent name="org.example.chatbmbis" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Monica\Documents\2DAM\PSP\Chat\ChatBMClient\src\main\resources\com\chatapp" />
+      <recent name="C:\Users\Monica\Documents\2DAM\PSP\Chat\ChatBMClient\src\main\resources\imgs" />
       <recent name="C:\Users\Aspa75\Documents\Chat\ChatBMClient\src\main\resources\imgs" />
       <recent name="C:\Users\Monica\Documents\2DAM\PSP\Chat\ChatBMClient\src\main\resources" />
       <recent name="C:\Users\bemim\Workspace\brunales-code\Chat\ChatBMClient\src\main\resources\img" />
@@ -137,7 +150,7 @@
       <recent name="org.example.chatbmbis" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main (2)">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main (1)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.chatapp.Main" />
       <module name="ChatBMBis" />
@@ -160,7 +173,7 @@
     </configuration>
     <configuration name="Main (2)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.chatapp.Main" />
-      <module name="ChatApp" />
+      <module name="ChatBMBis" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -202,8 +215,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
-        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
+        <option value="jdk-22-openjdk-22-f644763e9732-8c5c9ae5" />
       </set>
     </attachedChunks>
   </component>
@@ -276,6 +288,13 @@
       <workItem from="1713163079426" duration="540000" />
       <workItem from="1713163631188" duration="7758000" />
       <workItem from="1713248700487" duration="4718000" />
+      <workItem from="1713295829250" duration="21000" />
+      <workItem from="1713295860668" duration="834000" />
+      <workItem from="1714458302108" duration="538000" />
+      <workItem from="1714459972715" duration="24000" />
+      <workItem from="1714460005040" duration="3887000" />
+      <workItem from="1714466372137" duration="572000" />
+      <workItem from="1714474337077" duration="1965000" />
     </task>
     <task id="LOCAL-00001" summary="Interfaz en progreso">
       <option name="closed" value="true" />
