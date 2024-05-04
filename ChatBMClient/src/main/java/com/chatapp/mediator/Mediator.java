@@ -33,12 +33,28 @@ public class Mediator {
         return instance;
     }
 
+    private void filterInput() {
+        // El servidor siempre envia un mensaje de bienvenida, este metodo sirve para omitir esa parte. (no nos interesa para gui)
+        // Si no la gestionamos, cuando recibamos mensajes importantes del servidor, estaremos recibiendo ruido.
+        try {
+            Scanner in = new Scanner(getUser().getSocket().getInputStream());
+            String line;
+            do {
+                line = in.nextLine();
+            } while (!line.endsWith("."));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
     public boolean initUser() {
         if (user == null) {
             User user = new User();
             setUser(user);
             try {
                 user.connect();
+                filterInput();
                 user.sendUserType();
                 return true;
             } catch (IOException e) {

@@ -1,6 +1,5 @@
 
-Para iniciar sesion:
-    login <nickname> <password>
+Inicio sesion: login <nickname> <password>
 
-Si eres nuevo:
-    signup <nickname> <password>
+Registro: signup <nickname> <password>
+

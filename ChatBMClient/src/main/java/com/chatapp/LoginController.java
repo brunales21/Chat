@@ -10,6 +10,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import com.chatapp.mediator.Mediator;
 
+import java.io.IOException;
+import java.util.Scanner;
+
 public class LoginController extends Controller {
     private Mediator mediator;
     @FXML
@@ -33,6 +36,7 @@ public class LoginController extends Controller {
     private void onClickLogin() {
         login();
     }
+
 
     public void login() {
         if (!usernameField.getText().isBlank() && !passwordField.getText().isBlank()) {

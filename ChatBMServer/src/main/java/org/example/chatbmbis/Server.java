@@ -66,13 +66,14 @@ public class Server {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            sendFileContent(socket, "title.txt");
             Thread thread = new Thread(() -> clientHandler(getClientType(socket), socket));
             thread.start();
         }
     }
 
 
-    private void register(User user, Socket socket) {
+    private void linkUserWithSocket(User user, Socket socket) {
         socketUserMap.put(socket, user);
         userSocketMap.put(user, socket);
         historyUsers.add(user);
@@ -110,7 +111,7 @@ public class Server {
                 try {
                     if (successfulAccess(Utils.splitCommandLine(command))) {
                         user.setNickname(getNicknameFromUICommand(command));
-                        register(user, socket);
+                        linkUserWithSocket(user, socket);
                         break;
                     }
                 } catch (InvalidNicknameException | NicknameInUseException | InvalidCredentialsException
@@ -130,7 +131,7 @@ public class Server {
         }
     }
 
-    private void handleCliClient(Socket socket) {
+    private void handleCLIClient(Socket socket) {
         try {
             sendFileContent(socket, "welcome.txt");
             Scanner in = new Scanner(socket.getInputStream());
@@ -139,10 +140,13 @@ public class Server {
                 sendFileContent(socket, "instructions.txt");
                 try {
                     String[] commandParts = Utils.splitCommandLine(BackspaceRemover.removeBackspaces(in.nextLine()));
+                    if (commandParts[0].equalsIgnoreCase(Commands.EXIT.name())) {
+                        exit(socket);
+                    }
                     if (successfulAccess(commandParts)) {
                         user = new User(commandParts[1], ClientType.CLI_CLIENT);
-                        register(user, socket);
-                        sendMessage(socket, "Listo para chatear. Puede usar el comando HELP como ayuda.");
+                        linkUserWithSocket(user, socket);
+                        sendMessage(socket, "Listo para chatear. Puede usar el comando " + Commands.HELP + " como ayuda.");
                         break;
                     }
                 } catch (SyntaxException | InvalidCredentialsException | InvalidNicknameException |
@@ -158,11 +162,12 @@ public class Server {
 
         }
     }
+
     private void clientHandler(String clientType, Socket socket) {
         if (clientType.equalsIgnoreCase("GUI_CLIENT")) {
             handleGUIClient(socket);
         } else {
-            handleCliClient(socket);
+            handleCLIClient(socket);
         }
     }
 
@@ -242,43 +247,58 @@ public class Server {
                 sendFileContent(senderSocket, "help.txt");
                 break;
             case "EXIT":
-                try {
-                    if (user.isCLIUser()) {
-                        exitMessage(user);
-                    }
-                    senderSocket.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                // pasa a estar offline
-                socketUserMap.remove(senderSocket);
-                userOutMap.remove(user);
-                break;
+                logOut(user);
+                break;  
             default:
                 break;
         }
 
     }
+    
+    private void logOut(User user) {
+        Socket senderSocket;
+        try {
+            if (user.isCLIUser()) {
+                exitMessage(user);
+            }
+            senderSocket = userSocketMap.get(user);
+            senderSocket.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        // pasa a estar offline
+        socketUserMap.remove(senderSocket);
+        userOutMap.remove(user);
+    }
+    
+    private void exit(Socket socket) {
+        // Si hace un exit sin haber accedido al sistema (ni siquiera tenia la asociación socket>user)
+        try {
+            socket.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        socketUserMap.remove(socket);
+    }
 
     private boolean isCorrectSyntax(String[] commandParts) {
         return switch (commandParts[0].toUpperCase()) {
             case "PRIVMSG" -> commandParts.length == 3 || commandParts.length == 4;
+            case "LOGIN", "SIGNUP" -> commandParts.length == 3;
             case "JOIN", "CREATE", "PART", "DELETE" -> commandParts.length == 2;
-            case "LU", "LC", "EXIT" -> commandParts.length == 1;
+            case "LU", "LC", "HELP", "EXIT" -> commandParts.length == 1;
             default -> false;
         };
     }
 
     private boolean successfulAccess(String[] commandParts) throws InvalidNicknameException, SyntaxException, NicknameInUseException, InvalidCredentialsException, SessionAlreadyOpenException {
-        if (matchesSyntax(commandParts)) {
+        if (commandParts.length == 3) {
             String nickname = commandParts[1];
             String password = commandParts[2];
             if (!invalidNickname(nickname)) {
                 boolean repeatedNickname = historyUsers.stream().anyMatch(u -> u.getNickname().equals(nickname));
                 switch (commandParts[0].toUpperCase()) {
                     case "LOGIN":
-                        if (isOnline(nickname)) {
-                        }
                         return sqLiteManager.login(nickname, password, isOnline(nickname));
                     case "SIGNUP":
                         if (repeatedNickname) {
@@ -292,7 +312,7 @@ public class Server {
                 throw new InvalidNicknameException();
             }
         } else {
-            throw new SyntaxException("");
+            throw new SyntaxException(commandParts);
         }
     }
 
@@ -300,10 +320,12 @@ public class Server {
         return socketUserMap.containsValue(getUserByNickname(nickname));
     }
 
+    /*
     private boolean matchesSyntax(String[] arr) {
         // si el len coincide, significa que la sintaxis es correcta
-        return arr.length == 4 || arr.length == 3;
+        return arr.length == 3;
     }
+     */
 
     private boolean invalidNickname(String nickname) {
         return nickname.contains("/") || nickname.contains("\\") || nickname.contains("<") || nickname.contains(">");
@@ -430,6 +452,7 @@ public class Server {
         try {
             //MESSAGE #2dam bruno :hola
             send(userOutMap.get(receptor), Commands.MESSAGE + " " + channel.getName() + " " + sender + ":" + text);
+            //send(userOutMap.get(receptor), "Enviado");
         } catch (NullPointerException e) {
             throw new UserNotConnectedException();
         }
@@ -438,10 +461,11 @@ public class Server {
     public void sendMessage(User sender, User receptor, String text) throws UserNotExistsException {
         if (getOnlineUsers().contains(receptor)) {
             send(userOutMap.get(receptor), Commands.MESSAGE + " " + sender + ":" + text);
+            //send(userOutMap.get(receptor), "Enviado");
         } else if (getOfflineUsers().contains(receptor)) {
             persistMsg(sender, receptor.getNickname(), text, null);
         } else {
-            throw new UserNotExistsException(receptor.getNickname());
+            throw new UserNotExistsException();
         }
     }
 
