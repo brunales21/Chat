@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="578.0" prefWidth="993.0" styleClass="anchorPane" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chatapp.SignupController">
+<AnchorPane prefHeight="578.0" prefWidth="993.0" styleClass="anchorPane" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chatapp.controllers.SignupController">
     <children>
         <VBox alignment="TOP_CENTER" layoutX="131.0" layoutY="65.0" prefHeight="447.0" prefWidth="731.0" styleClass="interior" stylesheets="@../../css/styles.css" AnchorPane.bottomAnchor="65.80000000000001" AnchorPane.leftAnchor="131.0" AnchorPane.rightAnchor="130.79999999999995" AnchorPane.topAnchor="65.00000000000006">
             <children>

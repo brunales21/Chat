@@ -21,7 +21,7 @@
         <configuration>
           <transformers>
             <transformer>
-              <mainClass>com.chatapp.Main</mainClass>
+              <mainClass>com.chatapp.app.Main</mainClass>
             </transformer>
           </transformers>
         </configuration>

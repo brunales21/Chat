@@ -1,5 +1,6 @@
 package com.chatapp.utils;
 
+import com.chatapp.constants.Constants;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 
@@ -11,15 +12,16 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class WarningWindow {
-    private static ResourceBundle bundle = ResourceBundle.getBundle("bundle.messages", Locale.getDefault());
+
+    private static final ResourceBundle bundle = ResourceBundle.getBundle(Constants.BUNDLE_MESSAGES, Locale.getDefault());
 
     public static void instanceWarningWindow(String message) {
         if (getErrorTypes().contains(message)) {
-            String messageTransaleted = bundle.getString(message.replaceAll(" ", ""));
+            String translatedMessage = bundle.getString(message.replaceAll(" ", ""));
             Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("");
-                alert.setContentText(messageTransaleted);
+                alert.setContentText(translatedMessage);
                 alert.showAndWait();
             });
         }
@@ -30,7 +32,7 @@ public class WarningWindow {
         // ArrayList para almacenar los nombres de los errores
         ArrayList<String> errores = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/bundle/messages_es_ES.properties"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/bundle/messages_es.properties"))) {
             String linea;
 
             // Leer cada línea del archivo

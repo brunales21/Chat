@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane minHeight="400.0" minWidth="600.0" prefHeight="578.0" prefWidth="993.0" styleClass="anchorPane" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chatapp.LoginController">
+<AnchorPane minHeight="400.0" minWidth="600.0" prefHeight="578.0" prefWidth="993.0" styleClass="anchorPane" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chatapp.controllers.LoginController">
    <children>
       <VBox alignment="CENTER" layoutX="97.0" layoutY="86.0" maxHeight="500.0" maxWidth="800.0" prefHeight="406.0" prefWidth="803.0" styleClass="interior" stylesheets="@../../css/styles.css">
          <children>

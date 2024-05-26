@@ -1,25 +1,31 @@
 package com.chatapp.mediator;
 
-import com.chatapp.*;
 import com.chatapp.constants.Commands;
-import com.chatapp.conversation.Message;
-import com.chatapp.dao.FileChatDAO;
-import com.chatapp.utils.Utils;
+import com.chatapp.constants.Constants;
+import com.chatapp.constants.ErrorTypes;
+import com.chatapp.controllers.*;
+import com.chatapp.daos.impl.FileChatDAO;
+import com.chatapp.model.Message;
+import com.chatapp.model.User;
+import com.chatapp.utils.SyntaxUtils;
 import com.chatapp.utils.WarningWindow;
 import javafx.application.Platform;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.Console;
 import java.io.IOException;
 import java.util.*;
 
 public class Mediator {
+
+
     private static Mediator instance;
     private ChatController chatController;
     private AddContactViewController addViewController;
     private LoginController loginController;
     private SignupController signupController;
-    private Map<Stage, Controller> view = new HashMap<>();
+    private final Map<Stage, Controller> view = new HashMap<>();
     private User user;
     private boolean successfulAction = true;
 
@@ -45,12 +51,11 @@ public class Mediator {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public boolean initUser() {
         if (user == null) {
-            User user = new User();
+            User user = new User("localhost", 8080);
             setUser(user);
             try {
                 user.connect();
@@ -68,7 +73,7 @@ public class Mediator {
         if (getUser().getSocket() != null) {
             user.signup();
         } else {
-            WarningWindow.instanceWarningWindow("ServidorCaido");
+            WarningWindow.instanceWarningWindow(ErrorTypes.SERVER_DOWN);
         }
     }
 
@@ -76,11 +81,9 @@ public class Mediator {
         if (getUser().getSocket() != null) {
             user.login();
         } else {
-            WarningWindow.instanceWarningWindow("ServidorCaido");
+            WarningWindow.instanceWarningWindow(ErrorTypes.SERVER_DOWN);
         }
     }
-
-
 
     public void onApplicationClose(Stage stage) {
         // Realizar limpieza o acciones previas al cierre
@@ -93,10 +96,9 @@ public class Mediator {
                     getUser().getSocket().close();
                 }
                 // guardamos los chats y mensajes en un fichero binario
-                if (((FileChatDAO)getUser().getChatDAO()).getFile() != null) {
+                if (((FileChatDAO) getUser().getChatDAO()).getFile() != null) {
                     getUser().getChatDAO().saveChatMessages(getUser().getChatMessagesMap());
                 }
-
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -109,7 +111,7 @@ public class Mediator {
     public void createChatView() {
         Stage stage = null;
         for (Map.Entry<Stage, Controller> entry : view.entrySet()) {
-            if (entry.getKey().getTitle().equals("Chat")) {
+            if (entry.getKey().getTitle().equals(Constants.CHAT_VIEW_TITLE)) {
                 ChatController controller = (ChatController) entry.getValue();
                 stage = entry.getKey();
                 controller.getUserNameLabel().setText(user.getNickname());
@@ -118,28 +120,23 @@ public class Mediator {
         }
         stage.setResizable(true);
         stage.show();
-
     }
 
     public void sendMessage(String message) {
         user.sendMessage(message);
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public void createAddView(String promptText, String opt1, String opt2) {
         Stage stage = null;
         AddContactViewController addController = null;
         for (Map.Entry<Stage, Controller> entry : view.entrySet()) {
-            if (entry.getKey().getTitle().equals("Add")) {
+            if (entry.getKey().getTitle().equals(Constants.ADD_VIEW_TITLE)) {
                 stage = entry.getKey();
                 addController = (AddContactViewController) entry.getValue();
             }
         }
 
-        ResourceBundle bundle = ResourceBundle.getBundle("bundle.messages", Locale.getDefault());
+        ResourceBundle bundle = ResourceBundle.getBundle(Constants.BUNDLE_MESSAGES, Locale.getDefault());
         String promptTextInter = bundle.getString(promptText);
         String opt1Inter = bundle.getString(opt1);
         String opt2Inter = bundle.getString(opt2);
@@ -150,7 +147,6 @@ public class Mediator {
 
         stage.setResizable(false);
         stage.show();
-
     }
 
     public void addContactItem(VBox vBox, String nickname) {
@@ -164,7 +160,7 @@ public class Mediator {
     }
 
     public void processServerMsg(String message) {
-        String[] messageParts = Utils.splitCommandLine(message);
+        String[] messageParts = SyntaxUtils.splitCommandLine(message);
         String keyWord = messageParts[0];
         Message messageObj;
         if (actionRefused(keyWord)) {
@@ -176,28 +172,35 @@ public class Mediator {
             setSuccessfulAction(true);
         } else if (isTxtMessage(keyWord)) {
             // si tiene que procesar un msj de texto
-            messageParts[1] = messageParts[1].toLowerCase();
-            if (messageParts[1].startsWith("#")) {
-                // "MESSAGE #2dam bruno:hola"
-                messageObj = new Message(messageParts[2], messageParts[1], messageParts[3]);
-            } else {
-                // "MESSAGE bruno:hola"
-                messageObj = new Message(messageParts[1], messageParts[2]);
-                if (!getUser().containsContact(messageParts[1])) {
-                    chatController.addContactItem(chatController.getvBoxContacts(), messageObj.getSender());
-                    sendMessage(Commands.CREATE.name() + " " + messageObj.getSender());
-                }
-            }
-            user.addMessage(messageParts[1], messageObj);
-            chatController.overlayChat(messageParts[1]);
-            // si el chat abierto coincide con el emisor del mensaje..
-            if (chatController.getReceptorChatLabel().getText().equals(messageParts[1])) {
-                chatController.addMessageToListView(messageObj);
-            } else {
-                // si no, mostramos notificacion
-                chatController.getContactsMap().get(messageParts[1]).showNotificationImg(true);
-            }
+            messageHandler(messageParts);
+        }
+    }
 
+    private void messageHandler(String [] messageParts) {
+        Message messageObj;
+        messageParts[1] = messageParts[1].toLowerCase();
+        if (messageParts[1].startsWith("#")) {
+            // "MESSAGE #2dam bruno:hola"
+            messageObj = new Message(messageParts[2], messageParts[1], messageParts[3]);
+            if (!getUser().containsContact(messageParts[1])) {
+                chatController.addContactItem(chatController.getvBoxContacts(), messageObj.getSender());
+            }
+        } else {
+            // "MESSAGE bruno:hola"
+            messageObj = new Message(messageParts[1], messageParts[2]);
+            if (!getUser().containsContact(messageParts[1])) {
+                chatController.addContactItem(chatController.getvBoxContacts(), messageObj.getSender());
+                sendMessage(Commands.CREATE.name() + " " + messageObj.getSender());
+            }
+        }
+        user.addMessage(messageParts[1], messageObj);
+        chatController.overlayChat(messageParts[1]);
+        // si el chat abierto coincide con el emisor del mensaje..
+        if (chatController.getReceptorChatLabel().getText().equals(messageParts[1])) {
+            chatController.addMessageToListView(messageObj);
+        } else {
+            // si no, mostramos notificacion
+            chatController.getContactsMap().get(messageParts[1]).showNotificationImg(true);
         }
     }
 
@@ -217,8 +220,8 @@ public class Mediator {
         return user;
     }
 
-    public void setAddViewController(AddContactViewController addViewController) {
-        this.addViewController = addViewController;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public ChatController getChatController() {
@@ -233,10 +236,6 @@ public class Mediator {
         return view;
     }
 
-    public void setLoginController(LoginController loginController) {
-        this.loginController = loginController;
-    }
-
     public boolean successfulAction() {
         return successfulAction;
     }
@@ -249,8 +248,16 @@ public class Mediator {
         return addViewController;
     }
 
+    public void setAddViewController(AddContactViewController addViewController) {
+        this.addViewController = addViewController;
+    }
+
     public LoginController getLoginController() {
         return loginController;
+    }
+
+    public void setLoginController(LoginController loginController) {
+        this.loginController = loginController;
     }
 
     public SignupController getSignupController() {

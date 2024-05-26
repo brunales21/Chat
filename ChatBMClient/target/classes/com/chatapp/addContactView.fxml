@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="121.0" prefWidth="351.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chatapp.AddContactViewController">
+<AnchorPane prefHeight="121.0" prefWidth="351.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chatapp.controllers.AddContactViewController">
    <children>
       <HBox fx:id="hbox" alignment="CENTER_LEFT" layoutX="-1.0" prefHeight="148.0" prefWidth="556.0">
          <children>
