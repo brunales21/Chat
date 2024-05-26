@@ -11,7 +11,17 @@
   <component name="ChangeListManager">
     <list default="true" id="46d45c23-4adf-40e0-a91c-a5d6e7259c3c" name="Changes" comment="Interfaz en progreso">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chats_messages/user2-messages.bin" beforeDir="false" afterPath="$PROJECT_DIR$/chats_messages/user2-messages.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/constants/ErrorTypes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/constants/ErrorTypes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/controllers/SignupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/controllers/SignupController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/bundle/messages_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bundle/messages_en.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/bundle/messages_es.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bundle/messages_es.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/chatapp/loginView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/chatapp/loginView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/chatapp/signupView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/chatapp/signupView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/bundle/messages_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bundle/messages_en.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/bundle/messages_es.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bundle/messages_es.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/constants/ErrorTypes.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/constants/ErrorTypes.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/controllers/SignupController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/controllers/SignupController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/signupView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/signupView.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -288,7 +298,7 @@
       <workItem from="1716648477726" duration="1465000" />
       <workItem from="1716653645107" duration="8503000" />
       <workItem from="1716664702164" duration="612000" />
-      <workItem from="1716713245190" duration="3752000" />
+      <workItem from="1716713245190" duration="5019000" />
     </task>
     <task id="LOCAL-00001" summary="Interfaz en progreso">
       <option name="closed" value="true" />

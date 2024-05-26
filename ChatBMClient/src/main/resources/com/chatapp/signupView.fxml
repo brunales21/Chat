@@ -17,7 +17,7 @@
                   <Insets top="40.0" />
                </VBox.margin>
                 </Label>
-                <TextField fx:id="usernameField" maxHeight="30.0" maxWidth="400.0" prefHeight="30.0" prefWidth="558.0" promptText="Usuario">
+                <TextField fx:id="usernameField" maxHeight="30.0" maxWidth="400.0" prefHeight="30.0" prefWidth="558.0" promptText="Nombre de usuario">
                     <VBox.margin>
                         <Insets left="250.0" right="250.0" top="20.0" />
                     </VBox.margin>
@@ -27,7 +27,7 @@
                         <Insets left="250.0" right="250.0" top="20.0" />
                     </VBox.margin>
                 </PasswordField>
-            <PasswordField maxHeight="33.0" maxWidth="400.0" prefHeight="26.0" prefWidth="253.0">
+            <PasswordField fx:id="passwordField2" maxHeight="33.0" maxWidth="400.0" prefHeight="26.0" prefWidth="253.0" promptText="Repita contraseña">
                <VBox.margin>
                   <Insets left="250.0" right="250.0" top="20.0" />
                </VBox.margin>
