@@ -63,10 +63,11 @@ public class Mediator {
                 user.sendUserType();
                 return true;
             } catch (IOException e) {
+                this.user = null;
                 return false;
             }
         }
-        return true;
+        return false;
     }
 
     public void signup() {

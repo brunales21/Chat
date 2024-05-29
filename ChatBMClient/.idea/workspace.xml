@@ -12,17 +12,16 @@
     <list default="true" id="46d45c23-4adf-40e0-a91c-a5d6e7259c3c" name="Changes" comment="Interfaz en progreso">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/constants/ErrorTypes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/constants/ErrorTypes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/controllers/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/controllers/SignupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/controllers/SignupController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/mediator/Mediator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/mediator/Mediator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/utils/WarningWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/utils/WarningWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/bundle/messages_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bundle/messages_en.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/bundle/messages_es.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bundle/messages_es.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/chatapp/loginView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/chatapp/loginView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/chatapp/signupView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/chatapp/signupView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bundle/messages_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bundle/messages_en.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bundle/messages_es.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bundle/messages_es.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/constants/ErrorTypes.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/constants/ErrorTypes.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/controllers/SignupController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/controllers/SignupController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/signupView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/signupView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/chat.db" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/chat.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/chatapp/exceptions/InvalidCredentialsException.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/chatapp/exceptions/InvalidCredentialsException.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,12 +65,12 @@
     &quot;assignee&quot;: &quot;MonicaDelCap&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/brunales21/Chat.git&quot;,
-    &quot;accountId&quot;: &quot;5420542d-5b65-48ee-9edb-a3a1908a8ba0&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/brunales21/Chat.git",
+    "accountId": "b5b05005-ce7c-43db-b134-fd9fbc219715"
   }
-}</component>
+}]]></component>
   <component name="HighlightingSettingsPerFile">
     <setting file="jar://$USER_HOME$/.jdks/openjdk-21.0.1/lib/src.zip!/java.base/java/lang/Thread.java" root0="SKIP_INSPECTION" />
   </component>
@@ -110,7 +109,7 @@
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "openjdk-21",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/bemim/Workspace/DAM/TrabajoFinalGrado/Chat/ChatBMServer",
+    "last_opened_file_path": "C:/Users/Aspa56/workspace/IdeaProjects/Chat/ChatBMClient",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -150,7 +149,7 @@
       <recent name="com.chatapp.constants" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main (1)">
+  <component name="RunManager" selected="Application.Main (2)">
     <configuration name="Main (1)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.chatapp.app.Main" />
       <module name="ChatBMBis" />
@@ -173,7 +172,7 @@
     </configuration>
     <configuration name="Main (2)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.chatapp.app.Main" />
-      <module name="ChatBMBis" />
+      <module name="ChatApp" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -212,7 +211,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-22-openjdk-22-f644763e9732-8c5c9ae5" />
+        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
       </set>
     </attachedChunks>
   </component>
@@ -299,6 +299,7 @@
       <workItem from="1716653645107" duration="8503000" />
       <workItem from="1716664702164" duration="612000" />
       <workItem from="1716713245190" duration="5019000" />
+      <workItem from="1716989086041" duration="1379000" />
     </task>
     <task id="LOCAL-00001" summary="Interfaz en progreso">
       <option name="closed" value="true" />

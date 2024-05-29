@@ -41,20 +41,14 @@ public class LoginController extends Controller {
     public void login() {
         if (!usernameField.getText().isBlank() && !passwordField.getText().isBlank()) {
             String nickname = usernameField.getText().replace(" ", "").toLowerCase();
-            if (mediator.initUser()) {
-                // entra si pudo conectar con el servidor
-                mediator.getUser().setNickname(nickname);
-                mediator.login();
-                ThreadUtils.sleep(400);
-                if (mediator.getUser().isAuthenticated()) {
-                    closeLoginView();
-                    mediator.createChatView();
-                } else {
-                    WarningWindow.instanceWarningWindow(mediator.getUser().getServerResponse());
-                }
-            } else {
-                WarningWindow.instanceWarningWindow(ErrorTypes.SERVER_DOWN);
-            }
+
+
+
+            // gestionar inicio de sesión
+
+
+
+
         } else {
             NodeUtils.cleanTextField(usernameField);
             NodeUtils.cleanTextField(passwordField);

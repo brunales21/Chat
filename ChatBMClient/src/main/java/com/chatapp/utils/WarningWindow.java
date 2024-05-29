@@ -15,9 +15,10 @@ public class WarningWindow {
 
     private static final ResourceBundle bundle = ResourceBundle.getBundle(Constants.BUNDLE_MESSAGES, Locale.getDefault());
 
-    public static void instanceWarningWindow(String message) {
-        if (getErrorTypes().contains(message)) {
-            String translatedMessage = bundle.getString(message.replaceAll(" ", ""));
+    public static void instanceWarningWindow(String error) {
+        String errorName = SyntaxUtils.splitCommandLine(error)[1];
+        if (getErrorTypes().contains(errorName)) {
+            String translatedMessage = bundle.getString(errorName.replaceAll(" ", ""));
             Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("");
@@ -26,7 +27,6 @@ public class WarningWindow {
             });
         }
     }
-
     // Método estático para leer y procesar el archivo y devolver los nombres de los errores
     public static ArrayList<String> getErrorTypes() {
         // ArrayList para almacenar los nombres de los errores

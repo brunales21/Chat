@@ -45,20 +45,13 @@ public class SignupController extends Controller {
                 WarningWindow.instanceWarningWindow(ErrorTypes.PASSWORDS_MISMATCH);
                 return;
             }
-            if (mediator.initUser()) {
-                // entra si pudo conectar con el servidor
-                mediator.getUser().setNickname(nickname);
-                mediator.signup();
-                ThreadUtils.sleep(400);
-                if (mediator.getUser().isAuthenticated()) {
-                    closeSignupView();
-                    mediator.createChatView();
-                } else {
-                    WarningWindow.instanceWarningWindow(mediator.getUser().getServerResponse());
-                }
-            } else {
-                WarningWindow.instanceWarningWindow(ErrorTypes.SERVER_DOWN);
-            }
+
+
+
+            //gestionar registro
+
+
+
         } else {
             NodeUtils.cleanTextField(usernameField);
             NodeUtils.cleanTextField(passwordField);
