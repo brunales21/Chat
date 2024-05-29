@@ -20,6 +20,8 @@ import java.util.*;
 
 public class Server {
 
+    private String version = "1.0";
+
     private final SQLiteManager sqLiteManager;
     private final int port;
     private final Set<PrivateChat> privateChats;
@@ -255,6 +257,9 @@ public class Server {
             case "LC":
                 listChannels(user);
                 break;
+            case "VERSION":
+                sendMessage(user, MessageConstants.CHAT_BM_VERSION + version);
+                break;
             case "HELP":
                 sendFileContent(senderSocket, FilePaths.HELP_TXT);
                 break;
@@ -297,7 +302,7 @@ public class Server {
             case "PRIVMSG" -> commandParts.length == 3 || commandParts.length == 4;
             case "LOGIN", "SIGNUP" -> commandParts.length == 3;
             case "JOIN", "CREATE", "PART", "DELETE" -> commandParts.length == 2;
-            case "LU", "LC", "HELP", "EXIT" -> commandParts.length == 1;
+            case "LU", "LC", "VERSION", "HELP", "EXIT" -> commandParts.length == 1;
             default -> false;
         };
     }

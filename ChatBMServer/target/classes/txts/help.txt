@@ -1,13 +1,14 @@
 ---------------------------------------
 Entering -> login your-nickname password
          -> signup your-nickname password password
-Channel creation commands -> CREATE #channel
-Add contact command -> CREATE user
+Create channel -> CREATE #channel
+Add contact -> CREATE user
 Join a channel -> JOIN #channel
 Quitting from a channel -> PART #channel
 Deleting a contact -> DELETE nickname
-Message to channel command -> PRIVMSG #channel:message
-Message to user command -> PRIVMSG user:message
+Message to channel -> PRIVMSG #channel:message
+Message to user -> PRIVMSG user:message
 Command to list contacts -> LU
 Command to list channels -> LC
+Command to see version -> VERSION
 ---------------------------------------
