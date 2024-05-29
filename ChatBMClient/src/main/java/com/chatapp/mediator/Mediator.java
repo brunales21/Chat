@@ -53,21 +53,10 @@ public class Mediator {
         }
     }
 
-    public boolean initUser() {
-        if (user == null) {
-            User user = new User("localhost", 8080);
-            setUser(user);
-            try {
-                user.connect();
-                filterInput();
-                user.sendUserType();
-                return true;
-            } catch (IOException e) {
-                this.user = null;
-                return false;
-            }
-        }
-        return false;
+    public void initUser() throws IOException {
+        User user = new User("localhost", 8080);
+        setUser(user);
+        user.connect();
     }
 
     public void signup() {

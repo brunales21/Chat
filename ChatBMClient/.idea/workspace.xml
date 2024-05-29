@@ -10,12 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46d45c23-4adf-40e0-a91c-a5d6e7259c3c" name="Changes" comment="Interfaz en progreso">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/controllers/SignupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/controllers/SignupController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/mediator/Mediator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/mediator/Mediator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/chat.db" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/chat.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/chatapp/constants/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/chatapp/constants/Commands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/chatapp/constants/MessageConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/chatapp/constants/MessageConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/chatapp/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/java/org/chatapp/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/resources/txts/help.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/resources/txts/help.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -293,7 +291,7 @@
       <workItem from="1716653645107" duration="8503000" />
       <workItem from="1716664702164" duration="612000" />
       <workItem from="1716713245190" duration="5019000" />
-      <workItem from="1716989086041" duration="1837000" />
+      <workItem from="1716989086041" duration="4726000" />
     </task>
     <task id="LOCAL-00001" summary="Interfaz en progreso">
       <option name="closed" value="true" />

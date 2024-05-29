@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6ffc28d6-f167-4c5e-a0a7-d252a53a42e3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/chat.db" beforeDir="false" afterPath="$PROJECT_DIR$/chat.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/chatapp/constants/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/chatapp/constants/Commands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/chatapp/constants/MessageConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/chatapp/constants/MessageConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/chatapp/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/chatapp/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/txts/help.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/txts/help.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMClient/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/controllers/SignupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/controllers/SignupController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/mediator/Mediator.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/mediator/Mediator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -192,7 +191,7 @@
       <workItem from="1716653662231" duration="8868000" />
       <workItem from="1716664715245" duration="1848000" />
       <workItem from="1716713570946" duration="3795000" />
-      <workItem from="1716989098898" duration="1407000" />
+      <workItem from="1716989098898" duration="2273000" />
     </task>
     <servers />
   </component>

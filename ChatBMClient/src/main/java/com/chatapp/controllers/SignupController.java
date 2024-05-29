@@ -11,6 +11,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class SignupController extends Controller {
     private Mediator mediator;
 
@@ -45,7 +47,11 @@ public class SignupController extends Controller {
                 WarningWindow.instanceWarningWindow(ErrorTypes.PASSWORDS_MISMATCH);
                 return;
             }
-
+            try {
+                mediator.initUser();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
 
             //gestionar registro
