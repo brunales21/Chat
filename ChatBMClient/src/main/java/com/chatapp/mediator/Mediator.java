@@ -39,7 +39,7 @@ public class Mediator {
         return instance;
     }
 
-    private void filterInput() {
+    public void filterInput() {
         // El servidor siempre envia un mensaje de bienvenida, este metodo sirve para omitir esa parte. (no nos interesa para gui)
         // Si no la gestionamos, cuando recibamos mensajes importantes del servidor, estaremos recibiendo ruido.
         try {
@@ -53,26 +53,10 @@ public class Mediator {
         }
     }
 
-    public void initUser() throws IOException {
-        User user = new User("localhost", 8080);
+    public void initUser(String nickname) throws IOException {
+        User user = new User(nickname, "localhost", 8080);
         setUser(user);
         user.connect();
-    }
-
-    public void signup() {
-        if (getUser().getSocket() != null) {
-            user.signup();
-        } else {
-            WarningWindow.instanceWarningWindow(ErrorTypes.SERVER_DOWN);
-        }
-    }
-
-    public void login() {
-        if (getUser().getSocket() != null) {
-            user.login();
-        } else {
-            WarningWindow.instanceWarningWindow(ErrorTypes.SERVER_DOWN);
-        }
     }
 
     public void onApplicationClose(Stage stage) {
@@ -150,9 +134,9 @@ public class Mediator {
     }
 
     public void processServerMsg(String message) {
+        user.setServerResponse(message);
         String[] messageParts = SyntaxUtils.splitCommandLine(message);
         String keyWord = messageParts[0];
-        Message messageObj;
         if (actionRefused(keyWord)) {
             // si la accion fue rechazada
             setSuccessfulAction(false);

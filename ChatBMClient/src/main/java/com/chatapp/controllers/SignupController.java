@@ -48,7 +48,7 @@ public class SignupController extends Controller {
                 return;
             }
             try {
-                mediator.initUser();
+                mediator.initUser(nickname);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

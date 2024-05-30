@@ -16,6 +16,7 @@ public class WarningWindow {
     private static final ResourceBundle bundle = ResourceBundle.getBundle(Constants.BUNDLE_MESSAGES, Locale.getDefault());
 
     public static void instanceWarningWindow(String error) {
+        System.out.println(error);
         String errorName = SyntaxUtils.splitCommandLine(error)[1];
         if (getErrorTypes().contains(errorName)) {
             String translatedMessage = bundle.getString(errorName.replaceAll(" ", ""));

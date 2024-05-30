@@ -61,41 +61,17 @@ public class User extends Client {
         sendMessage(Commands.SIGNUP.name() + " " + nickname + " " + mediator.getSignupController().getPasswordField().getText());
     }
 
-    public void login() {
-        sendLoginCommand();
-        if (successfulAuthentication()) {
-            setAuthenticated(true);
-            this.start();
-        } else {
-            setAuthenticated(false);
-        }
-    }
-
-    public void signup() {
-        sendSignupCommand();
-        if (successfulAuthentication()) {
-            setAuthenticated(true);
-            this.start();
-        } else {
-            setAuthenticated(false);
-        }
-    }
-
     public void sendUserType() {
         sendMessage(ClientType.GUI_CLIENT.name());
     }
 
-    private boolean successfulAuthentication() {
+    public boolean successfulAuthentication() {
+        mediator.filterInput();
         Scanner in = null;
         try {
             in = new Scanner(getSocket().getInputStream());
             String serverResponse = in.nextLine();
-            String[] serverResponseParts = serverResponse.split(" ");
-            if (serverResponseParts.length > 1) {
-                setServerResponse(serverResponseParts[1]);
-            } else {
-                setServerResponse(serverResponseParts[0]);
-            }
+            System.out.println(serverResponse);
             return mediator.isActionApproved(serverResponse);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -158,6 +134,8 @@ public class User extends Client {
             WarningWindow.instanceWarningWindow(ErrorTypes.SERVER_DOWN);
         }
     }
+
+
 
     public List<Message> getMessages(String name) {
         return chatMessagesMap.computeIfAbsent(name, k -> new ArrayList<>());

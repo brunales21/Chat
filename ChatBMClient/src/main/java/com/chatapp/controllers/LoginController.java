@@ -13,6 +13,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import com.chatapp.mediator.Mediator;
 
+import java.io.IOException;
+
 public class LoginController extends Controller {
     private Mediator mediator;
     @FXML
@@ -41,20 +43,29 @@ public class LoginController extends Controller {
     public void login() {
         if (!usernameField.getText().isBlank() && !passwordField.getText().isBlank()) {
             String nickname = usernameField.getText().replace(" ", "").toLowerCase();
+            try {
+                mediator.initUser(nickname);
+            } catch (IOException e) {
+                WarningWindow.instanceWarningWindow(ErrorTypes.SERVER_DOWN);
+                return;
+            }
+            mediator.getUser().sendUserType();
+            mediator.getUser().sendLoginCommand();
 
-
-
-            // gestionar inicio de sesión
-
-
-
-
+            if (mediator.getUser().successfulAuthentication()) {
+                closeLoginView();
+                mediator.getUser().start();
+                mediator.createChatView();
+            } else {
+                WarningWindow.instanceWarningWindow(mediator.getUser().getServerResponse());
+            }
         } else {
             NodeUtils.cleanTextField(usernameField);
             NodeUtils.cleanTextField(passwordField);
             WarningWindow.instanceWarningWindow(ErrorTypes.EMPTY_FIELD);
         }
     }
+
 
     public void closeLoginView() {
         Stage stage = (Stage) this.loginButton.getScene().getWindow();
