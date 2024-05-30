@@ -40,6 +40,7 @@ public class User extends Client {
         this.contacts = new ArrayList<>();
         chatMessagesMap = new HashMap<>();
         mediator = Mediator.getInstance();
+        mediator.setUser(this);
         chatDAO = new FileChatDAO();
     }
 
