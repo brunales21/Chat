@@ -84,4 +84,11 @@ public class OpenAIConnector {
         System.out.println(response);
         return response.substring(startMarker, endMarker-1); // Devolver el contenido de la respuesta
     }
+
+    public static void main(String[] args) {
+        System.out.println(getGPTResponse("Hola, mi nombre es laura"));
+
+
+        System.out.println(conversationHistory);
+    }
 }

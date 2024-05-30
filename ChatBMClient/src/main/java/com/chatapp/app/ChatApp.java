@@ -5,6 +5,7 @@ import com.chatapp.controllers.ChatController;
 import com.chatapp.controllers.LoginController;
 import com.chatapp.controllers.SignupController;
 import com.chatapp.mediator.Mediator;
+import com.chatapp.model.User;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -24,7 +25,8 @@ public class ChatApp extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        mediator = Mediator.getInstance();
+        User user = new User();
+        setMediator(user.getMediator());
 
         FXMLLoader fxmlLoader = new FXMLLoader(ChatApp.class.getResource("/com/chatapp/chatView.fxml"));
         Scene chatView = new Scene(fxmlLoader.load());
@@ -57,6 +59,7 @@ public class ChatApp extends Application {
         Scene scene1 = new Scene(fxmlLoader1.load(), 993, 578);
         Stage signupStage = new Stage();
         SignupController signupController = fxmlLoader1.getController();
+        signupController.setUser(user);
         signupController.setMediator(mediator);
         mediator.setSignupController(signupController);
         signupStage.setScene(scene1);
@@ -69,6 +72,7 @@ public class ChatApp extends Application {
         FXMLLoader fxmlLoader2 = new FXMLLoader(ChatApp.class.getResource("/com/chatapp/loginView.fxml"));
         Scene scene = new Scene(fxmlLoader2.load(), 993, 578);
         LoginController loginController = fxmlLoader2.getController();
+        loginController.setUser(user);
         loginController.setMediator(mediator);
         mediator.setLoginController(loginController);
         stage.setScene(scene);
@@ -100,13 +104,13 @@ public class ChatApp extends Application {
 
         signupController.getUsernameField().setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ENTER) {
-                signupController.signup();
+                signupController.signUp();
             }
         });
 
         signupController.getPasswordField().setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ENTER) {
-                signupController.signup();
+                signupController.signUp();
             }
         });
     }

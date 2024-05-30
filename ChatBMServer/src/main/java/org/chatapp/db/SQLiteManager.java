@@ -82,13 +82,8 @@ public class SQLiteManager {
             return true;
         } catch (SQLException | NoSuchAlgorithmException e) {
             System.out.println(e.getMessage());
-            if (e instanceof SQLException sqlException) {
-                if (sqlException.getSQLState().equals("23000") && sqlException.getErrorCode() == 19) {
-                    throw new NicknameInUseException(nickname);
-                } else {
-                    System.out.println("Error al registrar usuario: " + e.getMessage());
-                    return false;
-                }
+            if (e instanceof SQLException) {
+                throw new NicknameInUseException(nickname);
             } else {
                 System.out.println("Error al registrar usuario: " + e.getMessage());
                 return false;

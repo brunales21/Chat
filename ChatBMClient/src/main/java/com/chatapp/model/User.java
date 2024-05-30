@@ -5,6 +5,7 @@ import com.chatapp.daos.ChatDAO;
 import com.chatapp.daos.impl.FileChatDAO;
 import com.chatapp.mediator.Mediator;
 import com.chatapp.utils.SyntaxUtils;
+import com.chatapp.utils.ThreadUtils;
 import com.chatapp.utils.WarningWindow;
 import javafx.application.Platform;
 
@@ -21,6 +22,8 @@ public class User extends Client {
     private String nickname;
     private Map<String, List<Message>> chatMessagesMap;
     private boolean authenticated = false;
+    private boolean connected = false;
+
 
     public User(String nickname, String hostname, int port) {
         super(hostname, port);
@@ -46,11 +49,34 @@ public class User extends Client {
         this.contacts = new ArrayList<>();
         chatMessagesMap = new HashMap<>();
         mediator = Mediator.getInstance();
+        mediator.setUser(this);
         chatDAO = new FileChatDAO();
     }
 
     public User(String nickname) {
         this(nickname, ConnectionConfig.DEFAULT_HOSTNAME, ConnectionConfig.DEFAULT_PORT);
+    }
+
+    public void initUser() throws IOException {
+        if (!isConnected()) {
+            mediator.getLoginController().setUser(this);
+            mediator.getSignupController().setUser(this);
+            initSocket();
+        }
+    }
+    public boolean connectToServer() {
+        try {
+            initUser();
+        } catch (IOException e) {
+            return false;
+        }
+        if (!mediator.getUser().isConnected()) {
+            mediator.getUser().setConnected(true);
+            mediator.filterInput();
+            mediator.getUser().sendUserType();
+            ThreadUtils.sleep(400);
+        }
+        return true;
     }
 
     public void sendLoginCommand() {
@@ -66,19 +92,17 @@ public class User extends Client {
     }
 
     public boolean successfulAuthentication() {
-        mediator.filterInput();
-        Scanner in = null;
+        Scanner in;
         try {
             in = new Scanner(getSocket().getInputStream());
             String serverResponse = in.nextLine();
-            System.out.println("Response: "+serverResponse);
             setServerResponse(serverResponse);
             return mediator.isActionApproved(serverResponse);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (NoSuchElementException e) {
             // En caso de que se caiga el servidor en el inicio de sesion
-            WarningWindow.instanceWarningWindow(ErrorTypes.SERVER_DOWN);
+            setServerResponse(ErrorTypes.SERVER_DOWN);
             return false;
         }
     }
@@ -189,6 +213,14 @@ public class User extends Client {
 
     public void setAuthenticated(boolean authenticated) {
         this.authenticated = authenticated;
+    }
+
+    public boolean isConnected() {
+        return connected;
+    }
+
+    public void setConnected(boolean connected) {
+        this.connected = connected;
     }
 
     @Override

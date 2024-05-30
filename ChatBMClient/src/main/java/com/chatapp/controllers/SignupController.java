@@ -2,19 +2,17 @@ package com.chatapp.controllers;
 
 import com.chatapp.constants.ErrorTypes;
 import com.chatapp.mediator.Mediator;
-import com.chatapp.utils.NodeUtils;
-import com.chatapp.utils.ThreadUtils;
+import com.chatapp.model.User;
+import com.chatapp.utils.FieldValidator;
 import com.chatapp.utils.WarningWindow;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class SignupController extends Controller {
     private Mediator mediator;
+    private User user;
 
     @FXML
     private TextField usernameField;
@@ -25,49 +23,38 @@ public class SignupController extends Controller {
     @FXML
     private PasswordField passwordField2;
 
-
     public SignupController() {
     }
 
     @FXML
     private void onClickSignup() {
-        signup();
+        signUp();
     }
 
-
-
-    public void signup() {
-        if (!usernameField.getText().isBlank() && !passwordField.getText().isBlank()) {
+    public void signUp() {
+        if (FieldValidator.validateCredentials(usernameField, passwordField, passwordField2)) {
             String nickname = usernameField.getText().replace(" ", "").toLowerCase();
-            if (invalidName(nickname)) {
-                WarningWindow.instanceWarningWindow(ErrorTypes.FORBIDDEN_CHARS);
-                return;
+            if (user.connectToServer()) {
+                mediator.getUser().setNickname(nickname);
+                mediator.getUser().sendSignupCommand();
+                if (mediator.getUser().successfulAuthentication()) {
+                    closeSignupView();
+                    mediator.createChatView();
+                    mediator.getUser().start();
+
+                } else {
+                    WarningWindow.instanceWarningWindow(mediator.getUser().getServerResponse());
+                    if (mediator.getUser().getServerResponse().equals(ErrorTypes.SERVER_DOWN)) {
+                        mediator.getUser().setConnected(false);
+                    }
+                }
+            } else {
+                WarningWindow.instanceWarningWindow(ErrorTypes.SERVER_DOWN);
             }
-            if (!passwordsMatch()) {
-                WarningWindow.instanceWarningWindow(ErrorTypes.PASSWORDS_MISMATCH);
-                return;
-            }
-            try {
-                mediator.initUser(nickname);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-
-            //gestionar registro
-
-
-
-        } else {
-            NodeUtils.cleanTextField(usernameField);
-            NodeUtils.cleanTextField(passwordField);
-            WarningWindow.instanceWarningWindow(ErrorTypes.EMPTY_FIELD);
+            user.setServerResponse("");
         }
     }
 
-    public Mediator getMediator() {
-        return mediator;
-    }
 
     public void setMediator(Mediator mediator) {
         this.mediator = mediator;
@@ -89,9 +76,7 @@ public class SignupController extends Controller {
         this.passwordField = passwordField;
     }
 
-    private boolean invalidName(String nickname) {
-        return nickname.contains("/") || nickname.contains("\\") || nickname.contains("<") || nickname.contains(">");
-    }
+
     public void showWindow() {
         Stage stage = (Stage) this.passwordField.getScene().getWindow();
         stage.show();
@@ -106,7 +91,11 @@ public class SignupController extends Controller {
         mediator.getLoginController().showWindow();
     }
 
-    private boolean passwordsMatch() {
-        return passwordField.getText().equals(passwordField2.getText());
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

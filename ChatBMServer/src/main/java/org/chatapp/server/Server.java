@@ -118,6 +118,7 @@ public class Server {
             User user = new User(ClientType.GUI_CLIENT);
             do {
                 String command = in.nextLine();
+                System.out.println(command);
                 if (command.equals(Commands.EXIT.name())) {
                     socket.close();
                     return;

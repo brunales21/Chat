@@ -53,11 +53,7 @@ public class Mediator {
         }
     }
 
-    public void initUser(String nickname) throws IOException {
-        User user = new User(nickname, "localhost", 8080);
-        setUser(user);
-        user.connect();
-    }
+
 
     public void onApplicationClose(Stage stage) {
         // Realizar limpieza o acciones previas al cierre

@@ -21,7 +21,7 @@ public class Client extends Thread {
         this(ConnectionConfig.DEFAULT_HOSTNAME, ConnectionConfig.DEFAULT_PORT);
     }
 
-    public void connect() throws IOException {
+    public void initSocket() throws IOException {
         socket = new Socket(hostname, port);
     }
 
