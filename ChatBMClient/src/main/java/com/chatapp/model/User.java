@@ -71,7 +71,8 @@ public class User extends Client {
         try {
             in = new Scanner(getSocket().getInputStream());
             String serverResponse = in.nextLine();
-            System.out.println(serverResponse);
+            System.out.println("Response: "+serverResponse);
+            setServerResponse(serverResponse);
             return mediator.isActionApproved(serverResponse);
         } catch (IOException e) {
             throw new RuntimeException(e);

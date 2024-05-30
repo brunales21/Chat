@@ -6,18 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="6ffc28d6-f167-4c5e-a0a7-d252a53a42e3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../ChatBMClient/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/controllers/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/controllers/SignupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/controllers/SignupController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/mediator/Mediator.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/mediator/Mediator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/utils/WarningWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/utils/WarningWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/controllers/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/controllers/LoginController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/controllers/SignupController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/controllers/SignupController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/mediator/Mediator.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/mediator/Mediator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chat.db" beforeDir="false" afterPath="$PROJECT_DIR$/chat.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/module-info.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/chatapp/IAs/AIConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/chatapp/IAs/AIConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/chatapp/IAs/OpenAIConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/chatapp/IAs/OpenAIConnector.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,24 +28,6 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;brunales21&quot;
-  }
-}</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/brunales21/Chat.git&quot;,
-    &quot;accountId&quot;: &quot;b5b05005-ce7c-43db-b134-fd9fbc219715&quot;
-  }
-}</component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="jar://$USER_HOME$/.jdks/openjdk-21.0.1/lib/src.zip!/java.base/java/io/FileOutputStream.java" root0="SKIP_INSPECTION" />
-  </component>
-  <component name="KubernetesApiProvider">{
-  &quot;isMigrated&quot;: true
-}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -60,72 +36,41 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.AIConnector.executor&quot;: &quot;Run&quot;,
-    &quot;Application.BackspaceRemover.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Server.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Utils.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Aspa56/workspace/IdeaProjects/Chat/ChatBMServer&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.Java&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.BackspaceRemover.executor": "Run",
+    "Application.Server.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/2DAM/IdeaProjects/Chat/ChatBMServer",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\bemim\Workspace\DAM\TrabajoFinalGrado\Chat\ChatBMServer\src\main\java\org\example\chatbmbis" />
       <recent name="C:\Users\bemim\Workspace\brunales-code\Chat\ChatBMServer" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\bemim\Workspace\DAM\TrabajoFinalGrado\Chat\ChatBMServer\src\main\resources" />
-      <recent name="C:\Users\bemim\Workspace\DAM\TrabajoFinalGrado\Chat\ChatBMServer\src\main\resources\txts" />
-    </key>
   </component>
-  <component name="RunManager" selected="Application.Server">
-    <configuration name="AIConnector" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.chatapp.IAs.AIConnector" />
-      <module name="ChatBMBis" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.chatapp.IAs.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+  <component name="RunManager">
+    <configuration name="SERVER" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="org.chatapp.server.Server" />
-      <module name="ChatBMBis" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.chatapp.utils.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
+      <module name="chatbm" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.Server" />
-        <item itemvalue="Application.AIConnector" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -175,32 +120,9 @@
       <workItem from="1709487919728" duration="849000" />
       <workItem from="1709642561773" duration="122000" />
       <workItem from="1709642730734" duration="14575000" />
-      <workItem from="1710240413632" duration="11421000" />
-      <workItem from="1710672612172" duration="9739000" />
-      <workItem from="1710717016460" duration="17000" />
-      <workItem from="1710717040331" duration="3007000" />
-      <workItem from="1710788170373" duration="1070000" />
-      <workItem from="1710789427859" duration="18494000" />
-      <workItem from="1710873686530" duration="1404000" />
-      <workItem from="1711240573519" duration="6729000" />
-      <workItem from="1711292364728" duration="12435000" />
-      <workItem from="1711709031140" duration="4478000" />
-      <workItem from="1711740593154" duration="14000" />
-      <workItem from="1711740626530" duration="35000" />
-      <workItem from="1711897506745" duration="10690000" />
-      <workItem from="1712235121372" duration="8113000" />
-      <workItem from="1712673424584" duration="1966000" />
-      <workItem from="1712756279113" duration="3909000" />
-      <workItem from="1712762073070" duration="17843000" />
-      <workItem from="1712845927006" duration="4317000" />
-      <workItem from="1712867517201" duration="1344000" />
-      <workItem from="1712936554573" duration="725000" />
-      <workItem from="1714833333942" duration="5891000" />
-      <workItem from="1716653662231" duration="8868000" />
-      <workItem from="1716664715245" duration="1848000" />
-      <workItem from="1716713570946" duration="3795000" />
-      <workItem from="1716989098898" duration="2273000" />
-      <workItem from="1717007991544" duration="3201000" />
+      <workItem from="1709714048820" duration="1606000" />
+      <workItem from="1714034555331" duration="34000" />
+      <workItem from="1717060177161" duration="2147000" />
     </task>
     <servers />
   </component>
