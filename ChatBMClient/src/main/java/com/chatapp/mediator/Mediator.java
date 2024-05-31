@@ -136,7 +136,7 @@ public class Mediator {
         if (actionRefused(keyWord)) {
             // si la accion fue rechazada
             setSuccessfulAction(false);
-            WarningWindow.instanceWarningWindow(messageParts[1]);
+            WarningWindow.instanceWarningWindow(message);
         } else if (isActionApproved(keyWord)) {
             // si fue aprobada
             setSuccessfulAction(true);

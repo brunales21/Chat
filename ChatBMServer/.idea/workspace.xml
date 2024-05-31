@@ -6,8 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="6ffc28d6-f167-4c5e-a0a7-d252a53a42e3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../ChatBMClient/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/app/ChatApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/app/ChatApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/mediator/Mediator.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/mediator/Mediator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat.db" beforeDir="false" afterPath="$PROJECT_DIR$/chat.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/chatapp/IAs/AIConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/chatapp/IAs/AIConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/chatapp/IAs/OpenAIConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/chatapp/IAs/OpenAIConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/chatapp/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/chatapp/server/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +60,7 @@
   "keyToString": {
     "Application.AIConnector.executor": "Run",
     "Application.BackspaceRemover.executor": "Run",
+    "Application.OpenAIConnector.executor": "Run",
     "Application.Server.executor": "Run",
     "Application.Utils.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
@@ -97,6 +104,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="OpenAIConnector" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.chatapp.IAs.OpenAIConnector" />
+      <module name="ChatBMBis" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.chatapp.IAs.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.chatapp.server.Server" />
       <module name="ChatBMBis" />
@@ -114,13 +134,15 @@
       <list>
         <item itemvalue="Application.Server" />
         <item itemvalue="Application.AIConnector" />
+        <item itemvalue="Application.OpenAIConnector" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-21.0.1-openjdk-21.0.1-f644763e9732-f98dd351" />
+        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
       </set>
     </attachedChunks>
   </component>
@@ -193,6 +215,7 @@
       <workItem from="1717007991544" duration="13015000" />
       <workItem from="1717081109892" duration="54000" />
       <workItem from="1717081430474" duration="787000" />
+      <workItem from="1717149426966" duration="4163000" />
     </task>
     <servers />
   </component>

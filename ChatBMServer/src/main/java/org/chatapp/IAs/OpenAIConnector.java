@@ -1,6 +1,8 @@
 package org.chatapp.IAs;
 
 import okhttp3.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,7 +12,7 @@ public class OpenAIConnector {
     private static final String API_URL = "https://api.openai.com/v1/chat/completions";
     private static final String MODEL = "gpt-3.5-turbo";
     private static final int MAX_TOKENS = 50;
-    private static final String API_KEY = "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";
+    private static final String API_KEY = "sk-proj-yNWssV7d5JQUngLpC8iNT3BlbkFJV8j41dxhbCNFTWgNV9FG";
 
     private static final OkHttpClient client = new OkHttpClient();
     private static final MediaType JSON = MediaType.parse("application/json");
@@ -25,15 +27,17 @@ public class OpenAIConnector {
             // Realizar la solicitud HTTP
             String response = sendRequest(body);
 
-            // Actualizar el historial de conversaciones
-            updateConversationHistory(message, response);
-
             // Extraer y devolver la respuesta del modelo
-            return extractContentFromResponse(response);
+            String botMessage = extractContentFromResponse(response);
+
+            // Actualizar el historial de conversaciones
+            updateConversationHistory(message, botMessage);
+
+            return botMessage;
 
         } catch (IOException e) {
-            System.out.println("Mensaje de la excepcion: "+e.getMessage());
-            System.out.println(e.getCause());
+            System.out.println("Mensaje de la excepción: " + e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }
@@ -75,20 +79,19 @@ public class OpenAIConnector {
     private static void updateConversationHistory(String message, String response) {
         // Agregar el mensaje y la respuesta al historial de conversaciones
         conversationHistory.add(message);
-        conversationHistory.add(extractContentFromResponse(response));
+        conversationHistory.add(response);
     }
 
     public static String extractContentFromResponse(String response) {
-        int startMarker = response.indexOf("content") + 11; // Marcador para el inicio del contenido
-        int endMarker = response.indexOf("}", startMarker); // Marcador para el final del contenido
-        System.out.println(response);
-        return response.substring(startMarker, endMarker-1); // Devolver el contenido de la respuesta
+        JSONObject jsonResponse = new JSONObject(response);
+        JSONArray choices = jsonResponse.getJSONArray("choices");
+        JSONObject firstChoice = choices.getJSONObject(0);
+        JSONObject message = firstChoice.getJSONObject("message");
+        return message.getString("content").trim();
     }
 
     public static void main(String[] args) {
-        System.out.println(getGPTResponse("Hola, mi nombre es laura"));
-
-
+        System.out.println(getGPTResponse("Hola, mi nombre es Laura"));
         System.out.println(conversationHistory);
     }
 }

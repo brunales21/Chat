@@ -1,6 +1,7 @@
 package org.chatapp.server;
 
 import org.chatapp.IAs.AIConnector;
+import org.chatapp.IAs.OpenAIConnector;
 import org.chatapp.constants.*;
 import org.chatapp.db.SQLiteManager;
 import org.chatapp.exceptions.*;
@@ -219,6 +220,7 @@ public class Server {
                     } else {
                         if (arg.equalsIgnoreCase(Commands.IA.name())) {
                             String response = AIConnector.getAISnippetsForQuery(msg);
+                            //String response = OpenAIConnector.getGPTResponse(msg);
                             sendMessage(getChatBotByName(Commands.IA.name()), user, response);
                         } else {
                             sendMessage(user, getUserByNickname(arg), msg);

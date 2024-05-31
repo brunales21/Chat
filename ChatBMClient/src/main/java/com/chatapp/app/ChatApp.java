@@ -25,7 +25,7 @@ public class ChatApp extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        User user = new User();
+        User user = new User("localhost", 8080);
         setMediator(user.getMediator());
 
         FXMLLoader fxmlLoader = new FXMLLoader(ChatApp.class.getResource("/com/chatapp/chatView.fxml"));

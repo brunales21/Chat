@@ -11,7 +11,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class AIConnector {
-    private static final String API_KEY = "d1480039-f769-4c08-a430-53694cdf5927<__>1OuyiBETU8N2v5f4lW02XyYS";
+    private static final String API_KEY = "2201124e-4fac-41a2-b960-5f3dc78dd70d<__>1PMTegETU8N2v5f4ZESdF2ua";
 
     public static String getAISnippetsForQuery(String query) {
         HttpClient client = HttpClient.newHttpClient();
