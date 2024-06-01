@@ -1,7 +1,6 @@
 package org.chatapp.server;
 
 import org.chatapp.IAs.AIConnector;
-import org.chatapp.IAs.OpenAIConnector;
 import org.chatapp.constants.*;
 import org.chatapp.db.SQLiteManager;
 import org.chatapp.exceptions.*;
@@ -16,6 +15,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -192,6 +192,7 @@ public class Server {
         String[] commandParts = SyntaxUtils.splitCommandLine(command);
         if (!isCorrectSyntax(commandParts)) {
             sendErrorMessage(senderSocket, new SyntaxException(command).getCliMsg());
+            return;
         }
         User user = socketUserMap.get(senderSocket);
         String commandName = commandParts[0].toUpperCase();

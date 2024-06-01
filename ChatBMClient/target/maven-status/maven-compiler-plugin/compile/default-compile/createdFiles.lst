@@ -13,6 +13,7 @@ com\chatapp\utils\SyntaxUtils.class
 com\chatapp\constants\Constants.class
 com\chatapp\model\PrivateChat.class
 com\chatapp\utils\NodeUtils.class
+com\chatapp\utils\FieldValidator.class
 com\chatapp\controllers\ChatController$1$1.class
 com\chatapp\mediator\Mediator.class
 com\chatapp\app\Main.class

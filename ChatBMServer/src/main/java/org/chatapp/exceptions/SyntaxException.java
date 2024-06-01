@@ -2,14 +2,14 @@ package org.chatapp.exceptions;
 
 public class SyntaxException extends ChatException {
     public SyntaxException(String command) {
-        super("El comando " + command + " no existe.", "SyntaxException");
+        super("La sintaxis de " + command + " es incorrecta.", "SyntaxException");
     }
 
     public SyntaxException(String[] parts) {
-        super("El comando " + String.join(" ", parts) + " no existe.", "SyntaxException");
+        super("La sintaxis de " + String.join(" ", parts) + " no es correcta.", "SyntaxException");
     }
 
     public SyntaxException() {
-        super("El comando no existe.", "SyntaxException");
+        super("Sintaxis de comando incorrecta.", "SyntaxException");
     }
 }

@@ -1,5 +1,3 @@
 
 Inicio sesion: login <nickname> <password>
-
 Registro: signup <nickname> <password>
-
