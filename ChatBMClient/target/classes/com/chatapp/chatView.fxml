@@ -8,9 +8,9 @@
 
 <AnchorPane fx:id="mainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="802.0" style="-fx-background-color: #eff6fc;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chatapp.controllers.ChatController">
    <children>
-      <HBox maxHeight="601.0" maxWidth="802.0" minHeight="600.0" minWidth="800.0" prefHeight="601.0" prefWidth="802.0" style="-fx-background-color: #eff6fc;" stylesheets="@../../css/styles.css">
+      <HBox maxHeight="Infinity" maxWidth="Infinity" minHeight="600.0" minWidth="800.0" prefHeight="601.0" prefWidth="802.0" style="-fx-background-color: #eff6fc;" stylesheets="@../../css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox alignment="TOP_CENTER" maxHeight="569.0" maxWidth="78.0" prefHeight="569.0" prefWidth="72.0" styleClass="anchorPane" stylesheets="@../../css/styles.css">
+            <VBox alignment="TOP_CENTER" minHeight="569.0" prefHeight="569.0" prefWidth="72.0" maxWidth="72.0" styleClass="anchorPane" stylesheets="@../../css/styles.css">
                <HBox.margin>
                   <Insets bottom="30.0" left="20.0" right="10.0" top="30.0" />
                </HBox.margin>
@@ -54,19 +54,20 @@
                      </tooltip>
                   </Button>
 
-
+                  <!-- Espaciador para empujar el icono hacia abajo -->
+                  <Pane VBox.vgrow="ALWAYS" />
 
                   <ImageView fitHeight="45.0" fitWidth="51.0" onMouseClicked="#onClickExit" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../imgs/exit.png" />
                      </image>
                      <VBox.margin>
-                        <Insets bottom="20.0" top="250.0" />
+                        <Insets bottom="20.0" />
                      </VBox.margin>
                   </ImageView>
                </children>
             </VBox>
-            <VBox prefHeight="600.0" prefWidth="278.0" style="-fx-background-color: white;">
+            <VBox alignment="TOP_CENTER" minHeight="600.0" minWidth="278.0" prefHeight="600.0" prefWidth="278.0" style="-fx-background-color: white;" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                <HBox.margin>
                   <Insets bottom="30.0" left="15.0" right="10.0" top="30.0" />
                </HBox.margin>
@@ -74,47 +75,42 @@
                   <Label fx:id="userNameLabel" alignment="CENTER" prefHeight="63.0" prefWidth="281.0" text="Label" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="24.0" />
-                     </font></Label>
-                  <VBox prefHeight="157.0" prefWidth="273.0">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
+                     </font>
+                  </Label>
+                  <VBox prefHeight="157.0" prefWidth="273.0" VBox.vgrow="ALWAYS">
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" top="20.0" />
                      </VBox.margin>
                      <children>
                         <Label prefHeight="35.0" prefWidth="264.0" text="Grupos" />
-                        <ScrollPane prefHeight="126.0" prefWidth="259.0">
+                        <ScrollPane fitToWidth="true" fitToHeight="true" VBox.vgrow="ALWAYS">
                            <content>
                               <VBox fx:id="vBoxChannels" prefHeight="125.0" prefWidth="242.0" style="-fx-background-color: white;" />
                            </content>
                         </ScrollPane>
                      </children>
                   </VBox>
-                  <VBox prefHeight="272.0" prefWidth="280.0">
+                  <VBox prefHeight="272.0" prefWidth="280.0" VBox.vgrow="ALWAYS">
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" top="20.0" />
                      </VBox.margin>
                      <children>
                         <Label prefHeight="48.0" prefWidth="284.0" text="Contactos" />
-                        <ScrollPane prefHeight="226.0" prefWidth="277.0">
+                        <ScrollPane fitToWidth="true" fitToHeight="true" VBox.vgrow="ALWAYS">
                            <content>
                               <VBox fx:id="vBoxContacts" prefHeight="226.0" prefWidth="240.0" style="-fx-background-color: white; -fx-border-color: white;" />
                            </content>
                         </ScrollPane>
                      </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
                   </VBox>
                </children>
             </VBox>
-            <VBox alignment="CENTER" prefHeight="538.0" prefWidth="372.0" style="-fx-background-color: white;">
+            <VBox alignment="CENTER" minHeight="538.0" minWidth="372.0" prefHeight="538.0" prefWidth="372.0" style="-fx-background-color: white;" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                <HBox.margin>
                   <Insets bottom="30.0" right="15.0" top="30.0" />
                </HBox.margin>
                <children>
-                  <HBox prefHeight="80.0" prefWidth="350.0">
+                  <HBox prefHeight="80.0" prefWidth="350.0" HBox.hgrow="ALWAYS">
                      <children>
                         <ImageView fitHeight="60.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -145,28 +141,16 @@
                            </children>
                         </VBox>
                      </children>
-                     <VBox.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </VBox.margin>
                   </HBox>
-                  <Separator prefHeight="3.0" prefWidth="366.0" style="-fx-background-color: grey;">
-                     <VBox.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </VBox.margin>
-                  </Separator>
-
-                        <ListView fx:id="messagesListView" prefHeight="368.0" prefWidth="333.0">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets left="30.0" right="30.0" top="20.0" />
-                           </padding>
-                        </ListView>
-
-                  <HBox alignment="CENTER_LEFT" prefHeight="83.0" prefWidth="371.0">
+                  <Separator prefHeight="3.0" prefWidth="366.0" style="-fx-background-color: grey;" />
+                  <ListView fx:id="messagesListView" prefHeight="368.0" prefWidth="333.0" VBox.vgrow="ALWAYS">
+                     <padding>
+                        <Insets left="30.0" right="30.0" top="20.0" />
+                     </padding>
+                  </ListView>
+                  <HBox alignment="CENTER_LEFT" prefHeight="83.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <TextField fx:id="textMessageField" prefHeight="44.0" prefWidth="299.0">
+                        <TextField fx:id="textMessageField" prefHeight="44.0" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
@@ -183,6 +167,7 @@
                   </HBox>
                </children>
             </VBox>
-         </children></HBox>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

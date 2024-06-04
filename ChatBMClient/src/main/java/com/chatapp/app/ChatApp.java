@@ -1,9 +1,6 @@
 package com.chatapp.app;
 
-import com.chatapp.controllers.AddContactViewController;
-import com.chatapp.controllers.ChatController;
-import com.chatapp.controllers.LoginController;
-import com.chatapp.controllers.SignupController;
+import com.chatapp.controllers.*;
 import com.chatapp.mediator.Mediator;
 import com.chatapp.model.User;
 import javafx.application.Application;
@@ -24,12 +21,17 @@ public class ChatApp extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         User user = new User();
         setMediator(user.getMediator());
 
         FXMLLoader fxmlLoader = new FXMLLoader(ChatApp.class.getResource("/com/chatapp/chatView.fxml"));
-        Scene chatView = new Scene(fxmlLoader.load());
+        Scene chatView = null;
+        try {
+            chatView = new Scene(fxmlLoader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         Stage stageChat = new Stage();
         stageChat.setTitle("Chat");
         stageChat.setScene(chatView);
@@ -44,7 +46,12 @@ public class ChatApp extends Application {
         stageChat.getIcons().add(icon);
 
         FXMLLoader fxmlLoader3 = new FXMLLoader(ChatApp.class.getResource("/com/chatapp/addContactView.fxml"));
-        Scene adduserView = new Scene(fxmlLoader3.load());
+        Scene adduserView = null;
+        try {
+            adduserView = new Scene(fxmlLoader3.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         Stage stageAddChat = new Stage();
         stageAddChat.getIcons().add(icon);
         stageAddChat.setScene(adduserView);
@@ -56,7 +63,12 @@ public class ChatApp extends Application {
 
 
         FXMLLoader fxmlLoader1 = new FXMLLoader(ChatApp.class.getResource("/com/chatapp/signupView.fxml"));
-        Scene scene1 = new Scene(fxmlLoader1.load(), 993, 578);
+        Scene scene1 = null;
+        try {
+            scene1 = new Scene(fxmlLoader1.load(), 993, 578);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         Stage signupStage = new Stage();
         SignupController signupController = fxmlLoader1.getController();
         signupController.setUser(user);
@@ -70,7 +82,12 @@ public class ChatApp extends Application {
 
 
         FXMLLoader fxmlLoader2 = new FXMLLoader(ChatApp.class.getResource("/com/chatapp/loginView.fxml"));
-        Scene scene = new Scene(fxmlLoader2.load(), 993, 578);
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader2.load(), 993, 578);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         LoginController loginController = fxmlLoader2.getController();
         loginController.setUser(user);
         loginController.setMediator(mediator);
@@ -84,6 +101,10 @@ public class ChatApp extends Application {
         setCloseWindow(stageChat);
         setCloseWindow(signupStage);
 
+        initEnterActions(chatController, loginController, signupController);
+    }
+
+    private void initEnterActions(ChatController chatController, LoginController loginController, SignupController signupController) {
         chatController.getTextMessageField().setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ENTER) {
                 chatController.sendMessage();
@@ -113,6 +134,13 @@ public class ChatApp extends Application {
                 signupController.signUp();
             }
         });
+
+        signupController.getPasswordField2().setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+                signupController.signUp();
+            }
+        });
+
     }
 
     private void setCloseWindow(Stage stage) {

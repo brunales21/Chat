@@ -47,7 +47,6 @@ public class LoginController extends Controller {
                     closeLoginView();
                     mediator.createChatView();
                     mediator.getUser().start();
-
                 } else {
                     WarningWindow.instanceWarningWindow(mediator.getUser().getServerResponse());
                     if (mediator.getUser().getServerResponse().equals(ErrorTypes.SERVER_DOWN)) {

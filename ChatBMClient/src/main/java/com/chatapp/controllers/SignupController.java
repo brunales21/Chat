@@ -6,6 +6,7 @@ import com.chatapp.model.User;
 import com.chatapp.utils.FieldValidator;
 import com.chatapp.utils.WarningWindow;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -41,7 +42,6 @@ public class SignupController extends Controller {
                     closeSignupView();
                     mediator.createChatView();
                     mediator.getUser().start();
-
                 } else {
                     WarningWindow.instanceWarningWindow(mediator.getUser().getServerResponse());
                     if (mediator.getUser().getServerResponse().equals(ErrorTypes.SERVER_DOWN)) {
@@ -97,5 +97,9 @@ public class SignupController extends Controller {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public PasswordField getPasswordField2() {
+        return passwordField2;
     }
 }

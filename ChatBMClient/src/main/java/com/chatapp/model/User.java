@@ -114,8 +114,7 @@ public class User extends Client {
 
     @Override
     public void run() {
-        mediator.getChatController().loadChatItems();
-        Scanner in = null;
+        Scanner in;
         try {
             in = new Scanner(getSocket().getInputStream());
         } catch (IOException e) {

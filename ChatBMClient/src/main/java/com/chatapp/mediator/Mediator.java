@@ -79,6 +79,7 @@ public class Mediator {
     }
 
     public void createChatView() {
+        getChatController().loadChatItems();
         Stage stage = null;
         for (Map.Entry<Stage, Controller> entry : view.entrySet()) {
             if (entry.getKey().getTitle().equals(Constants.CHAT_VIEW_TITLE)) {
