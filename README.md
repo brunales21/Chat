@@ -26,6 +26,11 @@ This project is a simple chat system developed in Java, using Maven as a depende
 - **Apache Maven 3.6.3** or higher
 - **JavaFX** (included in Java 11 or higher)
 
+## Chat with CLI
+```sh
+telnet brunales.com 8080
+```
+
 ## Installation
 
 ### Clone the repository
@@ -33,9 +38,4 @@ This project is a simple chat system developed in Java, using Maven as a depende
 ```sh
 git clone https://github.com/your-username/your-repo.git
 cd your-repo
-```
-
-## Chat with CLI
-```sh
-telnet brunales.com 8080
 ```
