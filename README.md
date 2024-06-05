@@ -1,26 +1,29 @@
 # Proyecto de Chat en Java
 
-Este es el repositorio de nuestro Trabajo de Fin de Grado (TFG), desarrollado por [Tu Nombre] y [Nombre de tu compañera]. El proyecto consiste en una aplicación de chat funcional desarrollada en Java. La lógica del servidor está alojada en la nube y el cliente se distribuye como un archivo `.jar`, desarrollado usando el gestor de dependencias Maven.
+## Descripción
+
+Este proyecto consiste en un sistema de chat simple desarrollado en Java, utilizando Maven como gestor de dependencias. El sistema de chat permite la creación de canales privados con amigos y es accesible a través de comandos utilizando Telnet. El proyecto está dividido en dos partes: el cliente y el servidor.
+
+- **Servidor**: Alojado en un servidor cloud.
+- **Cliente**: Una interfaz gráfica de usuario (GUI) desarrollada con JavaFX.
 
 ## Características
 
-- Chat funcional y amigable
-- Lógica del servidor gestionada en la nube
-- Cliente desarrollado en Java y empaquetado como un archivo `.jar`
-- Interfaz de usuario amigable (GUI)
-- Comunicación posible mediante comandos, incluso sin la GUI
+- **Creación de canales**: Los usuarios pueden crear canales para chatear con amigos.
+- **Accesibilidad mediante Telnet**: El chat puede ser utilizado a través de comandos en Telnet.
+- **Interfaz gráfica**: Cliente desarrollado con JavaFX para una mejor experiencia de usuario.
+- **Estructura de proyecto Maven**: Facilita la gestión de dependencias y la construcción del proyecto.
+
+## Requisitos
+
+- **Java 11** o superior
+- **Apache Maven 3.6.3** o superior
+- **JavaFX** (ya incluido en Java 11 o superior)
 
 ## Instalación
 
-### Requisitos previos
+### Clonar el repositorio
 
-- [Java JDK](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html) (versión 11 o superior)
-- [Maven](https://maven.apache.org/download.cgi) instalado
-
-### Instrucciones
-
-1. Clona el repositorio:
-
-   ```bash
-   git clone https://github.com/tu-usuario/proyecto-chat-java.git
-   cd proyecto-chat-java
+```sh
+git clone https://github.com/tu-usuario/tu-repo.git
+cd tu-repo
