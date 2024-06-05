@@ -33,10 +33,11 @@ Este proyecto consiste en un sistema de chat simple desarrollado en Java, utiliz
 ```sh
 git clone https://github.com/tu-usuario/tu-repo.git
 cd tu-repo
-
+```
 ## Uso desde CLI
 
 ### Conectarse al servidor
 
 ```sh
 telnet brunales.com 8080
+```
