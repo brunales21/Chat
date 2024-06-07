@@ -1,5 +1,6 @@
 package com.chatapp.app;
 
+import com.chatapp.constants.ConnectionConfig;
 import com.chatapp.controllers.*;
 import com.chatapp.mediator.Mediator;
 import com.chatapp.model.User;
@@ -22,7 +23,7 @@ public class ChatApp extends Application {
 
     @Override
     public void start(Stage stage) {
-        User user = new User();
+        User user = new User(ConnectionConfig.LOCALHOST, ConnectionConfig.DEFAULT_PORT);
         setMediator(user.getMediator());
 
         FXMLLoader fxmlLoader = new FXMLLoader(ChatApp.class.getResource("/com/chatapp/chatView.fxml"));
@@ -40,7 +41,7 @@ public class ChatApp extends Application {
         mediator.setChatController(chatController);
         mediator.getView().put(stageChat, chatController);
 
-        Image icon = new Image(getClass().getResourceAsStream("/imgs/appIcon3.png"));
+        Image icon = new Image(getClass().getResourceAsStream("/images/appIcon3.png"));
 
         // Establecer el ícono en la barra de tareas
         stageChat.getIcons().add(icon);

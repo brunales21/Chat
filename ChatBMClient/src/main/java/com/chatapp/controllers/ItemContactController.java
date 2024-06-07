@@ -3,15 +3,16 @@ package com.chatapp.controllers;
 import com.chatapp.callbacks.Callback;
 import com.chatapp.constants.Commands;
 import com.chatapp.mediator.Mediator;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
-public class ContactItemController extends Controller {
+import java.util.Objects;
+
+public class ItemContactController extends Controller {
     private Mediator mediator;
     @FXML
     Label nicknameLabel;
@@ -21,17 +22,20 @@ public class ContactItemController extends Controller {
     private Parent view;
     @FXML
     private ImageView notificationImg;
+    @FXML
+    private ImageView profilePicture;
 
     private Callback callback = () -> {
     };
 
-    public void onBorrarSubMenu(ActionEvent actionEvent) {
+    public void onBorrarSubMenu() {
         if (getNicknameLabelText().startsWith("#")) {
             mediator.sendMessage(Commands.PART.name() + " " + getNicknameLabelText());
         } else {
             mediator.sendMessage(Commands.DELETE.name() + " " + getNicknameLabelText());
         }
         mediator.deleteContactItem(getNicknameLabelText());
+        mediator.getChatController().getChatLabelPicture().setVisible(false);
     }
 
     public void showNotificationImg(boolean b) {
@@ -39,7 +43,7 @@ public class ContactItemController extends Controller {
     }
 
     @FXML
-    public void onClickItem(MouseEvent event) {
+    public void onClickItem() {
         callback.run();
     }
 
@@ -69,5 +73,17 @@ public class ContactItemController extends Controller {
 
     public void setView(Parent view) {
         this.view = view;
+    }
+    public void setChannelProfilePicture() {
+        profilePicture.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/channel_picture2.png"))));
+
+    }
+
+    public void setUserProfilePicture() {
+        profilePicture.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/usuario.png"))));
+    }
+
+    public void setAIProfilePicture() {
+        profilePicture.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/ai.png"))));
     }
 }

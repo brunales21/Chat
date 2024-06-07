@@ -10,14 +10,14 @@
    <children>
       <HBox maxHeight="Infinity" maxWidth="Infinity" minHeight="600.0" minWidth="800.0" prefHeight="601.0" prefWidth="802.0" style="-fx-background-color: #eff6fc;" stylesheets="@../../css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox alignment="TOP_CENTER" minHeight="569.0" prefHeight="569.0" prefWidth="72.0" maxWidth="72.0" styleClass="anchorPane" stylesheets="@../../css/styles.css">
+            <VBox alignment="TOP_CENTER" maxWidth="72.0" minHeight="569.0" prefHeight="569.0" prefWidth="72.0" styleClass="anchorPane" stylesheets="@../../css/styles.css">
                <HBox.margin>
                   <Insets bottom="30.0" left="20.0" right="10.0" top="30.0" />
                </HBox.margin>
                <children>
                   <ImageView fitHeight="48.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../imgs/usuario.png" />
+                        <Image url="@../../images/usuario.png" />
                      </image>
                      <VBox.margin>
                         <Insets top="10.0" />
@@ -28,7 +28,7 @@
                      <graphic>
                         <ImageView fitHeight="66.0" fitWidth="53.0" preserveRatio="true">
                            <image>
-                              <Image url="@../../imgs/anadir-grupo.png" />
+                              <Image url="@../../images/anadir-grupo.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -45,7 +45,7 @@
                      <graphic>
                         <ImageView fitHeight="63.0" fitWidth="52.0" preserveRatio="true">
                            <image>
-                              <Image url="@../../imgs/sms.png" />
+                              <Image url="@../../images/sms.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -59,7 +59,7 @@
 
                   <ImageView fitHeight="45.0" fitWidth="51.0" onMouseClicked="#onClickExit" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../imgs/exit.png" />
+                        <Image url="@../../images/exit.png" />
                      </image>
                      <VBox.margin>
                         <Insets bottom="20.0" />
@@ -67,7 +67,7 @@
                   </ImageView>
                </children>
             </VBox>
-            <VBox alignment="TOP_CENTER" minHeight="600.0" minWidth="278.0" prefHeight="600.0" prefWidth="278.0" style="-fx-background-color: white;" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+            <VBox alignment="TOP_CENTER" maxWidth="350" minHeight="600.0" minWidth="278.0" prefHeight="600.0" prefWidth="278.0" style="-fx-background-color: white;" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                <HBox.margin>
                   <Insets bottom="30.0" left="15.0" right="10.0" top="30.0" />
                </HBox.margin>
@@ -83,7 +83,7 @@
                      </VBox.margin>
                      <children>
                         <Label prefHeight="35.0" prefWidth="264.0" text="Grupos" />
-                        <ScrollPane fitToWidth="true" fitToHeight="true" VBox.vgrow="ALWAYS">
+                        <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
                            <content>
                               <VBox fx:id="vBoxChannels" prefHeight="125.0" prefWidth="242.0" style="-fx-background-color: white;" />
                            </content>
@@ -96,9 +96,10 @@
                      </VBox.margin>
                      <children>
                         <Label prefHeight="48.0" prefWidth="284.0" text="Contactos" />
-                        <ScrollPane fitToWidth="true" fitToHeight="true" VBox.vgrow="ALWAYS">
+                        <ScrollPane maxHeight="275" fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
                            <content>
-                              <VBox fx:id="vBoxContacts" prefHeight="226.0" prefWidth="240.0" style="-fx-background-color: white; -fx-border-color: white;" />
+                              <!-- Modificación: Aplicación de estilos al VBox de contactos -->
+                              <VBox fx:id="vBoxContacts" styleClass="contact-vbox" />
                            </content>
                         </ScrollPane>
                      </children>
@@ -112,9 +113,9 @@
                <children>
                   <HBox prefHeight="80.0" prefWidth="350.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <ImageView fitHeight="60.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="chatLabelPicture" fitHeight="60.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true" visible="false">
                            <image>
-                              <Image url="@../../imgs/usuario.png" />
+                              <Image url="@../../images/usuario.png" />
                            </image>
                            <HBox.margin>
                               <Insets top="10.0" />
@@ -122,7 +123,7 @@
                         </ImageView>
                         <VBox prefHeight="57.0" prefWidth="305.0">
                            <children>
-                              <Label fx:id="receptorChatLabel" prefHeight="37.0" prefWidth="306.0" text=" ">
+                              <Label fx:id="receptorChatLabel" prefHeight="74.0" prefWidth="306.0" text=" ">
                                  <padding>
                                     <Insets left="20.0" />
                                  </padding>
@@ -133,7 +134,7 @@
                                     <Insets top="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label prefHeight="38.0" prefWidth="306.0" text="Online">
+                              <Label prefHeight="38.0" prefWidth="306.0">
                                  <padding>
                                     <Insets left="20.0" />
                                  </padding>
@@ -157,7 +158,7 @@
                         </TextField>
                         <ImageView fitHeight="37.0" fitWidth="38.0" onMouseClicked="#onClickSendMessage" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../imgs/enviar-mensaje.png" />
+                              <Image url="@../../images/enviar-mensaje.png" />
                            </image>
                            <HBox.margin>
                               <Insets left="10.0" />

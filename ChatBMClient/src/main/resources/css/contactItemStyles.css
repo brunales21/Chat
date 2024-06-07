@@ -1,0 +1,28 @@
+/* Estilo para los elementos de contacto */
+.contact-item {
+    -fx-background-color: #f2f2f2;
+    -fx-padding: 5px;
+    -fx-border-width: 0 0 1 0; /* Solo un borde inferior */
+    -fx-border-color: #ddd; /* Color del borde */
+}
+
+.contact-item:hover {
+    -fx-background-color: #e6e6e6; /* Cambia el color de fondo al pasar el ratón */
+}
+
+.contact-item .profile-picture {
+    -fx-border-radius: 50%;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1px;
+}
+
+.contact-item .nickname-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333; /* Color del texto */
+}
+
+.contact-item .online-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #1fff7a; /* Color verde para indicar "en línea" */
+}

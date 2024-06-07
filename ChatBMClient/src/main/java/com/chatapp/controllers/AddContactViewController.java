@@ -37,7 +37,7 @@ public class AddContactViewController extends Controller {
 
     @FXML
     private void onClickButtonLeft() {
-        String name = nicknameTextField.getText().toLowerCase();
+        String name = nicknameTextField.getText().toLowerCase().replaceAll(" ", "");
         if (!name.isEmpty()) {
             if (isCreateChannelBtn()) {
                 StringBuilder channelName = new StringBuilder("#").append(name);
@@ -71,7 +71,7 @@ public class AddContactViewController extends Controller {
 
     @FXML
     public void onClickButtonRight() {
-        String chatName = "#" + nicknameTextField.getText();
+        String chatName = "#" + nicknameTextField.getText().replaceAll(" ", "");
         if (!chatName.replaceAll("#", "").isEmpty() && !mediator.getUser().containsContact(chatName)) {
             if (nicknameTextField.getPromptText().equals(channelPrompt)) {
                 mediator.sendMessage(Commands.JOIN.name() + " " + chatName);

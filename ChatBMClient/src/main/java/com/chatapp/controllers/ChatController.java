@@ -19,6 +19,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -42,7 +44,9 @@ public class ChatController extends Controller {
     private Label receptorChatLabel, userNameLabel;
     @FXML
     private TextField textMessageField;
-    private final Map<String, ContactItemController> contactsMap = new HashMap<>();
+    @FXML
+    private ImageView chatLabelPicture;
+    private final Map<String, ItemContactController> contactsMap = new HashMap<>();
     private final Locale locale = Locale.getDefault();
     private final ResourceBundle bundle = ResourceBundle.getBundle(Constants.BUNDLE_MESSAGES, locale);
 
@@ -83,7 +87,7 @@ public class ChatController extends Controller {
 
     public void overlayChat(String nickname) {
         // Obtener el controlador del item utilizando el nickname proporcionado
-        ContactItemController itemContactController = contactsMap.get(nickname);
+        ItemContactController itemContactController = contactsMap.get(nickname);
 
         if (itemContactController != null) {
             // Obtener el nodo (vista) correspondiente al controlador
@@ -173,10 +177,17 @@ public class ChatController extends Controller {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        ContactItemController itemContactController = loader.getController();
+        ItemContactController itemContactController = loader.getController();
         itemContactController.setMediator(mediator);
         itemContactController.showNotificationImg(false);
         itemContactController.setCallback(() -> {
+            if (nickname.startsWith("#")) {
+                setChatLabelPicture("/images/channel_picture2.png");
+            } else if (nickname.equalsIgnoreCase(Commands.IA.name())) {
+                setChatLabelPicture("/images/ai.png");
+            } else {
+                setChatLabelPicture("/images/usuario.png");
+            }
             itemContactController.showNotificationImg(false);
             setReceptorChatLabelText(nickname);
             messagesListView.getItems().clear();
@@ -189,6 +200,13 @@ public class ChatController extends Controller {
         mediator.getUser().getChatMessagesMap().put(nickname, mediator.getUser().getMessages(nickname));
         mediator.getUser().addContact(nickname);
         itemContactController.setView(parent);
+        if (nickname.startsWith("#")) {
+            itemContactController.setChannelProfilePicture();
+        } else if (nickname.equalsIgnoreCase(Commands.IA.name())) {
+            itemContactController.setAIProfilePicture();
+        } else {
+            itemContactController.setUserProfilePicture();
+        }
         // Añadir el nuevo nodo al final de la lista de nodos hijos del vBoxPrivate
         Parent finalParent = parent;
         Platform.runLater(() -> {
@@ -207,7 +225,7 @@ public class ChatController extends Controller {
         // Iterar sobre los nodos y eliminar el que tenga el nickname deseado
         for (Node child : children) {
             if (child instanceof Parent) {
-                ContactItemController itemContactController = ((FXMLLoader) child.getUserData()).getController();
+                ItemContactController itemContactController = ((FXMLLoader) child.getUserData()).getController();
                 if (itemContactController.getNicknameLabelText().equals(nickname)) {
                     children.remove(child);
                     contactsMap.remove(nickname);
@@ -275,11 +293,20 @@ public class ChatController extends Controller {
         this.textMessageField = textMessageField;
     }
 
-    public Map<String, ContactItemController> getContactsMap() {
+    public Map<String, ItemContactController> getContactsMap() {
         return contactsMap;
     }
 
     public ListView getMessagesListView() {
         return messagesListView;
+    }
+
+    private void setChatLabelPicture(String path) {
+        chatLabelPicture.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(path))));
+        chatLabelPicture.setVisible(true);
+    }
+
+    public ImageView getChatLabelPicture() {
+        return chatLabelPicture;
     }
 }
