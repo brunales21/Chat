@@ -36,6 +36,6 @@ telnet brunales.com 8080
 ### Clone the repository
 
 ```sh
-git clone https://github.com/your-username/your-repo.git
-cd your-repo
+git clone https://github.com/brunales21/Chat.git
 ```
+If you want to try this app, first run the server and later run a client. Make sure your port 8080 is available.
