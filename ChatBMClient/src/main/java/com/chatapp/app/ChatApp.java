@@ -1,6 +1,7 @@
 package com.chatapp.app;
 
 import com.chatapp.constants.ConnectionConfig;
+import com.chatapp.constants.Constants;
 import com.chatapp.controllers.AddContactViewController;
 import com.chatapp.controllers.ChatController;
 import com.chatapp.controllers.LoginController;
@@ -37,7 +38,7 @@ public class ChatApp extends Application {
             throw new RuntimeException(e);
         }
         Stage stageChat = new Stage();
-        stageChat.setTitle("Chat");
+        stageChat.setTitle(Constants.CHAT_VIEW_TITLE);
         stageChat.setScene(chatView);
         ChatController chatController = fxmlLoader.getController();
         chatController.setMediator(mediator);
@@ -148,10 +149,6 @@ public class ChatApp extends Application {
 
     private void setCloseWindow(Stage stage) {
         stage.setOnCloseRequest(event -> mediator.onApplicationClose(stage));
-    }
-
-    public Mediator getMediator() {
-        return mediator;
     }
 
     public void setMediator(Mediator mediator) {

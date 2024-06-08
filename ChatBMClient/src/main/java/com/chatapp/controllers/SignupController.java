@@ -6,12 +6,12 @@ import com.chatapp.model.User;
 import com.chatapp.utils.FieldValidator;
 import com.chatapp.utils.WarningWindow;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class SignupController extends Controller {
+
     private Mediator mediator;
     private User user;
 
@@ -55,7 +55,6 @@ public class SignupController extends Controller {
         }
     }
 
-
     public void setMediator(Mediator mediator) {
         this.mediator = mediator;
     }
@@ -64,23 +63,15 @@ public class SignupController extends Controller {
         return usernameField;
     }
 
-    public void setUsernameField(TextField usernameField) {
-        this.usernameField = usernameField;
-    }
-
     public PasswordField getPasswordField() {
         return passwordField;
     }
-
-    public void setPasswordField(PasswordField passwordField) {
-        this.passwordField = passwordField;
-    }
-
 
     public void showWindow() {
         Stage stage = (Stage) this.passwordField.getScene().getWindow();
         stage.show();
     }
+
     public void closeSignupView() {
         Stage stage = (Stage) this.passwordField.getScene().getWindow();
         stage.close();

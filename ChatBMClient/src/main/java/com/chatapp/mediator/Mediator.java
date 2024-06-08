@@ -81,10 +81,11 @@ public class Mediator {
                 ChatController controller = (ChatController) entry.getValue();
                 stage = entry.getKey();
                 controller.getUserNameLabel().setText("Bienvenid@, " + user.getNickname());
+                chatController.setUserPictureLetter(user.getNickname().charAt(0));
                 break;
             }
         }
-        stage.setResizable(true);
+        assert stage != null;
         stage.show();
     }
 
@@ -107,6 +108,7 @@ public class Mediator {
         String opt1Inter = bundle.getString(opt1);
         String opt2Inter = bundle.getString(opt2);
 
+        assert addController != null;
         addController.setPromptText(promptTextInter);
         addController.getButton1().setText(opt1Inter);
         addController.getButton2().setText(opt2Inter);

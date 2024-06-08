@@ -10,7 +10,6 @@ import com.chatapp.utils.WarningWindow;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
@@ -32,7 +31,8 @@ public class AddContactViewController extends Controller {
     private Button button2;
     private Mediator mediator;
 
-    public AddContactViewController() {}
+    public AddContactViewController() {
+    }
 
     @FXML
     private void onClickButtonLeft() {
@@ -67,13 +67,15 @@ public class AddContactViewController extends Controller {
             mediator.addContactItem(mediator.getChatController().getvBoxContacts(), nickname);
         }
     }
+
     private void createChannelRequest(Mediator mediator, String channelName) {
         mediator.sendMessage(Commands.CREATE.name() + " " + channelName);
         ThreadUtils.sleep(100);
         if (mediator.successfulAction()) {
-            mediator.addContactItem(mediator.getChatController().getvBoxChannels(), channelName.toString());
+            mediator.addContactItem(mediator.getChatController().getvBoxChannels(), channelName);
         }
     }
+
     @FXML
     public void onClickButtonRight() {
         String chatName = "#" + nicknameTextField.getText().replaceAll(" ", "");
@@ -101,10 +103,6 @@ public class AddContactViewController extends Controller {
 
     public Button getButton2() {
         return button2;
-    }
-
-    public void setButton2(Button button2) {
-        this.button2 = button2;
     }
 
     public void setMediator(Mediator mediator) {

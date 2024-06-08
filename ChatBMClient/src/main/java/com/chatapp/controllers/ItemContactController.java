@@ -60,10 +60,6 @@ public class ItemContactController extends Controller {
         this.nicknameLabel.setText(nickNameLabel);
     }
 
-    public ImageView getNotificationImg() {
-        return notificationImg;
-    }
-
     public void setMediator(Mediator mediator) {
         this.mediator = mediator;
     }

@@ -13,10 +13,6 @@ public class Channel {
         this.users = new ArrayList<>();
     }
 
-    public List<User> getUsers() {
-        return users;
-    }
-
     public String getName() {
         return name;
     }

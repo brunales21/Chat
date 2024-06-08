@@ -65,3 +65,69 @@
     -fx-wrap-text: true;
 }
 
+/* styles.css */
+.rounded-textfield {
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-padding: 10px;
+    -fx-background-color: white;
+    -fx-border-color: lightgray;
+}
+
+/* styles.css */
+.contact-item-selected {
+    -fx-background-color: #a3f596; /* Light blue color */
+}
+
+/* styles.css */
+.vbox-rounded {
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-background-color: inherit;
+}
+
+/* Custom scrollbar for ListView */
+.list-view .scroll-bar:vertical {
+    -fx-background-color: transparent; /* Transparent background for the scrollbar */
+    -fx-padding: 0; /* No padding */
+}
+
+.list-view .scroll-bar:vertical .track {
+    -fx-background-color: transparent; /* Transparent background for the track */
+    -fx-padding: 0; /* No padding */
+}
+
+.list-view .scroll-bar:vertical .thumb {
+    -fx-background-color: rgba(0, 0, 0, 0.2); /* Light grey thumb */
+    -fx-background-radius: 5px; /* Rounded corners */
+    -fx-padding: 0; /* No padding */
+    -fx-pref-width: 5px; /* Thin scrollbar thumb */
+}
+
+.list-view .scroll-bar:vertical .increment-button,
+.list-view .scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent; /* Transparent background for the buttons */
+}
+
+/* Custom scrollbar for ScrollPane */
+.scroll-pane .scroll-bar:vertical {
+    -fx-background-color: transparent; /* Transparent background for the scrollbar */
+    -fx-padding: 0; /* No padding */
+}
+
+.scroll-pane .scroll-bar:vertical .track {
+    -fx-background-color: transparent; /* Transparent background for the track */
+    -fx-padding: 0; /* No padding */
+}
+
+.scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: rgba(0, 0, 0, 0.2); /* Light grey thumb */
+    -fx-background-radius: 5px; /* Rounded corners */
+    -fx-padding: 0; /* No padding */
+    -fx-pref-width: 5px; /* Thin scrollbar thumb */
+}
+
+.scroll-pane .scroll-bar:vertical .increment-button,
+.scroll-pane .scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent; /* Transparent background for the buttons */
+}

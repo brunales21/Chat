@@ -209,10 +209,6 @@ public class User extends Client {
         return authenticated;
     }
 
-    public void setAuthenticated(boolean authenticated) {
-        this.authenticated = authenticated;
-    }
-
     public boolean isConnected() {
         return connected;
     }

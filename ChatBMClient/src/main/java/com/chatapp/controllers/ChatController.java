@@ -35,24 +35,25 @@ import java.util.*;
 
 public class ChatController extends Controller {
 
-
+    private final ObservableList<Message> messageList = FXCollections.observableArrayList(); // Lista observable para los mensajes
+    private final Map<String, ItemContactController> contactsMap = new HashMap<>();
+    private final Locale locale = Locale.getDefault();
+    private final ResourceBundle bundle = ResourceBundle.getBundle(Constants.BUNDLE_MESSAGES, locale);
     private Mediator mediator;
     @FXML
     private AnchorPane mainAnchorPane;
     @FXML
+    private ImageView userPictureProfile;
+    @FXML
     private VBox vBoxChannels, vBoxContacts;
     @FXML
     private ListView<Message> messagesListView;
-    private final ObservableList<Message> messageList = FXCollections.observableArrayList(); // Lista observable para los mensajes
     @FXML
     private Label receptorChatLabel, userNameLabel;
     @FXML
     private TextField textMessageField;
     @FXML
     private ImageView chatLabelPicture;
-    private final Map<String, ItemContactController> contactsMap = new HashMap<>();
-    private final Locale locale = Locale.getDefault();
-    private final ResourceBundle bundle = ResourceBundle.getBundle(Constants.BUNDLE_MESSAGES, locale);
 
     @FXML
     protected void onClickChannelOptions() {
@@ -77,7 +78,7 @@ public class ChatController extends Controller {
         String receptor = receptorChatLabel.getText();
         if (!text.isBlank() && !receptor.isBlank()) {
             addMessageToListView(new Message(mediator.getUser().getNickname(), textMessageField.getText()));
-            //PRIVMSG MONICA : HOLA SOY BRUNO
+            //PRIVMSG MONICA:HOLA SOY BRUNO
             String message = Commands.PRIVMSG + " " + receptor + SyntaxUtils.DELIMITER + text;
             mediator.sendMessage(message);
         }
@@ -121,7 +122,7 @@ public class ChatController extends Controller {
 
     @FXML
     public void initialize() {
-        messagesListView.setStyle("-fx-background-color: transparent;");
+        messagesListView.setStyle("-fx-background-color: #d2f1ff;");
         messagesListView.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(Message msg, boolean empty) {
@@ -191,7 +192,16 @@ public class ChatController extends Controller {
         ItemContactController itemContactController = loader.getController();
         itemContactController.setMediator(mediator);
         itemContactController.showNotificationImg(false);
+        Parent finalParent1 = parent;
         itemContactController.setCallback(() -> {
+            // Restablecer el estilo de fondo de todos los elementos
+            for (Node child : vBox.getChildren()) {
+                child.setStyle("");
+            }
+
+            // Aplicar el estilo de fondo azul al elemento seleccionado
+            finalParent1.setStyle("-fx-background-color: #ADD8E6;");
+
             if (nickname.startsWith("#")) {
                 setChatLabelPicture("/images/channel_picture2.png");
             } else if (nickname.equalsIgnoreCase(Commands.IA.name())) {
@@ -204,6 +214,7 @@ public class ChatController extends Controller {
             messagesListView.getItems().clear();
             mediator.getUser().getMessages(nickname).forEach(this::addMessageToListView);
         });
+
 
         itemContactController.setNicknameLabelText(nickname);
 
@@ -304,29 +315,25 @@ public class ChatController extends Controller {
         return textMessageField;
     }
 
-    public void setTextMessageField(TextField textMessageField) {
-        this.textMessageField = textMessageField;
-    }
-
     public Map<String, ItemContactController> getContactsMap() {
         return contactsMap;
     }
 
-    public ListView getMessagesListView() {
-        return messagesListView;
+    private void setChatLabelPictureLetter(char letter) {
+        chatLabelPicture.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/letters/letra-" + letter + ".png".toLowerCase()))));
+        chatLabelPicture.setVisible(true);
+    }
+
+    public void setUserPictureLetter(char letter) {
+        userPictureProfile.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/letters/letra-" + letter + ".png".toLowerCase()))));
+    }
+
+    public ImageView getChatLabelPicture() {
+        return chatLabelPicture;
     }
 
     private void setChatLabelPicture(String path) {
         chatLabelPicture.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(path))));
         chatLabelPicture.setVisible(true);
-    }
-
-    private void setChatLabelPictureLetter(char letter) {
-        chatLabelPicture.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/letters/letra-"+letter+".png".toLowerCase()))));
-        chatLabelPicture.setVisible(true);
-    }
-
-    public ImageView getChatLabelPicture() {
-        return chatLabelPicture;
     }
 }

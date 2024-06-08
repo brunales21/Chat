@@ -3,6 +3,7 @@ package com.chatapp.controllers;
 import com.chatapp.constants.Constants;
 import com.chatapp.constants.ErrorTypes;
 import com.chatapp.internationalization.Internationalization;
+import com.chatapp.mediator.Mediator;
 import com.chatapp.model.User;
 import com.chatapp.utils.FieldValidator;
 import com.chatapp.utils.WarningWindow;
@@ -11,18 +12,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import com.chatapp.mediator.Mediator;
 
 public class LoginController extends Controller {
-    private Mediator mediator;
-    private User user;
 
     @FXML
     Button loginButton;
     @FXML
     TextField usernameField, passwordField;
+    private Mediator mediator;
+    private User user;
 
-    public LoginController() {}
+    public LoginController() {
+    }
 
     @FXML
     private void initialize() {
@@ -31,11 +32,11 @@ public class LoginController extends Controller {
         Internationalization.convertIntoOtherLanguage(Constants.USERNAME, usernameField);
         Internationalization.convertIntoOtherLanguage(Constants.PASSWORD, passwordField);
     }
+
     @FXML
     private void onClickLogin() {
         login();
     }
-
 
     public void login() {
         if (FieldValidator.validateCredentials(usernameField, passwordField, null)) {
@@ -70,10 +71,6 @@ public class LoginController extends Controller {
         stage.show();
     }
 
-    public Mediator getMediator() {
-        return mediator;
-    }
-
     public void setMediator(Mediator mediator) {
         this.mediator = mediator;
     }
@@ -82,15 +79,11 @@ public class LoginController extends Controller {
         return usernameField;
     }
 
-    public Button getEnterButton() {
-        return loginButton;
-    }
-
     public TextField getPasswordField() {
         return passwordField;
     }
 
-    public void swapWindow(MouseEvent mouseEvent) {
+    public void swapWindow() {
         closeLoginView();
         mediator.getSignupController().showWindow();
     }
