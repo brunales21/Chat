@@ -2,7 +2,6 @@ package com.chatapp.mediator;
 
 import com.chatapp.constants.Commands;
 import com.chatapp.constants.Constants;
-import com.chatapp.constants.ErrorTypes;
 import com.chatapp.controllers.*;
 import com.chatapp.daos.impl.FileChatDAO;
 import com.chatapp.model.Message;
@@ -13,19 +12,17 @@ import javafx.application.Platform;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.Console;
 import java.io.IOException;
 import java.util.*;
 
 public class Mediator {
 
-
     private static Mediator instance;
+    private final Map<Stage, Controller> view = new HashMap<>();
     private ChatController chatController;
     private AddContactViewController addViewController;
     private LoginController loginController;
     private SignupController signupController;
-    private final Map<Stage, Controller> view = new HashMap<>();
     private User user;
     private boolean successfulAction = true;
 
@@ -52,8 +49,6 @@ public class Mediator {
             throw new RuntimeException(e);
         }
     }
-
-
 
     public void onApplicationClose(Stage stage) {
         // Realizar limpieza o acciones previas al cierre
@@ -85,7 +80,7 @@ public class Mediator {
             if (entry.getKey().getTitle().equals(Constants.CHAT_VIEW_TITLE)) {
                 ChatController controller = (ChatController) entry.getValue();
                 stage = entry.getKey();
-                controller.getUserNameLabel().setText(user.getNickname());
+                controller.getUserNameLabel().setText("Bienvenid@, " + user.getNickname());
                 break;
             }
         }
@@ -147,7 +142,7 @@ public class Mediator {
         }
     }
 
-    private void messageHandler(String [] messageParts) {
+    private void messageHandler(String[] messageParts) {
         Message messageObj;
         messageParts[1] = messageParts[1].toLowerCase();
         if (messageParts[1].startsWith("#")) {

@@ -148,7 +148,7 @@ public class ChatController extends Controller {
 
                     HBox container = new HBox(messageBox);
                     container.setStyle("-fx-background-color: transparent;");
-                    boolean messageOwner = msg.getSender().equals(userNameLabel.getText());
+                    boolean messageOwner = msg.getSender().equals(mediator.getUser().getNickname());
 
                     if (messageOwner) {
                         messageLabel.setText(msg.getText());
@@ -197,7 +197,7 @@ public class ChatController extends Controller {
             } else if (nickname.equalsIgnoreCase(Commands.IA.name())) {
                 setChatLabelPicture("/images/ai.png");
             } else {
-                setChatLabelPicture("/images/usuario.png");
+                setChatLabelPictureLetter(nickname.charAt(0));
             }
             itemContactController.showNotificationImg(false);
             setReceptorChatLabelText(nickname);
@@ -216,7 +216,7 @@ public class ChatController extends Controller {
         } else if (nickname.equalsIgnoreCase(Commands.IA.name())) {
             itemContactController.setAIProfilePicture();
         } else {
-            itemContactController.setUserProfilePicture();
+            itemContactController.setUserProfilePicture(nickname.charAt(0));
         }
         // Añadir el nuevo nodo al final de la lista de nodos hijos del vBoxPrivate
         Parent finalParent = parent;
@@ -318,6 +318,11 @@ public class ChatController extends Controller {
 
     private void setChatLabelPicture(String path) {
         chatLabelPicture.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(path))));
+        chatLabelPicture.setVisible(true);
+    }
+
+    private void setChatLabelPictureLetter(char letter) {
+        chatLabelPicture.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/letters/letra-"+letter+".png".toLowerCase()))));
         chatLabelPicture.setVisible(true);
     }
 

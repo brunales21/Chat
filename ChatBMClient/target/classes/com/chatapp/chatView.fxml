@@ -100,7 +100,7 @@
                         <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="275" VBox.vgrow="ALWAYS">
                            <content>
                               <!-- Modificación: Aplicación de estilos al VBox de contactos -->
-                              <VBox fx:id="vBoxContacts" styleClass="contact-vbox" />
+                              <VBox fx:id="vBoxContacts" prefWidth="260.0" styleClass="contact-vbox" />
                            </content>
                         </ScrollPane>
                      </children>

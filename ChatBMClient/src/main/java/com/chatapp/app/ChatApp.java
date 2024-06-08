@@ -1,7 +1,10 @@
 package com.chatapp.app;
 
 import com.chatapp.constants.ConnectionConfig;
-import com.chatapp.controllers.*;
+import com.chatapp.controllers.AddContactViewController;
+import com.chatapp.controllers.ChatController;
+import com.chatapp.controllers.LoginController;
+import com.chatapp.controllers.SignupController;
 import com.chatapp.mediator.Mediator;
 import com.chatapp.model.User;
 import javafx.application.Application;
@@ -141,7 +144,6 @@ public class ChatApp extends Application {
                 signupController.signUp();
             }
         });
-
     }
 
     private void setCloseWindow(Stage stage) {

@@ -24,7 +24,6 @@ public class User extends Client {
     private boolean authenticated = false;
     private boolean connected = false;
 
-
     public User(String nickname, String hostname, int port) {
         super(hostname, port);
         this.nickname = nickname;
@@ -65,6 +64,7 @@ public class User extends Client {
             initSocket();
         }
     }
+
     public boolean connectToServer() {
         try {
             initUser();
@@ -159,8 +159,6 @@ public class User extends Client {
             WarningWindow.instanceWarningWindow(ErrorTypes.SERVER_DOWN);
         }
     }
-
-
 
     public List<Message> getMessages(String name) {
         return chatMessagesMap.computeIfAbsent(name, k -> new ArrayList<>());

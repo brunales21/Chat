@@ -13,9 +13,10 @@ import javafx.scene.layout.HBox;
 import java.util.Objects;
 
 public class ItemContactController extends Controller {
-    private Mediator mediator;
+
     @FXML
     Label nicknameLabel;
+    private Mediator mediator;
     @FXML
     private HBox item;
     @FXML
@@ -74,13 +75,13 @@ public class ItemContactController extends Controller {
     public void setView(Parent view) {
         this.view = view;
     }
+
     public void setChannelProfilePicture() {
         profilePicture.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/channel_picture2.png"))));
-
     }
 
-    public void setUserProfilePicture() {
-        profilePicture.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/usuario.png"))));
+    public void setUserProfilePicture(char letter) {
+        profilePicture.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/letters/letra-" + letter + ".png".toLowerCase()))));
     }
 
     public void setAIProfilePicture() {
