@@ -29,7 +29,7 @@ public class ChatApp extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(ChatApp.class.getResource("/com/chatapp/chatView.fxml"));
         Scene chatView = null;
         try {
-            chatView = new Scene(fxmlLoader.load());
+            chatView = new Scene(fxmlLoader.load(), 993, 700);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

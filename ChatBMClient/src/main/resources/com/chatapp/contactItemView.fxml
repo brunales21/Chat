@@ -70,5 +70,6 @@
    </children>
    <stylesheets>
       <URL value="@../../css/contactItemStyles.css" />
+      <URL value="@../../css/styles.css" />
    </stylesheets>
 </HBox>

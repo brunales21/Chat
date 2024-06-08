@@ -24,5 +24,5 @@
 
 .contact-item .online-label {
     -fx-font-size: 12px;
-    -fx-text-fill: #1fff7a; /* Color verde para indicar "en línea" */
+    -fx-text-fill: #d21616; /* Color verde para indicar "en línea" */
 }

@@ -24,9 +24,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class ChatController extends Controller {
@@ -117,10 +121,7 @@ public class ChatController extends Controller {
 
     @FXML
     public void initialize() {
-        // Asignar la lista observable al ListView
-        messagesListView.setItems(messageList);
-        messagesListView.setStyle("-fx-background-color: #fffdf9; -fx-padding: 1px;");
-
+        messagesListView.setStyle("-fx-background-color: transparent;");
         messagesListView.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(Message msg, boolean empty) {
@@ -128,35 +129,45 @@ public class ChatController extends Controller {
                 if (empty || msg == null) {
                     setText(null);
                     setGraphic(null);
+                    setStyle("-fx-background-color: transparent; -fx-border-width: 0; -fx-padding: 5px;");
                 } else {
                     Label messageLabel = new Label(msg.getSender() + ": " + msg.getText());
                     messageLabel.setWrapText(true);
+                    messageLabel.setFont(Font.font("System", FontWeight.NORMAL, 14));
+                    messageLabel.setTextFill(Color.web("#333"));
+
+                    // Crear un Label para mostrar la hora
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+                    Label timeLabel = new Label(msg.getTime().format(formatter));
+                    timeLabel.setStyle("-fx-font-size: 10px; -fx-text-fill: #888888;"); // Estilo para la hora
 
                     VBox messageBox = new VBox();
-                    messageBox.getChildren().add(messageLabel);
+
+                    messageBox.getChildren().addAll(messageLabel, timeLabel);
+                    messageBox.getStyleClass().add("message-container");
 
                     HBox container = new HBox(messageBox);
-                    container.setStyle("-fx-background-color: white;");
-
+                    container.setStyle("-fx-background-color: transparent;");
                     boolean messageOwner = msg.getSender().equals(userNameLabel.getText());
-                    container.setAlignment(messageOwner ? Pos.CENTER_RIGHT : Pos.CENTER_LEFT);
-                    setGraphic(container);
-                    container.setStyle("-fx-background-color: #ffffff;");
 
                     if (messageOwner) {
-                        messageBox.setStyle("-fx-padding: 6px; -fx-background-radius: 15px; -fx-background-color: rgb(131,184,241);");
+                        messageLabel.setText(msg.getText());
+                        messageBox.getStyleClass().add("message-sender");
+                        container.setAlignment(Pos.CENTER_RIGHT);
                     } else {
-                        messageBox.setStyle("-fx-padding: 6px; -fx-background-radius: 15px; -fx-background-color: #bbf6a4; ");
+                        messageBox.getStyleClass().add("message-receiver");
+                        container.setAlignment(Pos.CENTER_LEFT);
                     }
 
-                    // Ajustar el ancho máximo del mensaje al ancho disponible en la ventana
-                    messageLabel.setMaxWidth(messagesListView.getWidth() * 0.7); // ajusta el ancho del mensaje al 70% del ancho de la ventana
-                    getStage().widthProperty().addListener(new ChangeListener<Number>() {
+                    messageLabel.setMaxWidth(messagesListView.getWidth() * 0.7);
+                    messagesListView.widthProperty().addListener(new ChangeListener<Number>() {
                         @Override
                         public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                             messageLabel.setMaxWidth(newValue.doubleValue() * 0.7);
                         }
                     });
+
+                    setGraphic(container);
                 }
             }
         });
@@ -222,7 +233,10 @@ public class ChatController extends Controller {
         } else {
             children = vBoxContacts.getChildren();
         }
-        // Iterar sobre los nodos y eliminar el que tenga el nickname deseado
+        deleteItemChatController(children, nickname);
+    }
+
+    private void deleteItemChatController(ObservableList<Node> children, String nickname) {
         for (Node child : children) {
             if (child instanceof Parent) {
                 ItemContactController itemContactController = ((FXMLLoader) child.getUserData()).getController();
@@ -230,6 +244,7 @@ public class ChatController extends Controller {
                     children.remove(child);
                     contactsMap.remove(nickname);
                     mediator.getUser().removeContact(nickname);
+                    mediator.getUser().getChatMessagesMap().remove(nickname);
                     break;
                 }
             }

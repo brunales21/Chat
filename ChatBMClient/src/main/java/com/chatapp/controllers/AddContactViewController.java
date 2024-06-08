@@ -10,6 +10,7 @@ import com.chatapp.utils.WarningWindow;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
@@ -31,9 +32,7 @@ public class AddContactViewController extends Controller {
     private Button button2;
     private Mediator mediator;
 
-    public AddContactViewController() {
-
-    }
+    public AddContactViewController() {}
 
     @FXML
     private void onClickButtonLeft() {
@@ -45,22 +44,14 @@ public class AddContactViewController extends Controller {
                     WarningWindow.instanceWarningWindow(ErrorTypes.CHAT_REPEATED_EXCEPTION);
                     return;
                 }
-                mediator.sendMessage(Commands.CREATE.name() + " " + channelName);
-                ThreadUtils.sleep(100);
-                if (mediator.successfulAction()) {
-                    mediator.addContactItem(mediator.getChatController().getvBoxChannels(), channelName.toString());
-                }
+                createChannelRequest(mediator, channelName.toString());
             } else if (isCreateContactBtn()) {
                 if (mediator.getUser().containsContact(name)) {
                     WarningWindow.instanceWarningWindow(ErrorTypes.CHAT_REPEATED_EXCEPTION);
                     return;
                 }
                 if (!name.equals(mediator.getUser().getNickname())) {
-                    mediator.sendMessage(Commands.CREATE.name() + " " + name);
-                    ThreadUtils.sleep(100);
-                    if (mediator.successfulAction()) {
-                        mediator.addContactItem(mediator.getChatController().getvBoxContacts(), name);
-                    }
+                    addContactRequest(mediator, name);
                 }
             }
             NodeUtils.cleanTextField(nicknameTextField);
@@ -69,6 +60,20 @@ public class AddContactViewController extends Controller {
         stageToClose.close();
     }
 
+    private void addContactRequest(Mediator mediator, String nickname) {
+        mediator.sendMessage(Commands.CREATE.name() + " " + nickname);
+        ThreadUtils.sleep(100);
+        if (mediator.successfulAction()) {
+            mediator.addContactItem(mediator.getChatController().getvBoxContacts(), nickname);
+        }
+    }
+    private void createChannelRequest(Mediator mediator, String channelName) {
+        mediator.sendMessage(Commands.CREATE.name() + " " + channelName);
+        ThreadUtils.sleep(100);
+        if (mediator.successfulAction()) {
+            mediator.addContactItem(mediator.getChatController().getvBoxChannels(), channelName.toString());
+        }
+    }
     @FXML
     public void onClickButtonRight() {
         String chatName = "#" + nicknameTextField.getText().replaceAll(" ", "");

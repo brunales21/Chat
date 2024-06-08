@@ -10,124 +10,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46d45c23-4adf-40e0-a91c-a5d6e7259c3c" name="Changes" comment="Login and signup working with validation error.">
-      <change afterPath="$PROJECT_DIR$/chats_messages/a-messages.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chats_messages/bruce-messages.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chats_messages/myuser-messages.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chats_messages/p-messages.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/css/contactItemStyles.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/ai.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/channel_pic.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/channel_picture.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/channel_picture2.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chats_messages/a-messages.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chats_messages/bruce-messages.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chats_messages/lau-messages.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chats_messages/myuser-messages.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chats_messages/p-messages.bin" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/app/ChatApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/app/ChatApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/constants/ConnectionConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/constants/ConnectionConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/controllers/AddContactViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/controllers/AddContactViewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/controllers/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/controllers/ChatController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/chatapp/controllers/ContactItemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chatapp/controllers/ItemContactController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/chatapp/chatView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/chatapp/chatView.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/chatapp/contactItemView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/chatapp/contactItemView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/chatapp/loginView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/chatapp/loginView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/chatapp/signupView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/chatapp/signupView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/css/contactItemStyles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/css/contactItemStyles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/css/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/anadir-grupo (1).png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/anadir-grupo (1).png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/anadir-grupo.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/anadir-grupo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/appIcon.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/appIcon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/appIcon2.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/appIcon2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/appIcon3.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/appIcon3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/appIcon4.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/appIcon4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/appIcon5.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/appIcon5.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/backgroundLogin.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/backgroundLogin.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/burbuja-de-chat.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/burbuja-de-chat.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/campana-de-notificacion.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/campana-de-notificacion.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/canal.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/canal.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/charla.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/charla.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/chat-privado.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/chat-privado.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/chat.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/chat.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/enviar-mensaje.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/enviar-mensaje.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/exit.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/exit.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/globos-de-texto.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/globos-de-texto.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/home.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/home.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/img.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/img.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/img_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/img_1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/img_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/profile_picture.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/img_3.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/img_3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/img_4.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/img_4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/klipartz.com.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/klipartz.com.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/mensajero.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/mensajero.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/notificacion.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/notificacion.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/search.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/search.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/settings.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/settings.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/sms.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/sms.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/texto.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/texto.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/usuario.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/usuario.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/imgs/ventana-de-chat.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/ventana-de-chat.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/app/ChatApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/app/ChatApp.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/chatView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/chatView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/constants/ConnectionConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/constants/ConnectionConfig.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/contactItemView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/contactItemView.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/controllers/AddContactViewController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/controllers/AddContactViewController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/controllers/ChatController$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/controllers/ChatController$1$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/controllers/ChatController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/controllers/ChatController$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/controllers/ChatController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/controllers/ChatController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/controllers/ContactItemController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/loginView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/loginView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/mediator/Mediator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/mediator/Mediator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/chatapp/signupView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/chatapp/signupView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/css/contactItemStyles.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/css/contactItemStyles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/css/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/anadir-grupo (1).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/anadir-grupo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/appIcon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/appIcon2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/appIcon3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/appIcon4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/appIcon5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/backgroundLogin.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/burbuja-de-chat.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/campana-de-notificacion.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/canal.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/charla.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/chat-privado.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/chat.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/enviar-mensaje.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/exit.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/globos-de-texto.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/home.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/img.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/img_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/img_2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/img_3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/img_4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/klipartz.com.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/mensajero.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/notificacion.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/search.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/settings.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/sms.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/texto.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/usuario.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/imgs/ventana-de-chat.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/.idea/dataSources/d1fbcd0f-0a28-48c2-8f5f-f0d4bd9c90f5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/.idea/dataSources/d1fbcd0f-0a28-48c2-8f5f-f0d4bd9c90f5.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/.idea/dataSources/e4926137-13d0-46d6-97cb-deb1cff46482.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/.idea/dataSources/e4926137-13d0-46d6-97cb-deb1cff46482.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/.idea/dataSources/d1fbcd0f-0a28-48c2-8f5f-f0d4bd9c90f5.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/.idea/dataSources/e4926137-13d0-46d6-97cb-deb1cff46482.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMServer/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMServer/src/main/resources/data/chat.db" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/src/main/resources/data/chat.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/data/chat.db" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/data/chat.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/module-info.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/IAs/AIConnector.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/IAs/AIConnector.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/IAs/OpenAIConnector.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/IAs/OpenAIConnector.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/constants/ClientType.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/constants/ClientType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/constants/Commands.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/constants/Commands.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/constants/MessageConstants.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/constants/MessageConstants.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/db/SQLiteManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/db/SQLiteManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/exceptions/ChatNotFoundException.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/exceptions/ChatNotFoundException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/exceptions/ChatRepeatedException.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/exceptions/ChatRepeatedException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/exceptions/NicknameInUseException.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/exceptions/NicknameInUseException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/exceptions/RegisterSyntaxException.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/exceptions/RegisterSyntaxException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/exceptions/SessionAlreadyOpenException.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/exceptions/SessionAlreadyOpenException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/exceptions/SyntaxException.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/exceptions/SyntaxException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/exceptions/UserNotExistsException.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/exceptions/UserNotExistsException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/server/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/server/Server.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/utils/DatabaseUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMServer/target/classes/org/chatapp/utils/DatabaseUtils.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -197,42 +109,42 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Application.ChatApp.executor": "Run",
-    "Application.Main (1).executor": "Run",
-    "Application.Main (2).executor": "Run",
-    "Application.Main (3).executor": "Run",
-    "Application.Main (4).executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.Unnamed.executor": "Run",
-    "Application.Utils.executor": "Run",
-    "Maven.ChatApp [clean].executor": "Run",
-    "Maven.ChatApp [install].executor": "Run",
-    "Maven.ChatApp [package].executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "jdk.selected.JAVA_MODULE": "openjdk-21",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Aspa56/workspace/IdeaProjects/Chat/ChatBMClient/src/main/resources/images",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.27931035",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.sourceCode.Java",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Application.ChatApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main (1).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main (2).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main (3).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main (4).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Utils.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ChatApp [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ChatApp [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ChatApp [package].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Aspa56/workspace/IdeaProjects/Chat/ChatBMClient/src/main/resources/images&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.27931035&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.Java&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="org.example.chatbmbis" />
@@ -259,10 +171,10 @@
       <recent name="com.chatapp.constants" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ChatApp">
+  <component name="RunManager" selected="Application.Main (1)">
     <configuration name="ChatApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.chatapp.app.ChatApp" />
-      <module name="ChatApp" />
+      <module name="ChatBMBis" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.chatapp.app.*" />
@@ -341,8 +253,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
-        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
+        <option value="jdk-22-openjdk-22-f644763e9732-8c5c9ae5" />
       </set>
     </attachedChunks>
   </component>
@@ -435,6 +346,7 @@
       <workItem from="1717149450465" duration="5923000" />
       <workItem from="1717492823005" duration="10751000" />
       <workItem from="1717750475017" duration="11488000" />
+      <workItem from="1717798718397" duration="8316000" />
     </task>
     <task id="LOCAL-00001" summary="Interfaz en progreso">
       <option name="closed" value="true" />

@@ -32,5 +32,36 @@
 }
 
 .list-view .list-cell:hover {
-    -fx-background-color: #f0f0f0;
+    -fx-background-color: #f5f0f0;
 }
+
+.list-view .list-cell {
+    -fx-background-color: #ffffff;
+    -fx-border-width: 0; /* Elimina los bordes */
+    -fx-padding: 5px; /* Ajusta el padding según tu diseño */
+}
+
+/* Message container styles */
+.message-container {
+    -fx-background-color: #ffffff;
+    -fx-padding: 6px;
+    -fx-background-radius: 15px;
+}
+
+/* Message box styles for sender */
+.message-sender {
+    -fx-background-color: rgb(131,184,241);
+    -fx-background-radius: 15px 0px 15px 15px; /* Rounded corners with different radii */
+}
+
+/* Message box styles for receiver */
+.message-receiver {
+    -fx-background-color: #bbf6a4;
+    -fx-background-radius: 0px 15px 15px 15px; /* Rounded corners with different radii */
+}
+
+/* Ensuring text wraps and maximum width */
+.message-label {
+    -fx-wrap-text: true;
+}
+

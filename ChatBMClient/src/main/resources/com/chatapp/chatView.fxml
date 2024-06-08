@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -8,7 +9,7 @@
 
 <AnchorPane fx:id="mainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="802.0" style="-fx-background-color: #eff6fc;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chatapp.controllers.ChatController">
    <children>
-      <HBox maxHeight="Infinity" maxWidth="Infinity" minHeight="600.0" minWidth="800.0" prefHeight="601.0" prefWidth="802.0" style="-fx-background-color: #eff6fc;" stylesheets="@../../css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox layoutX="-66.0" maxHeight="Infinity" maxWidth="Infinity" minHeight="600.0" minWidth="800.0" prefHeight="601.0" prefWidth="868.0" style="-fx-background-color: #eff6fc;" stylesheets="@../../css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <VBox alignment="TOP_CENTER" maxWidth="72.0" minHeight="569.0" prefHeight="569.0" prefWidth="72.0" styleClass="anchorPane" stylesheets="@../../css/styles.css">
                <HBox.margin>
@@ -82,10 +83,10 @@
                         <Insets left="10.0" right="10.0" top="20.0" />
                      </VBox.margin>
                      <children>
-                        <Label prefHeight="35.0" prefWidth="264.0" text="Grupos" />
+                        <Label prefHeight="35.0" prefWidth="264.0" text="Canales" />
                         <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
                            <content>
-                              <VBox fx:id="vBoxChannels" prefHeight="125.0" prefWidth="242.0" style="-fx-background-color: white;" />
+                              <VBox fx:id="vBoxChannels" prefHeight="125.0" prefWidth="242.0" />
                            </content>
                         </ScrollPane>
                      </children>
@@ -96,7 +97,7 @@
                      </VBox.margin>
                      <children>
                         <Label prefHeight="48.0" prefWidth="284.0" text="Contactos" />
-                        <ScrollPane maxHeight="275" fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
+                        <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="275" VBox.vgrow="ALWAYS">
                            <content>
                               <!-- Modificación: Aplicación de estilos al VBox de contactos -->
                               <VBox fx:id="vBoxContacts" styleClass="contact-vbox" />
@@ -123,7 +124,7 @@
                         </ImageView>
                         <VBox prefHeight="57.0" prefWidth="305.0">
                            <children>
-                              <Label fx:id="receptorChatLabel" prefHeight="74.0" prefWidth="306.0" text=" ">
+                              <Label fx:id="receptorChatLabel" prefHeight="74.0" prefWidth="306.0">
                                  <padding>
                                     <Insets left="20.0" />
                                  </padding>
@@ -143,7 +144,7 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <Separator prefHeight="3.0" prefWidth="366.0" style="-fx-background-color: grey;" />
+                  <Separator prefHeight="3.0" prefWidth="366.0" />
                   <ListView fx:id="messagesListView" prefHeight="368.0" prefWidth="333.0" VBox.vgrow="ALWAYS">
                      <padding>
                         <Insets left="30.0" right="30.0" top="20.0" />
@@ -151,7 +152,7 @@
                   </ListView>
                   <HBox alignment="CENTER_LEFT" prefHeight="83.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <TextField fx:id="textMessageField" prefHeight="44.0" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="textMessageField" prefHeight="44.0" promptText="Escribe un mensaje" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
@@ -161,7 +162,7 @@
                               <Image url="@../../images/enviar-mensaje.png" />
                            </image>
                            <HBox.margin>
-                              <Insets left="10.0" />
+                              <Insets left="10.0" right="10.0" />
                            </HBox.margin>
                         </ImageView>
                      </children>
@@ -171,4 +172,8 @@
          </children>
       </HBox>
    </children>
+   <stylesheets>
+      <URL value="@../../css/contactItemStyles.css" />
+      <URL value="@../../css/styles.css" />
+   </stylesheets>
 </AnchorPane>
