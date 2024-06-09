@@ -42,7 +42,6 @@ public class ItemContactController extends Controller {
     public void showNotificationImg(boolean b) {
         notificationImg.setVisible(b);
     }
-
     @FXML
     public void onClickItem() {
         callback.run();

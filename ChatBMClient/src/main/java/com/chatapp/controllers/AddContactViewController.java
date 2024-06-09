@@ -64,7 +64,7 @@ public class AddContactViewController extends Controller {
         mediator.sendMessage(Commands.CREATE.name() + " " + nickname);
         ThreadUtils.sleep(100);
         if (mediator.successfulAction()) {
-            mediator.addContactItem(mediator.getChatController().getvBoxContacts(), nickname);
+            mediator.addContactItem(mediator.getChatController().getVBoxChats(), nickname);
         }
     }
 
@@ -72,7 +72,7 @@ public class AddContactViewController extends Controller {
         mediator.sendMessage(Commands.CREATE.name() + " " + channelName);
         ThreadUtils.sleep(100);
         if (mediator.successfulAction()) {
-            mediator.addContactItem(mediator.getChatController().getvBoxChannels(), channelName);
+            mediator.addContactItem(mediator.getChatController().getVBoxChats(), channelName);
         }
     }
 
@@ -84,7 +84,7 @@ public class AddContactViewController extends Controller {
                 mediator.sendMessage(Commands.JOIN.name() + " " + chatName);
                 ThreadUtils.sleep(100);
                 if (mediator.successfulAction()) {
-                    mediator.addContactItem(mediator.getChatController().getvBoxChannels(), chatName);
+                    mediator.addContactItem(mediator.getChatController().getVBoxChats(), chatName);
                 }
             }
         }

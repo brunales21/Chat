@@ -10,15 +10,13 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -36,7 +34,7 @@ import java.util.*;
 public class ChatController extends Controller {
 
     private final ObservableList<Message> messageList = FXCollections.observableArrayList(); // Lista observable para los mensajes
-    private final Map<String, ItemContactController> contactsMap = new HashMap<>();
+    private Map<String, ItemContactController> contactsMap = new HashMap<>();
     private final Locale locale = Locale.getDefault();
     private final ResourceBundle bundle = ResourceBundle.getBundle(Constants.BUNDLE_MESSAGES, locale);
     private Mediator mediator;
@@ -45,7 +43,7 @@ public class ChatController extends Controller {
     @FXML
     private ImageView userPictureProfile;
     @FXML
-    private VBox vBoxChannels, vBoxContacts;
+    private VBox chatsContainer;
     @FXML
     private ListView<Message> messagesListView;
     @FXML
@@ -53,7 +51,12 @@ public class ChatController extends Controller {
     @FXML
     private TextField textMessageField;
     @FXML
+    private TextField searchField;
+    @FXML
     private ImageView chatLabelPicture;
+    private ObservableList<ItemContactController> chatList;
+    private FilteredList<ItemContactController> filteredList;
+
 
     @FXML
     protected void onClickChannelOptions() {
@@ -167,12 +170,28 @@ public class ChatController extends Controller {
                             messageLabel.setMaxWidth(newValue.doubleValue() * 0.7);
                         }
                     });
-
                     setGraphic(container);
                 }
             }
         });
     }
+
+    @FXML
+    public void onKeyReleased() {
+        String searchText = searchField.getText().toLowerCase();
+        ObservableList<Node> children = chatsContainer.getChildren();
+
+        for (var child : children) {
+            if (child instanceof Parent) {
+                ItemContactController itemController = ((FXMLLoader) child.getUserData()).getController();
+                String nickname = itemController.getNicknameLabelText().toLowerCase();
+                boolean matches = nickname.contains(searchText);
+                child.setVisible(matches);
+                child.setManaged(matches);
+            }
+        }
+    }
+
 
     public void addMessageToListView(Message message) {
         Platform.runLater(() -> {
@@ -238,12 +257,7 @@ public class ChatController extends Controller {
     }
 
     public void removeContactItem(String nickname) {
-        ObservableList<Node> children;
-        if (nickname.startsWith("#")) {
-            children = vBoxChannels.getChildren();
-        } else {
-            children = vBoxContacts.getChildren();
-        }
+        ObservableList<Node> children = chatsContainer.getChildren();
         deleteItemChatController(children, nickname);
     }
 
@@ -270,11 +284,7 @@ public class ChatController extends Controller {
         Map<String, List<Message>> chatMessagesMap = mediator.getUser().getChatDAO().loadChatMessages();
         mediator.getUser().setChatMessagesMap(chatMessagesMap);
         for (String chatName : chatMessagesMap.keySet()) {
-            if (chatName.startsWith("#")) {
-                addContactItem(vBoxChannels, chatName);
-            } else {
-                addContactItem(vBoxContacts, chatName);
-            }
+                addContactItem(chatsContainer, chatName);
         }
     }
 
@@ -291,12 +301,8 @@ public class ChatController extends Controller {
         return userNameLabel;
     }
 
-    public VBox getvBoxChannels() {
-        return vBoxChannels;
-    }
-
-    public VBox getvBoxContacts() {
-        return vBoxContacts;
+    public VBox getVBoxChats() {
+        return chatsContainer;
     }
 
     public Label getReceptorChatLabel() {

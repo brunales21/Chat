@@ -9,11 +9,11 @@
 
 <AnchorPane fx:id="mainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="802.0" style="-fx-background-color: #eff6fc;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chatapp.controllers.ChatController">
    <children>
-      <HBox layoutX="-66.0" maxHeight="Infinity" maxWidth="Infinity" minHeight="600.0" minWidth="788.0" prefHeight="601.0" prefWidth="788.0" style="-fx-background-color: #abd2f3;" stylesheets="@../../css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox fx:id="chatHBox" layoutX="-66.0" maxHeight="Infinity" maxWidth="Infinity" minHeight="600.0" minWidth="788.0" prefHeight="601.0" prefWidth="788.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox fx:id="leftVBox" alignment="TOP_CENTER" maxWidth="72.0" minHeight="569.0" prefHeight="569.0" prefWidth="72.0" style=" -fx-background-color: #5ab1e0;" styleClass="vbox-rounded" stylesheets="@../../css/styles.css">
+            <VBox fx:id="leftVBox" alignment="TOP_CENTER" maxWidth="72.0" minHeight="569.0" prefHeight="569.0" prefWidth="72.0" style=" -fx-background-color: #49b5ef;" styleClass="vbox-rounded" stylesheets="@../../css/styles.css">
                <HBox.margin>
-                  <Insets bottom="30.0" left="20.0" right="10.0" top="30.0" />
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </HBox.margin>
                <children>
                   <ImageView fx:id="userPictureProfile" fitHeight="48.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" translateY="10.0">
@@ -45,9 +45,7 @@
                   <Button onMouseClicked="#onClickPrivChatOptions" prefHeight="50.0" prefWidth="46.0" style="-fx-background-color: transparent;" styleClass="ba" translateY="25.0">
                      <graphic>
                         <ImageView fitHeight="63.0" fitWidth="52.0" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/agregar-usuario (3).png" />
-                           </image>
+                           <Image url="@../../images/agregar-usuario (3).png" />
                         </ImageView>
                      </graphic>
                      <tooltip>
@@ -60,60 +58,52 @@
 
                   <VBox alignment="BOTTOM_LEFT" prefHeight="45.0" prefWidth="51.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <ImageView fitHeight="45.0" fitWidth="51.0" onMouseClicked="#onClickExit" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/exit.png" />
-                           </image>
-                           <VBox.margin>
-                              <Insets bottom="20.0" left="10.0" />
-                           </VBox.margin>
-                        </ImageView>
+                        <Button onMouseClicked="#onClickExit" style="-fx-background-color: transparent;">
+                           <graphic>
+                           <ImageView fitHeight="45.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true" translateX="3.0" translateY="-10.0">
+                              <image>
+                                 <Image url="@../../images/exit.png" />
+                              </image>
+                              <VBox.margin>
+                                 <Insets bottom="20.0" left="10.0" />
+                              </VBox.margin>
+                           </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Cerrar sesión" />
+                           </tooltip>
+                        </Button>
+
                      </children>
                   </VBox>
                </children>
             </VBox>
-            <VBox fx:id="midVBox" alignment="TOP_CENTER" maxWidth="350" minHeight="600.0" minWidth="278.0" prefHeight="600.0" prefWidth="278.0" style="-fx-background-color: #9efcb8;" styleClass="vbox-rounded" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+            <VBox fx:id="midVBox" alignment="TOP_CENTER" maxWidth="350" minHeight="557.0" minWidth="278.0" prefHeight="557.0" prefWidth="282.0" style="-fx-background-color: #7ac6ef;" styleClass="vbox-rounded" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                <HBox.margin>
-                  <Insets bottom="30.0" left="15.0" right="10.0" top="30.0" />
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </HBox.margin>
                <children>
-                  <Label fx:id="userNameLabel" alignment="CENTER" prefHeight="63.0" prefWidth="281.0" text="Label" textAlignment="CENTER">
+                  <Label fx:id="userNameLabel" alignment="CENTER" prefHeight="63.0" prefWidth="281.0" text="Label" textAlignment="CENTER" translateY="10.0">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <VBox prefHeight="157.0" prefWidth="273.0" VBox.vgrow="ALWAYS">
-                     <VBox.margin>
-                        <Insets left="10.0" right="10.0" top="20.0" />
-                     </VBox.margin>
+                  <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" translateY="15.0">
                      <children>
-                        <Label prefHeight="35.0" prefWidth="264.0" text="Canales" />
-                        <ScrollPane fitToHeight="true" fitToWidth="true" stylesheets="@../../css/styles.css" VBox.vgrow="ALWAYS">
-                           <content>
-                              <VBox fx:id="vBoxChannels" prefHeight="125.0" prefWidth="242.0" />
-                           </content>
-                        </ScrollPane>
+                        <TextField fx:id="searchField" onKeyReleased="#onKeyReleased" prefWidth="200.0" promptText="Buscar chats..." styleClass="search-field" />
+                        <!-- Puedes agregar un botón de búsqueda aquí si lo deseas -->
                      </children>
-                  </VBox>
-                  <VBox prefHeight="272.0" prefWidth="280.0" VBox.vgrow="ALWAYS">
-                     <VBox.margin>
-                        <Insets left="10.0" right="10.0" top="20.0" />
-                     </VBox.margin>
-                     <children>
-                        <Label prefHeight="48.0" prefWidth="284.0" text="Contactos" />
-                        <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="275" stylesheets="@../../css/styles.css" VBox.vgrow="ALWAYS">
-                           <content>
-                              <!-- Modificación: Aplicación de estilos al VBox de contactos -->
-                              <VBox fx:id="vBoxContacts" prefWidth="260.0" styleClass="contact-vbox" />
-                           </content>
-                        </ScrollPane>
-                     </children>
-                  </VBox>
+                  </HBox>
+                  <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="504.0" prefWidth="265.0" translateY="35.0">
+                     <VBox fx:id="chatsContainer" prefHeight="157.0" prefWidth="282.0" styleClass="chat-container" VBox.vgrow="ALWAYS">
+                     </VBox>
+                  </ScrollPane>
+
                </children>
             </VBox>
             <VBox fx:id="rightVBox" alignment="CENTER" minHeight="425.0" minWidth="372.0" prefHeight="425.0" prefWidth="307.0" style="-fx-background-color: #49b5ef;" styleClass="vbox-rounded" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                <HBox.margin>
-                  <Insets bottom="30.0" right="15.0" top="30.0" />
+                  <Insets bottom="10.0" right="10.0" top="10.0" />
                </HBox.margin>
                <children>
                   <HBox prefHeight="80.0" prefWidth="350.0" HBox.hgrow="ALWAYS">

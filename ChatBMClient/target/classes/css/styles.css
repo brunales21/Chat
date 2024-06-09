@@ -6,7 +6,7 @@
     -fx-font-size:24;
 }
 .anchorPane{
-    -fx-background-image: url('../images/backgroundLogin.jpg');
+    -fx-background-image: url('../images/background.jpg');
 }
 .interior{
     -fx-border-color: grey;
@@ -115,19 +115,82 @@
     -fx-padding: 0; /* No padding */
 }
 
-.scroll-pane .scroll-bar:vertical .track {
-    -fx-background-color: transparent; /* Transparent background for the track */
-    -fx-padding: 0; /* No padding */
-}
-
 .scroll-pane .scroll-bar:vertical .thumb {
     -fx-background-color: rgba(0, 0, 0, 0.2); /* Light grey thumb */
     -fx-background-radius: 5px; /* Rounded corners */
     -fx-padding: 0; /* No padding */
-    -fx-pref-width: 5px; /* Thin scrollbar thumb */
+    -fx-pref-width: 1px; /* Thin scrollbar thumb */
 }
 
 .scroll-pane .scroll-bar:vertical .increment-button,
 .scroll-pane .scroll-bar:vertical .decrement-button {
     -fx-background-color: transparent; /* Transparent background for the buttons */
+}
+
+.search-field {
+    -fx-background-color: #f2f2f2; /* Fondo gris claro */
+    -fx-border-color: #cccccc; /* Borde gris */
+    -fx-border-radius: 15; /* Bordes redondeados */
+    -fx-background-radius: 15; /* Bordes redondeados */
+    -fx-padding: 10px; /* Relleno interno */
+    -fx-font-size: 14px; /* Tamaño de la fuente */
+    -fx-prompt-text-fill: #999999; /* Color del texto de sugerencia */
+}
+
+.search-field:focused {
+    -fx-border-color: #5ab1e0; /* Color del borde al enfocar */
+    -fx-background-color: #ffffff; /* Fondo blanco al enfocar */
+}
+
+/* Estilo para el campo de búsqueda */
+.search-field {
+    -fx-background-color: #f2f2f2; /* Fondo gris claro */
+    -fx-border-color: #cccccc; /* Borde gris */
+    -fx-border-radius: 15; /* Bordes redondeados */
+    -fx-background-radius: 15; /* Bordes redondeados */
+    -fx-padding: 10px; /* Relleno interno */
+    -fx-font-size: 14px; /* Tamaño de la fuente */
+    -fx-prompt-text-fill: #999999; /* Color del texto de sugerencia */
+}
+
+/* Estilo sencillo y elegante para ScrollPane */
+.scroll-pane {
+    -fx-background-color: #7ac6ef; /* Fondo transparente */
+    -fx-padding: 0; /* Sin relleno */
+    -fx-border-color: #7AC6EFFF; /* Sin borde */
+}
+
+.scroll-pane .scroll-bar:vertical {
+    -fx-background-color: #7AC6EFFF;
+    -fx-padding: 0; /* Sin relleno */
+}
+
+.scroll-pane .scroll-bar:vertical .track {
+    -fx-background-color: transparent; /* Fondo transparente */
+    -fx-padding: 0; /* Sin relleno */
+}
+
+.scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: rgba(156, 220, 255, 0.89); /* Color del pulgar gris claro */
+    -fx-background-radius: 5px; /* Bordes redondeados */
+    -fx-padding: 0; /* Sin relleno */
+    -fx-pref-width: 1px; /* Pulgar delgado */
+}
+
+/* Estilo para el contenedor de chats */
+.chat-container {
+    -fx-background-color: #7AC6EFFF; /* Color de fondo */
+    -fx-padding: 15px;
+}
+
+
+.search-field:focused {
+    -fx-border-color: #5ab1e0; /* Color del borde al enfocar */
+    -fx-background-color: #ffffff; /* Fondo blanco al enfocar */
+}
+
+#chatHBox {
+    -fx-background-image: url('../images/background.jpg'); /* Ruta a tu imagen de fondo */
+    -fx-background-size: cover; /* Ajusta la imagen para cubrir todo el fondo del HBox */
+    -fx-background-position: center; /* Centra la imagen */
 }

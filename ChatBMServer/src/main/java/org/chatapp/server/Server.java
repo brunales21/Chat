@@ -61,11 +61,6 @@ public class Server {
         } else {
             server = new Server();
         }
-        try {
-            server.sqLiteManager.truncateTable(DatabaseUtils.USER_TABLE_NAME);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
         server.start();
     }
 

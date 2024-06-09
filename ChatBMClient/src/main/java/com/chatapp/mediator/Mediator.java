@@ -151,13 +151,13 @@ public class Mediator {
             // "MESSAGE #2dam bruno:hola"
             messageObj = new Message(messageParts[2], messageParts[1], messageParts[3]);
             if (!getUser().containsContact(messageParts[1])) {
-                chatController.addContactItem(chatController.getvBoxContacts(), messageObj.getSender());
+                chatController.addContactItem(chatController.getVBoxChats(), messageObj.getSender());
             }
         } else {
             // "MESSAGE bruno:hola"
             messageObj = new Message(messageParts[1], messageParts[2]);
             if (!getUser().containsContact(messageParts[1])) {
-                chatController.addContactItem(chatController.getvBoxContacts(), messageObj.getSender());
+                chatController.addContactItem(chatController.getVBoxChats(), messageObj.getSender());
                 sendMessage(Commands.CREATE.name() + " " + messageObj.getSender());
             }
         }

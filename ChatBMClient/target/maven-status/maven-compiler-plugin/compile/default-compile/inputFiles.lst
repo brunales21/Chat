@@ -17,7 +17,6 @@ C:\Users\bemim\Workspace\DAM\TrabajoFinalGrado\Chat\ChatBMClient\src\main\java\c
 C:\Users\bemim\Workspace\DAM\TrabajoFinalGrado\Chat\ChatBMClient\src\main\java\com\chatapp\controllers\SignupController.java
 C:\Users\bemim\Workspace\DAM\TrabajoFinalGrado\Chat\ChatBMClient\src\main\java\com\chatapp\model\Client.java
 C:\Users\bemim\Workspace\DAM\TrabajoFinalGrado\Chat\ChatBMClient\src\main\java\com\chatapp\utils\ThreadUtils.java
-C:\Users\bemim\Workspace\DAM\TrabajoFinalGrado\Chat\ChatBMClient\src\main\java\com\chatapp\controllers\ContactItemController.java
 C:\Users\bemim\Workspace\DAM\TrabajoFinalGrado\Chat\ChatBMClient\src\main\java\com\chatapp\utils\NodeUtils.java
 C:\Users\bemim\Workspace\DAM\TrabajoFinalGrado\Chat\ChatBMClient\src\main\java\com\chatapp\daos\impl\FileChatDAO.java
 C:\Users\bemim\Workspace\DAM\TrabajoFinalGrado\Chat\ChatBMClient\src\main\java\com\chatapp\constants\Commands.java
@@ -26,4 +25,5 @@ C:\Users\bemim\Workspace\DAM\TrabajoFinalGrado\Chat\ChatBMClient\src\main\java\c
 C:\Users\bemim\Workspace\DAM\TrabajoFinalGrado\Chat\ChatBMClient\src\main\java\com\chatapp\model\Message.java
 C:\Users\bemim\Workspace\DAM\TrabajoFinalGrado\Chat\ChatBMClient\src\main\java\com\chatapp\internationalization\Internationalization.java
 C:\Users\bemim\Workspace\DAM\TrabajoFinalGrado\Chat\ChatBMClient\src\main\java\com\chatapp\model\PrivateChat.java
+C:\Users\bemim\Workspace\DAM\TrabajoFinalGrado\Chat\ChatBMClient\src\main\java\com\chatapp\controllers\ItemContactController.java
 C:\Users\bemim\Workspace\DAM\TrabajoFinalGrado\Chat\ChatBMClient\src\main\java\com\chatapp\controllers\Controller.java
