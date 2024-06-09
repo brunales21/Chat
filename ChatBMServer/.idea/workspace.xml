@@ -4,25 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ffc28d6-f167-4c5e-a0a7-d252a53a42e3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../ChatBMClient/chats_messages/a-messages.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/controllers/AddContactViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/controllers/AddContactViewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/controllers/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/controllers/ChatController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/controllers/ItemContactController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/controllers/ItemContactController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/mediator/Mediator.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/java/com/chatapp/mediator/Mediator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/src/main/resources/com/chatapp/chatView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/src/main/resources/com/chatapp/chatView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/chatView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/chatView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/controllers/AddContactViewController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/controllers/AddContactViewController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/controllers/ChatController$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/controllers/ChatController$1$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/controllers/ChatController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/controllers/ChatController$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/controllers/ChatController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/controllers/ChatController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/controllers/ItemContactController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/controllers/ItemContactController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/mediator/Mediator.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/classes/com/chatapp/mediator/Mediator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/data/chat.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/data/chat.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/data/chat.db" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/data/chat.db" afterDir="false" />
-    </list>
+    <list default="true" id="6ffc28d6-f167-4c5e-a0a7-d252a53a42e3" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -75,7 +57,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "feature/#1__Merge__VBoxes",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/bemim/Workspace/DAM/TrabajoFinalGrado/Chat/ChatBMServer",
@@ -231,7 +213,7 @@
       <workItem from="1717750493112" duration="3440000" />
       <workItem from="1717798704088" duration="3069000" />
       <workItem from="1717838680807" duration="1459000" />
-      <workItem from="1717844425544" duration="3603000" />
+      <workItem from="1717844425544" duration="6187000" />
     </task>
     <servers />
   </component>
