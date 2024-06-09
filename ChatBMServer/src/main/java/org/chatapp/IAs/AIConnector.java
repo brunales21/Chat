@@ -48,9 +48,4 @@ public class AIConnector {
             return null;
         }
     }
-
-    public static void main(String[] args) {
-        String message = getAISnippetsForQuery("cuantos balones de oro tiene messi ");
-        System.out.println(message);
-    }
 }
