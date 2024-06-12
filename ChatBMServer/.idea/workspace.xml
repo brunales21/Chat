@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ffc28d6-f167-4c5e-a0a7-d252a53a42e3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../ChatBMClient/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/ServerChat.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/ServerChat.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/original-ServerChat.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/src/main/resources/data/chat.db" beforeDir="false" />
+    <list default="true" id="6ffc28d6-f167-4c5e-a0a7-d252a53a42e3" name="Changes" comment="Server ready!">
+      <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/ChatClient.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/ChatClient.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChatBMClient/target/original-ChatClient.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/target/original-ChatClient.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,11 +183,24 @@
       <workItem from="1717960176394" duration="49000" />
       <workItem from="1717960579051" duration="98000" />
       <workItem from="1718189443343" duration="680000" />
-      <workItem from="1718199166199" duration="32000" />
+      <workItem from="1718199166199" duration="113000" />
     </task>
+    <task id="LOCAL-00001" summary="Server ready!">
+      <option name="closed" value="true" />
+      <created>1718199223805</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1718199223805</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Server ready!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Server ready!" />
   </component>
 </project>

@@ -89,13 +89,13 @@
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" translateY="15.0">
+                  <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" translateY="35.0">
                      <children>
-                        <TextField fx:id="searchField" onKeyReleased="#onKeyReleased" prefWidth="200.0" promptText="Buscar chats..." styleClass="search-field" />
+                        <TextField fx:id="searchField" onKeyReleased="#onKeyReleased" prefWidth="200.0" promptText="Buscar chats..." styleClass="search-field" translateY="15.0" />
                         <!-- Puedes agregar un botón de búsqueda aquí si lo deseas -->
                      </children>
                   </HBox>
-                  <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="441.0" prefWidth="310.0" translateY="35.0">
+                  <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="441.0" prefWidth="310.0" translateY="75.0">
                      <VBox fx:id="chatsContainer" prefHeight="742.0" prefWidth="308.0" styleClass="chat-container" VBox.vgrow="ALWAYS">
                      </VBox>
                   </ScrollPane>
