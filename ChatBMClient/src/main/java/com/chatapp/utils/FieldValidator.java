@@ -26,7 +26,7 @@ public class FieldValidator {
     }
 
     public static boolean invalidName(String nickname) {
-        return nickname.contains("ñ") || nickname.contains("/") || nickname.contains("\\") || nickname.contains("<") || nickname.contains(">");
+        return nickname.contains("?") || nickname.contains("\"") || nickname.contains("|") || nickname.contains(":") || nickname.contains("*") || nickname.contains("ñ") || nickname.contains("/") || nickname.contains("\\") || nickname.contains("<") || nickname.contains(">");
     }
 
     private static boolean startsWithLetter(String nickname) {

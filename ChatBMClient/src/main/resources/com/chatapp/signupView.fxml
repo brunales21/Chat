@@ -41,7 +41,7 @@
                         <Insets left="250.0" right="250.0" top="20.0" />
                     </VBox.margin>
                 </PasswordField>
-                <Text fx:id="backToLogin" fill="#02abcd" fontSmoothingType="LCD" onMouseClicked="#swapWindow" style="-fx-underline: true;" text="¿Eres nuevo?">
+                <Text fx:id="backToLogin" fill="#02abcd" fontSmoothingType="LCD" onMouseClicked="#swapWindow" style="-fx-underline: true;" text="Ya tengo una cuenta!">
                     <VBox.margin>
                         <Insets top="10.0" />
                     </VBox.margin>

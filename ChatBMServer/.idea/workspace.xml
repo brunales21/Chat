@@ -57,10 +57,11 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/bemim/Workspace/DAM/TrabajoFinalGrado/Chat/ChatBMServer&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/bemim/Workspace/DAM/PFC/CodigoFuente/Chat/ChatBMServer&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -86,7 +87,7 @@
   <component name="RunManager">
     <configuration name="Server" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="org.chatapp.server.Server" />
-      <module name="ChatBMBis" />
+      <module name="chatbm" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -175,6 +176,10 @@
       <workItem from="1717798704088" duration="3069000" />
       <workItem from="1717838680807" duration="1459000" />
       <workItem from="1717844425544" duration="6187000" />
+      <workItem from="1717959518707" duration="456000" />
+      <workItem from="1717960176394" duration="49000" />
+      <workItem from="1717960579051" duration="98000" />
+      <workItem from="1718189443343" duration="680000" />
     </task>
     <servers />
   </component>
