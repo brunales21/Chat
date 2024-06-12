@@ -11,7 +11,7 @@
    <children>
       <HBox fx:id="chatHBox" layoutX="-66.0" maxHeight="Infinity" maxWidth="Infinity" minHeight="600.0" minWidth="788.0" prefHeight="601.0" prefWidth="788.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox fx:id="leftVBox" alignment="TOP_CENTER" maxWidth="72.0" minHeight="569.0" prefHeight="569.0" prefWidth="72.0" style=" -fx-background-color: #49b5ef;" styleClass="left-vbox-rounded" stylesheets="@../../css/styles.css">
+            <VBox fx:id="leftVBox" alignment="TOP_CENTER" maxWidth="115.0" minHeight="569.0" prefHeight="581.0" prefWidth="99.0" style=" -fx-background-color: #49b5ef;" styleClass="left-vbox-rounded" stylesheets="@../../css/styles.css">
                <HBox.margin>
                   <Insets bottom="10.0" left="10.0" top="10.0" />
                </HBox.margin>
@@ -58,20 +58,21 @@
 
                   <VBox alignment="BOTTOM_LEFT" prefHeight="45.0" prefWidth="51.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <Button onMouseClicked="#onClickExit" style="-fx-background-color: transparent;">
+                        <Button onMouseClicked="#onClickExit" style="-fx-background-color: transparent;" translateX="7.0">
                            <graphic>
-                           <ImageView fitHeight="45.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true" translateX="3.0" translateY="-10.0">
+                           <ImageView fitHeight="45.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
                               <image>
                                  <Image url="@../../images/exit.png" />
                               </image>
-                              <VBox.margin>
-                                 <Insets bottom="20.0" left="10.0" />
-                              </VBox.margin>
+
                            </ImageView>
                            </graphic>
                            <tooltip>
                               <Tooltip text="Cerrar sesión" />
                            </tooltip>
+                           <VBox.margin>
+                              <Insets bottom="20.0" left="10.0" />
+                           </VBox.margin>
                         </Button>
 
                      </children>
@@ -118,7 +119,7 @@
                         </ImageView>
                         <VBox prefHeight="57.0" prefWidth="305.0">
                            <children>
-                              <Label fx:id="receptorChatLabel" prefHeight="74.0" prefWidth="306.0" translateX="10.0">
+                              <Label fx:id="receptorChatLabel" prefHeight="53.0" prefWidth="468.0" translateX="10.0">
                                  <padding>
                                     <Insets left="20.0" />
                                  </padding>
