@@ -81,10 +81,21 @@
 
 /* styles.css */
 .vbox-rounded {
-    -fx-background-radius: 10px;
-    -fx-border-radius: 10px;
+    -fx-background-radius: 0px 10px 10px 0px;
+    -fx-border-radius: 0px 10px 10px 0px;
     -fx-background-color: inherit;
 }
+
+.left-vbox-rounded {
+    -fx-background-radius: 10px 0 0 10px;
+    -fx-border-radius: 10px 0 0 10px;
+    -fx-background-color: inherit;
+}
+
+.mid-vbox-rounded {
+    -fx-background-color: inherit;
+}
+
 
 /* Custom scrollbar for ListView */
 .list-view .scroll-bar:vertical {
@@ -142,17 +153,6 @@
     -fx-background-color: #ffffff; /* Fondo blanco al enfocar */
 }
 
-/* Estilo para el campo de búsqueda */
-.search-field {
-    -fx-background-color: #f2f2f2; /* Fondo gris claro */
-    -fx-border-color: #cccccc; /* Borde gris */
-    -fx-border-radius: 15; /* Bordes redondeados */
-    -fx-background-radius: 15; /* Bordes redondeados */
-    -fx-padding: 10px; /* Relleno interno */
-    -fx-font-size: 14px; /* Tamaño de la fuente */
-    -fx-prompt-text-fill: #999999; /* Color del texto de sugerencia */
-}
-
 /* Estilo sencillo y elegante para ScrollPane */
 .scroll-pane {
     -fx-background-color: #7ac6ef; /* Fondo transparente */
@@ -181,12 +181,6 @@
 .chat-container {
     -fx-background-color: #7AC6EFFF; /* Color de fondo */
     -fx-padding: 15px;
-}
-
-
-.search-field:focused {
-    -fx-border-color: #5ab1e0; /* Color del borde al enfocar */
-    -fx-background-color: #ffffff; /* Fondo blanco al enfocar */
 }
 
 #chatHBox {
