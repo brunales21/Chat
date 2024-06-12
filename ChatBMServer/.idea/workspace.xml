@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ffc28d6-f167-4c5e-a0a7-d252a53a42e3" name="Changes" comment="" />
+    <list default="true" id="6ffc28d6-f167-4c5e-a0a7-d252a53a42e3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../ChatBMClient/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ChatBMClient/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/ServerChat.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/ServerChat.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/original-ServerChat.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/src/main/resources/data/chat.db" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -87,7 +92,7 @@
   <component name="RunManager">
     <configuration name="Server" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="org.chatapp.server.Server" />
-      <module name="chatbm" />
+      <module name="ChatBMBis" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -180,6 +185,7 @@
       <workItem from="1717960176394" duration="49000" />
       <workItem from="1717960579051" duration="98000" />
       <workItem from="1718189443343" duration="680000" />
+      <workItem from="1718199166199" duration="32000" />
     </task>
     <servers />
   </component>
